@@ -1,0 +1,11 @@
+{
+  "atils": {
+    "phoenix-protocol-secure-cloud-operator": {
+      "v1": {
+        "label": "Phoenix Protocol // Secure Cloud Operator",
+        "status": "active",
+        "description": "From Service to Secure Cloud"
+      }
+    }
+  }
+}
