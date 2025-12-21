@@ -1,0 +1,24 @@
+ATILS FUNDAMENTALS SPINE (v1)
+
+State exists.
+Boundaries protect state.
+Flow moves state.
+Failure reveals where those broke down.
+
+DIAGNOSTIC QUESTIONS
+• What state exists here?
+• Who owns it?
+• Where is the boundary?
+• What happens if it breaks?
+
+UNIT 001 — STATE & BOUNDARIES
+Core insight:
+State exists first. Boundaries exist to protect state.
+
+UNIT 002 — FLOW
+Core insight:
+Flow moves state across boundaries.
+
+UNIT 003 — FAILURE
+Core insight:
+Failure reveals misalignment between state, boundaries, and flow.
