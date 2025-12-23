@@ -4,17 +4,19 @@ export default function SentinelAcademyPage() {
   const lessons = loadLessons({
     org: "atils",
     canon: "sentinel-protocol-defensive-operations",
-    version: "v1"
+    version: "v1",
   });
 
   return (
     <div>
       <h1>Sentinel Division</h1>
-      <p>Defensive security and operational hardening.</p>
+      <p>Defensive security, authority, and operational judgement.</p>
 
       <ul>
-        {lessons.map(l => (
-          <li key={l.id}>{l.title}</li>
+        {lessons.map((l) => (
+          <li key={l.id}>
+            <a href={`/lessons/${l.id}`}>{l.title}</a>
+          </li>
         ))}
       </ul>
     </div>
