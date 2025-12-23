@@ -1,9 +1,8 @@
 import { z } from "zod";
 
-/**
- * ELITE COMPETENCE — BROKEN ARROW
- * Mandatory real-world failure scenario
- */
+/* ─────────────────────────────
+   ELITE COMPETENCE — BROKEN ARROW
+───────────────────────────── */
 export const EliteCompetenceSchema = z.object({
   scenario_name: z.string().min(5),
   role_simulation: z.string().min(10),
@@ -23,9 +22,9 @@ export const EliteCompetenceSchema = z.object({
   interrogation_questions: z.array(z.string().min(10)).min(3),
 });
 
-/**
- * LEGAL CONTEXT — DEFAULT UK (EXTENSIBLE)
- */
+/* ─────────────────────────────
+   LEGAL CONTEXT (UK DEFAULT)
+───────────────────────────── */
 export const LegalContextSchema = z.object({
   jurisdiction: z.string().default("UK"),
   laws: z.array(z.string().min(5)).min(2),
@@ -33,9 +32,9 @@ export const LegalContextSchema = z.object({
   operator_duties: z.array(z.string().min(10)).min(2),
 });
 
-/**
- * CORE LESSON SCHEMA (RELAXED FOR FIRST SUCCESS)
- */
+/* ─────────────────────────────
+   CORE LESSON SCHEMA
+───────────────────────────── */
 export const LessonSchema = z.object({
   id: z.string().min(3),
   canon: z.string().min(3),
@@ -50,13 +49,13 @@ export const LessonSchema = z.object({
 
   mission_brief: z.object({
     shadow_corp: z.string().default("Aegis Logistics"),
-    briefing: z.string().min(30), // relaxed from 50
+    briefing: z.string().min(50),
     rules_of_engagement: z.array(z.string().min(10)).min(3),
   }),
 
   content: z.object({
-    concept: z.string().min(120),      // relaxed from 200
-    walkthrough: z.string().min(120),  // relaxed from 200
+    concept: z.string().min(200),
+    walkthrough: z.string().min(200),
     checkpoints: z.array(z.string().min(10)).min(3),
     common_mistakes: z.array(z.string().min(10)).min(3),
   }),
@@ -78,7 +77,7 @@ export const LessonSchema = z.object({
   accessibility: z.object({
     reading_level: z.enum(["simple", "standard", "advanced"]).default("standard"),
     dyslexia_friendly: z.boolean().default(true),
-    alt_text_summary: z.string().min(20), // relaxed from 30
+    alt_text_summary: z.string().min(30),
   }),
 
   resume_bullets: z.array(z.string().min(15)).min(3),
