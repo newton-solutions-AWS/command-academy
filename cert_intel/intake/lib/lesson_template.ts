@@ -1,37 +1,36 @@
 export const LESSON_TEMPLATE = {
-  id: "",
-  canon: "",
-  version: "",
   title: "",
-
-  objectives: ["", "", ""],
-  prerequisites: [],
-  duration_minutes: 45,
-
-  tags: ["security", "cloud", "operations"],
+  objectives: [],
+  duration_minutes: 30,
+  tags: [],
 
   mission_brief: {
-    shadow_corp: "Aegis Logistics",
-    briefing: "",
-    rules_of_engagement: ["", "", ""],
+    mission: "",
+    why_it_matters: "",
+    success_definition: "",
   },
+
+  prerequisites: ["Basic CLI familiarity"],
 
   content: {
     concept: "",
     walkthrough: "",
-    checkpoints: ["", "", ""],
-    common_mistakes: ["", "", ""],
+    checkpoints: [],
+    common_mistakes: [],
   },
 
   lab: {
-    type: "guided-cli",
+    type: "terminal-sim",
     setup: "",
-    steps: ["", "", "", "", ""],
+    steps: [],
+    safety: [],
     validate: {
       command: "",
-      expected: "",
+      expected: {
+        type: "json",
+        must_have_paths: ["$"],
+      },
     },
-    safety: ["", "", ""],
   },
 
   elite_competence: {
@@ -39,30 +38,24 @@ export const LESSON_TEMPLATE = {
     role_simulation: "",
     bug_injection: {
       description: "",
-      bad_state: "",
+      hint: "",
     },
     success_criteria: {
-      verification_command: "",
-      expected_output: "",
+      pass_conditions: [],
+      fail_conditions: [],
     },
-    interrogation_questions: ["", "", ""],
+    interrogation_questions: [],
   },
 
+  resume_bullets: [],
+
   legal_context: {
-    jurisdiction: "UK",
-    laws: ["UK GDPR", "Computer Misuse Act 1990"],
-    compliance_focus: ["data protection", "least privilege"],
-    operator_duties: [
-      "Protect sensitive data",
-      "Operate within authorised access boundaries",
-    ],
+    authorized_use: "",
+    prohibited_use: "",
+    data_handling: "",
   },
 
   accessibility: {
-    reading_level: "standard",
-    dyslexia_friendly: true,
     alt_text_summary: "",
   },
-
-  resume_bullets: ["", "", ""],
 };

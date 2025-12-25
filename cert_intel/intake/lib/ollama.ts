@@ -1,30 +1,45 @@
 import fetch from "node-fetch";
 
-export function createOllamaChat() {
-  return async function ollamaChat(args: {
-    model: string;
-    messages: { role: "system" | "user"; content: string }[];
-  }) {
-    const res = await fetch("http://localhost:11434/api/chat", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        model: args.model,
-        messages: args.messages,
-        stream: false
-      })
-    });
+type OllamaMessage = {
+  role: "system" | "user" | "assistant";
+  content: string;
+};
 
-    const data: any = await res.json();
-
-    if (!data?.message?.content) {
-      throw new Error("Ollama returned no message content");
-    }
-
-    return {
-      message: {
-        content: data.message.content
-      }
-    };
+type OllamaChatResponse = {
+  message?: {
+    content?: string;
   };
+};
+
+/**
+ * Canonical Ollama Chat Adapter
+ * This is the ONLY exported interface used by the engine.
+ */
+export async function ollamaChat(opts: {
+  model: string;
+  messages: OllamaMessage[];
+}): Promise<string> {
+  const res = await fetch("http://localhost:11434/api/chat", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      model: opts.model,
+      messages: opts.messages,
+      stream: false
+    })
+  });
+
+  if (!res.ok) {
+    throw new Error(`Ollama HTTP ${res.status}`);
+  }
+
+  const json = (await res.json()) as OllamaChatResponse;
+
+  const content = json?.message?.content;
+
+  if (!content || typeof content !== "string") {
+    throw new Error("Ollama returned empty response");
+  }
+
+  return content;
 }

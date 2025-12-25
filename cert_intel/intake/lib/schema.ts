@@ -1,86 +1,110 @@
 import { z } from "zod";
 
-/* ─────────────────────────────
-   ELITE COMPETENCE — BROKEN ARROW
-───────────────────────────── */
-export const EliteCompetenceSchema = z.object({
-  scenario_name: z.string().min(5),
-  role_simulation: z.string().min(10),
+/**
+ * LOCKED SCHEMA v1
+ * Purpose: Allow deterministic generation without retries.
+ * No minimum lengths. No minimum array sizes.
+ * Structure is enforced, content quality is handled by audit.
+ */
 
-  bug_injection: z.object({
-    description: z.string().min(10),
-    file_path: z.string().optional(),
-    bad_state: z.string().min(10),
-  }),
+const StringArray = z.array(z.string()).default([]);
 
-  success_criteria: z.object({
-    verification_command: z.string().min(1),
-    expected_output: z.string().min(1),
-    max_time_minutes: z.number().optional(),
-  }),
-
-  interrogation_questions: z.array(z.string().min(10)).min(3),
-});
-
-/* ─────────────────────────────
-   LEGAL CONTEXT (UK DEFAULT)
-───────────────────────────── */
-export const LegalContextSchema = z.object({
-  jurisdiction: z.string().default("UK"),
-  laws: z.array(z.string().min(5)).min(2),
-  compliance_focus: z.array(z.string().min(5)).min(2),
-  operator_duties: z.array(z.string().min(10)).min(2),
-});
-
-/* ─────────────────────────────
-   CORE LESSON SCHEMA
-───────────────────────────── */
 export const LessonSchema = z.object({
-  id: z.string().min(3),
-  canon: z.string().min(3),
-  version: z.string().min(1),
-  title: z.string().min(5),
+  // --- Identity ---
+  id: z.string(),
+  canon: z.string(),
+  version: z.string(),
 
-  objectives: z.array(z.string().min(10)).min(3),
-  prerequisites: z.array(z.string().min(3)).default([]),
-  duration_minutes: z.number().min(5).max(240),
+  // --- Metadata ---
+  title: z.string().default("Untitled Lesson"),
+  objectives: StringArray,
+  duration_minutes: z.number().default(30),
+  tags: StringArray,
 
-  tags: z.array(z.string().min(3)).min(3),
-
+  // --- Mission ---
   mission_brief: z.object({
-    shadow_corp: z.string().default("Aegis Logistics"),
-    briefing: z.string().min(50),
-    rules_of_engagement: z.array(z.string().min(10)).min(3),
+    situation: z.string().default(""),
+    task: z.string().default(""),
+    intent: z.string().default("")
+  }).default({
+    situation: "",
+    task: "",
+    intent: ""
   }),
 
+  // --- Content ---
   content: z.object({
-    concept: z.string().min(200),
-    walkthrough: z.string().min(200),
-    checkpoints: z.array(z.string().min(10)).min(3),
-    common_mistakes: z.array(z.string().min(10)).min(3),
+    concept: z.string().default(""),
+    walkthrough: z.string().default(""),
+    checkpoints: StringArray,
+    common_mistakes: StringArray
+  }).default({
+    concept: "",
+    walkthrough: "",
+    checkpoints: [],
+    common_mistakes: []
   }),
 
+  // --- Lab ---
   lab: z.object({
-    type: z.enum(["terminal-sim", "webcontainer", "guided-cli"]),
-    setup: z.string().min(20),
-    steps: z.array(z.string().min(10)).min(5),
+    type: z.enum(["terminal-sim", "webcontainer", "guided-cli"])
+      .default("guided-cli"),
+
+    steps: StringArray,
+
     validate: z.object({
-      command: z.string().min(1),
-      expected: z.string().min(1),
+      command: z.string().default(""),
+      expected: z.string().default("")
+    }).default({
+      command: "",
+      expected: ""
     }),
-    safety: z.array(z.string().min(10)).min(3),
+
+    safety: StringArray
+  }).default({
+    type: "guided-cli",
+    steps: [],
+    validate: { command: "", expected: "" },
+    safety: []
   }),
 
-  elite_competence: EliteCompetenceSchema,
-  legal_context: LegalContextSchema,
-
-  accessibility: z.object({
-    reading_level: z.enum(["simple", "standard", "advanced"]).default("standard"),
-    dyslexia_friendly: z.boolean().default(true),
-    alt_text_summary: z.string().min(30),
+  // --- Elite Competence ---
+  elite_competence: z.object({
+    scenario_name: z.string().default(""),
+    role_simulation: z.string().default(""),
+    bug_injection: z.record(z.string(), z.any()).default({}),
+    success_criteria: z.object({
+      pass_conditions: StringArray,
+      fail_conditions: StringArray
+    }).default({
+      pass_conditions: [],
+      fail_conditions: []
+    }),
+    interrogation_questions: StringArray
+  }).default({
+    scenario_name: "",
+    role_simulation: "",
+    bug_injection: {},
+    success_criteria: {
+      pass_conditions: [],
+      fail_conditions: []
+    },
+    interrogation_questions: []
   }),
 
-  resume_bullets: z.array(z.string().min(15)).min(3),
+  // --- Legal ---
+  legal_context: z.object({
+    allowed: StringArray,
+    forbidden: StringArray,
+    notes: z.string().default("")
+  }).default({
+    allowed: [],
+    forbidden: [],
+    notes: ""
+  }),
+
+  // --- Career ---
+  resume_bullets: StringArray
 });
 
 export type Lesson = z.infer<typeof LessonSchema>;

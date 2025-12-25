@@ -1,58 +1,56 @@
 #!/usr/bin/env ts-node
 
-import { generateBatch } from "./lib/generate";
-import { createOllamaChat } from "./lib/ollama";
+import path from "path";
+import { generateBatchV1 } from "./lib/generate.v1";
 
-/* ─────────────────────────────
-   ARGUMENT PARSING
-───────────────────────────── */
-const [, , cmd, org, canon, version, countArg] = process.argv;
-
-if (cmd !== "gen") {
-  console.error("Usage: gen <org> <canon> <version> <count>");
-  process.exit(1);
-}
-
-if (!org || !canon || !version) {
-  console.error("Missing required arguments.");
-  process.exit(1);
-}
-
-const count = Number(countArg || 1);
-
-/* ─────────────────────────────
-   ENV CONFIG
-───────────────────────────── */
-const MODEL = process.env.MODEL || "llama3.1";
-const CONCURRENCY = Number(process.env.CONCURRENCY || 1);
-const MAX_ATTEMPTS = Number(process.env.MAX_ATTEMPTS || 6);
-
-console.log(`🧠 MODEL=${MODEL} CONCURRENCY=${CONCURRENCY} MAX_ATTEMPTS=${MAX_ATTEMPTS}`);
-
-/* ─────────────────────────────
-   MODEL FACTORY
-───────────────────────────── */
-const ollamaChat = createOllamaChat();
-
-/* ─────────────────────────────
-   EXECUTION (FIXES TOP-LEVEL AWAIT)
-───────────────────────────── */
 async function main() {
-  await generateBatch({
-    org,
+  const [, , command, canon, track, version, countRaw] = process.argv;
+
+  if (command !== "gen") {
+    console.error("❌ Usage: gen <canon> <track> <version> <count>");
+    process.exit(1);
+  }
+
+  if (!canon || !track || !version || !countRaw) {
+    console.error("❌ Missing required arguments");
+    process.exit(1);
+  }
+
+  const count = Number(countRaw);
+  if (Number.isNaN(count) || count <= 0) {
+    console.error("❌ Count must be a positive number");
+    process.exit(1);
+  }
+
+  const model = process.env.MODEL ?? "llama3.1:latest";
+  const maxAttempts = Number(process.env.MAX_ATTEMPTS ?? 3);
+
+  const outDir = path.join(
+    "cert_intel",
+    "canon",
     canon,
+    track,
+    version,
+    "lessons"
+  );
+
+  console.log(
+    `🧠 MODEL=${model} CONCURRENCY=1 MAX_ATTEMPTS=${maxAttempts}`
+  );
+  console.log(`🛡️ Factory Online → ${outDir}`);
+
+  await generateBatchV1({
+    canon,
+    track,
     version,
     count,
-    model: MODEL,
-    concurrency: CONCURRENCY,
-    maxAttempts: MAX_ATTEMPTS,
-    ollamaChat
+    model,
+    outDir,
+    maxAttempts,
   });
-
-  console.log("✅ Generation complete");
 }
 
-main().catch(err => {
+main().catch((err) => {
   console.error("❌ Fatal error:", err);
   process.exit(1);
 });
