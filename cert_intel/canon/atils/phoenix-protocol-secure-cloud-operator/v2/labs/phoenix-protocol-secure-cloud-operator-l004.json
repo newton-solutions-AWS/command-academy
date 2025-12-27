@@ -1,0 +1,92 @@
+{
+  "id": "phoenix-protocol-secure-cloud-operator-l004",
+  "canon": "phoenix-protocol-secure-cloud-operator",
+  "version": "v2",
+  "title": "Phoenix Protocol: Verify IAM Role Visibility Using Read-Only CLI Commands",
+  "objectives": [
+    "Confirm IAM role visibility using standard AWS CLI",
+    "Interpret empty or populated output safely",
+    "Avoid validation against assumed or hardcoded role names"
+  ],
+  "duration_minutes": 25,
+  "tags": ["aws", "iam", "read-only", "inspection", "phoenix"],
+  "mission_brief": {
+    "situation": "You are operating in a sandbox or training AWS account where IAM roles may or may not exist.",
+    "mission": "Verify IAM access by listing roles without creating, modifying, or deleting any IAM resources.",
+    "execution": "Use read-only AWS CLI commands and validate success based on command execution rather than resource presence."
+  },
+  "prerequisites": [
+    "AWS CLI installed and working",
+    "Valid sandbox or training credentials configured",
+    "Basic familiarity with IAM concepts"
+  ],
+  "content": {
+    "concept": "IAM role visibility is a foundational verification step for secure cloud operators. Listing roles confirms permission scope without introducing risk.",
+    "walkthrough": "You will execute a standard AWS CLI command to list IAM roles. The command may return role names or no output at all. Both outcomes are valid.",
+    "checkpoints": [
+      "Command executes without error",
+      "Output is safely interpreted",
+      "No assumptions are made about role existence"
+    ],
+    "common_mistakes": [
+      "Assuming specific role names exist",
+      "Treating empty output as a failure",
+      "Attempting to create or modify IAM roles"
+    ]
+  },
+  "lab": {
+    "type": "guided-cli",
+    "setup": "Use a sandbox or training AWS account. Do not run commands in production environments.",
+    "steps": [
+      "Open your terminal.",
+      "Ensure AWS CLI is installed and configured.",
+      "Run the IAM role listing command.",
+      "Observe whether output is empty or populated.",
+      "Confirm the command completed successfully without errors."
+    ],
+    "safety": [
+      "Read-only command",
+      "No IAM changes",
+      "Sandbox-safe"
+    ],
+    "validate": {
+      "command": "aws iam list-roles --query \"Roles[].RoleName\" --output text",
+      "expected": "",
+      "match": "contains"
+    }
+  },
+  "elite_competence": {
+    "scenario_name": "IAM Visibility Verification",
+    "role_simulation": "You are validating IAM access in an unknown environment where role presence cannot be assumed.",
+    "bug_injection": {
+      "bug": "Validation checks for a hardcoded role name.",
+      "symptom": "Learners fail despite correct permissions.",
+      "fix": "Validate execution behavior instead of specific resource identifiers."
+    },
+    "success_criteria": {
+      "pass_conditions": [
+        "Command executes successfully",
+        "Validation passes in empty or populated environments",
+        "No assumptions about IAM structure"
+      ],
+      "fail_conditions": [
+        "Hardcoded role names",
+        "Write or destructive IAM actions"
+      ]
+    },
+    "interrogation_questions": [
+      "Why is listing IAM roles safer than creating them?",
+      "Why should operators avoid assuming role names?",
+      "How does behavior-based validation reduce audit risk?"
+    ]
+  },
+  "legal_context": {
+    "allowed": "Executing read-only AWS CLI commands in authorized sandbox or training accounts.",
+    "prohibited": "Creating, modifying, or deleting IAM roles without explicit authorization."
+  },
+  "resume_bullets": [
+    "Verified IAM role visibility using deterministic AWS CLI validation.",
+    "Demonstrated safe identity inspection techniques in cloud environments.",
+    "Applied audit-safe, read-only IAM verification workflows."
+  ]
+}
