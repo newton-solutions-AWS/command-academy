@@ -1,0 +1,88 @@
+{
+  "id": "phoenix-protocol-secure-cloud-operator-l006",
+  "canon": "newton-command-academy",
+  "version": "v1.0",
+  "title": "Secure Cloud Operator Lesson 6: Identity and Access Management",
+  "objectives": [
+    "Understand the importance of identity and access management in cloud security",
+    "Learn how to use AWS IAM roles and policies"
+  ],
+  "duration_minutes": 60,
+  "tags": [
+    "aws",
+    "iam",
+    "identity",
+    "access"
+  ],
+  "mission_brief": {
+    "situation": "You are a cloud operator tasked with securing a new application deployed in the cloud",
+    "mission": "Use AWS IAM to manage identity and access for your application",
+    "execution": "Complete the lab steps to demonstrate your understanding"
+  },
+  "prerequisites": [
+    "Basic knowledge of AWS services",
+    "Familiarity with command-line interfaces"
+  ],
+  "content": {
+    "concept": "Identity and Access Management in Cloud Security",
+    "walkthrough": "Using AWS IAM Roles and Policies",
+    "checkpoints": [
+      "Create an IAM role for your application",
+      "Attach policies to the IAM role"
+    ],
+    "common_mistakes": [
+      "Forgetting to attach policies",
+      "Not using IAM roles"
+    ]
+  },
+  "lab": {
+    "type": "guided-cli",
+    "setup": "Create a new AWS IAM role and attach a policy",
+    "steps": [
+      "aws iam list-roles --query 'Roles[].RoleName' --output text"
+    ],
+    "safety": [
+      "Do not delete any IAM roles or policies"
+    ],
+    "validate": {
+      "command": "aws iam list-roles --query 'Roles[].RoleName' --output text",
+      "expected": "",
+      "match": "contains"
+    }
+  },
+  "elite_competence": {
+    "scenario_name": "Cloud Security Scenario",
+    "role_simulation": "Cloud Operator",
+    "bug_injection": {
+      "bug": "Unauthorized access to sensitive data",
+      "symptom": "IAM role not attached to application",
+      "fix": "Attach IAM role to application"
+    },
+    "success_criteria": {
+      "pass_conditions": [
+        "IAM role created and attached to application",
+        "Policies attached to IAM role"
+      ],
+      "fail_conditions": [
+        "Unauthorized access to sensitive data"
+      ]
+    },
+    "interrogation_questions": [
+      "What is the importance of IAM roles in cloud security?",
+      "How do you attach policies to an IAM role?"
+    ]
+  },
+  "legal_context": {
+    "allowed": [
+      "Using AWS IAM services",
+      "Creating IAM roles and policies"
+    ],
+    "prohibited": [
+      "Deleting IAM roles or policies without authorization"
+    ]
+  },
+  "resume_bullets": [
+    "Created and attached IAM roles to applications",
+    "Attached policies to IAM roles"
+  ]
+}

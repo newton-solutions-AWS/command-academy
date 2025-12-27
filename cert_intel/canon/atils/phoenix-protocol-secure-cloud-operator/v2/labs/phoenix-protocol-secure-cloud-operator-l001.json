@@ -1,0 +1,82 @@
+{
+  "id": "phoenix-protocol-secure-cloud-operator-l001",
+  "canon": "tils-newton-command-academy-lesson-1",
+  "version": "v1.0",
+  "title": "Introduction to AWS CLI - Getting Account Information",
+  "objectives": [
+    "Understand the basics of AWS CLI",
+    "Be able to retrieve account information using AWS CLI"
+  ],
+  "duration_minutes": 30,
+  "tags": [
+    "AWS",
+    "CLI",
+    "Security"
+  ],
+  "mission_brief": {
+    "situation": "As a cloud operator, you need to understand your AWS environment.",
+    "mission": "Use the AWS CLI to retrieve account information.",
+    "execution": "Complete the lab and validate your results."
+  },
+  "prerequisites": [
+    "Basic understanding of AWS"
+  ],
+  "content": {
+    "concept": "This lesson introduces the basics of AWS CLI, focusing on retrieving account information.",
+    "walkthrough": "",
+    "checkpoints": [
+      "Understand the AWS CLI command to retrieve account information",
+      "Successfully run the AWS CLI command"
+    ],
+    "common_mistakes": [
+      "Incorrect AWS CLI command",
+      "Insufficient permissions"
+    ]
+  },
+  "lab": {
+    "type": "guided-cli",
+    "setup": "",
+    "steps": [
+      "aws sts get-caller-identity --query 'Account' --output text"
+    ],
+    "safety": [],
+    "validate": {
+      "command": "aws sts get-caller-identity --query 'Account' --output text",
+      "expected": "",
+      "match": "contains"
+    }
+  },
+  "elite_competence": {
+    "scenario_name": "Cloud Operator - Retrieve Account Information",
+    "role_simulation": "Cloud Operator",
+    "bug_injection": {
+      "bug": "Incorrect AWS CLI command",
+      "symptom": "Account information not retrieved correctly",
+      "fix": "Use the correct AWS CLI command"
+    },
+    "success_criteria": {
+      "pass_conditions": [
+        "Account information is retrieved correctly"
+      ],
+      "fail_conditions": [
+        "Account information is not retrieved correctly"
+      ]
+    },
+    "interrogation_questions": [
+      "What is the purpose of using the AWS CLI?",
+      "How do you retrieve account information using the AWS CLI?"
+    ]
+  },
+  "legal_context": {
+    "allowed": [
+      "Use AWS CLI to retrieve account information"
+    ],
+    "prohibited": [
+      "Modify or delete existing resources"
+    ]
+  },
+  "resume_bullets": [
+    "Retrieved account information using AWS CLI",
+    "Understood the basics of AWS CLI"
+  ]
+}

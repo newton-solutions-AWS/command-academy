@@ -1,0 +1,83 @@
+{
+  "id": "phoenix-protocol-secure-cloud-operator-l008",
+  "canon": "newton-command-academy-v1",
+  "version": "1.0",
+  "title": "Secure Cloud Operator - Lesson 8: Understanding IAM Roles",
+  "objectives": [
+    "Understand the concept of IAM roles in AWS",
+    "Learn how to list and describe IAM roles using the AWS CLI"
+  ],
+  "duration_minutes": 30,
+  "tags": [
+    "AWS",
+    "IAM",
+    "Roles"
+  ],
+  "mission_brief": {
+    "situation": "As a cloud security operator, you need to ensure that your IAM roles are properly configured to manage access to your resources.",
+    "mission": "List and describe all IAM roles in your AWS account",
+    "execution": "Use the AWS CLI to list and describe IAM roles"
+  },
+  "prerequisites": [
+    "AWS CLI installed and configured"
+  ],
+  "content": {
+    "concept": "IAM roles are used to manage access to resources in your AWS account. They can be attached to users, groups, or services.",
+    "walkthrough": "The AWS CLI provides commands to list and describe IAM roles. You will use the `aws iam list-roles` command to list all IAM roles in your account.",
+    "checkpoints": [
+      "Understand how IAM roles are used in your AWS account",
+      "Use the AWS CLI to list and describe IAM roles"
+    ],
+    "common_mistakes": [
+      "Not properly configuring IAM roles, leading to security vulnerabilities"
+    ]
+  },
+  "lab": {
+    "type": "guided-cli",
+    "setup": "",
+    "steps": [
+      "aws iam list-roles --query 'Roles[].RoleName' --output text"
+    ],
+    "safety": [],
+    "validate": {
+      "command": "aws iam list-roles --query 'Roles[].RoleName' --output text",
+      "expected": "",
+      "match": "contains"
+    }
+  },
+  "elite_competence": {
+    "scenario_name": "IAM Role Configuration",
+    "role_simulation": "Cloud Security Operator",
+    "bug_injection": {
+      "bug": "Incorrect IAM role configuration",
+      "symptom": "Unauthorized access to resources",
+      "fix": "Reconfigure IAM roles to restrict access"
+    },
+    "success_criteria": {
+      "pass_conditions": [
+        "IAM roles are properly configured",
+        "Access is restricted to authorized users"
+      ],
+      "fail_conditions": [
+        "IAM roles are not properly configured",
+        "Unauthorized access occurs"
+      ]
+    },
+    "interrogation_questions": [
+      "What is the purpose of IAM roles in AWS?",
+      "How do you list and describe IAM roles using the AWS CLI?"
+    ]
+  },
+  "legal_context": {
+    "allowed": [
+      "List and describe IAM roles using the AWS CLI"
+    ],
+    "prohibited": [
+      "Access resources without proper authorization"
+    ]
+  },
+  "resume_bullets": [
+    "Listed and described all IAM roles in the AWS account",
+    "Understood how to properly configure IAM roles for secure access"
+  ]
+}

@@ -1,0 +1,91 @@
+{
+  "id": "REPLACE_ID",
+  "canon": "phoenix-protocol-secure-cloud-operator",
+  "version": "v2",
+  "title": "REPLACE_TITLE",
+  "objectives": [
+    "Verify service visibility using standard AWS CLI",
+    "Interpret empty or populated output safely",
+    "Avoid assumptions about existing infrastructure"
+  ],
+  "duration_minutes": 30,
+  "tags": ["aws", "read-only", "deterministic", "phoenix"],
+  "mission_brief": {
+    "situation": "You are operating in a sandbox or training AWS account where resources may or may not exist.",
+    "mission": "Verify service access using read-only AWS CLI commands without creating, modifying, or deleting resources.",
+    "execution": "Use describe or list commands and validate success based on execution behavior rather than resource presence."
+  },
+  "prerequisites": [
+    "AWS CLI installed and working",
+    "Valid sandbox or training credentials configured"
+  ],
+  "content": {
+    "concept": "This lesson teaches safe, deterministic validation of AWS service access using read-only commands. The goal is to confirm permissions and visibility without relying on the existence of specific resources.",
+    "walkthrough": "You will execute a read-only AWS CLI command. The command may return data or an empty response depending on the environment. Both outcomes indicate successful execution.",
+    "checkpoints": [
+      "Command executes without error",
+      "Output is deterministic",
+      "No resources are modified"
+    ],
+    "common_mistakes": [
+      "Assuming resources exist",
+      "Validating against dynamic identifiers",
+      "Using write or destructive commands"
+    ]
+  },
+  "lab": {
+    "type": "guided-cli",
+    "setup": "Use a sandbox or training AWS account. Never run these commands in production.",
+    "steps": [
+      "Open a terminal with AWS CLI configured",
+      "Execute the provided read-only AWS CLI command",
+      "Observe the output carefully",
+      "Confirm the command executes without error",
+      "Do not attempt to create or modify resources"
+    ],
+    "safety": [
+      "Read-only commands only",
+      "Sandbox account",
+      "No production credentials"
+    ],
+    "validate": {
+      "command": "REPLACE_COMMAND",
+      "expected": "",
+      "match": "contains"
+    }
+  },
+  "elite_competence": {
+    "scenario_name": "Behavior-Based Validation",
+    "role_simulation": "You are responsible for confirming access without assuming infrastructure state.",
+    "bug_injection": {
+      "bug": "Validation relied on resource existence.",
+      "symptom": "Learners fail in empty environments.",
+      "fix": "Validate behavior instead of assets."
+    },
+    "success_criteria": {
+      "pass_conditions": [
+        "Read-only AWS CLI",
+        "Deterministic output",
+        "Environment-agnostic validation"
+      ],
+      "fail_conditions": [
+        "Write operations",
+        "Dynamic identifiers"
+      ]
+    },
+    "interrogation_questions": [
+      "Why is empty output not a failure?",
+      "How does behavior-based validation reduce risk?",
+      "Why should operators avoid assumptions?"
+    ]
+  },
+  "legal_context": {
+    "allowed": "Executing read-only AWS CLI commands in an authorized sandbox or training account.",
+    "prohibited": "Creating, modifying, or deleting cloud resources without authorization."
+  },
+  "resume_bullets": [
+    "Verified AWS service access using deterministic CLI validation.",
+    "Applied safe, read-only cloud inspection techniques.",
+    "Demonstrated environment-agnostic operational validation."
+  ]
+}

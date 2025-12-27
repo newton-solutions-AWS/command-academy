@@ -1,0 +1,86 @@
+{
+  "id": "phoenix-protocol-secure-cloud-operator-l007",
+  "canon": "tils-newton-academy",
+  "version": "v1.0",
+  "title": "Secure Cloud Operator - Lesson 7: Identifying AWS Account and S3 Buckets",
+  "objectives": [
+    "Identify the AWS account ID associated with the current session.",
+    "List all available S3 buckets in the account."
+  ],
+  "duration_minutes": 30,
+  "tags": [
+    "aws",
+    "security",
+    "cloud"
+  ],
+  "mission_brief": {
+    "situation": "As a cloud security operator, you need to identify the AWS account associated with your current session and list all available S3 buckets.",
+    "mission": "Use AWS CLI commands to retrieve the account ID and list S3 buckets.",
+    "execution": "Execute the necessary AWS CLI commands to achieve the objectives."
+  },
+  "prerequisites": [
+    "Basic understanding of AWS CLI"
+  ],
+  "content": {
+    "concept": "AWS CLI for security operations",
+    "walkthrough": "Using the `aws sts get-caller-identity` command to retrieve the account ID and listing S3 buckets using `aws s3 ls`.",
+    "checkpoints": [
+      "Verify the AWS account ID is correct",
+      "Confirm all available S3 buckets are listed"
+    ],
+    "common_mistakes": [
+      "Using incorrect AWS CLI commands",
+      "Not verifying output"
+    ]
+  },
+  "lab": {
+    "type": "guided-cli",
+    "setup": "None required",
+    "steps": [
+      "aws sts get-caller-identity --query \"Account\" --output text"
+    ],
+    "safety": [
+      "Verify AWS account ID is correct before proceeding"
+    ],
+    "validate": {
+      "command": "aws sts get-caller-identity --query \"Account\" --output text",
+      "expected": "",
+      "match": "contains"
+    }
+  },
+  "elite_competence": {
+    "scenario_name": "Secure Cloud Operator Scenario",
+    "role_simulation": "Cloud Security Operator",
+    "bug_injection": {
+      "bug": "Incorrect AWS CLI command used to retrieve account ID.",
+      "symptom": "Incorrect account ID displayed.",
+      "fix": "Use correct AWS CLI command `aws sts get-caller-identity`."
+    },
+    "success_criteria": {
+      "pass_conditions": [
+        "Correct AWS account ID is retrieved",
+        "All available S3 buckets are listed"
+      ],
+      "fail_conditions": [
+        "Incorrect AWS account ID is retrieved",
+        "Not all S3 buckets are listed"
+      ]
+    },
+    "interrogation_questions": [
+      "What is the primary purpose of using `aws sts get-caller-identity`?",
+      "How do you ensure you are listing all available S3 buckets?"
+    ]
+  },
+  "legal_context": {
+    "allowed": [
+      "Using AWS CLI commands to retrieve account ID and list S3 buckets"
+    ],
+    "prohibited": [
+      "Modifying or deleting existing resources"
+    ]
+  },
+  "resume_bullets": [
+    "Securely identified the AWS account associated with my session",
+    "Listed all available S3 buckets in the account"
+  ]
+}

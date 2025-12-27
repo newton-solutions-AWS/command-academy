@@ -1,0 +1,89 @@
+{
+  "id": "phoenix-protocol-secure-cloud-operator-l003",
+  "canon": "newton-command-academy",
+  "version": "1.0",
+  "title": "Managing IAM Roles and Permissions",
+  "objectives": [
+    "Understand the importance of IAM roles in securing cloud resources.",
+    "Learn how to list IAM roles using AWS CLI."
+  ],
+  "duration_minutes": 60,
+  "tags": [
+    "aws",
+    "iam",
+    "roles",
+    "permissions"
+  ],
+  "mission_brief": {
+    "situation": "As a cloud operator, you need to manage IAM roles and permissions to ensure secure access to your cloud resources.",
+    "mission": "List all IAM roles in your account using AWS CLI.",
+    "execution": "Use the correct command to list IAM roles."
+  },
+  "prerequisites": [
+    "Basic understanding of AWS CLI",
+    " Familiarity with IAM concepts"
+  ],
+  "content": {
+    "concept": "IAM Roles and Permissions",
+    "walkthrough": "List IAM roles using AWS CLI",
+    "checkpoints": [
+      "Verify the output contains all IAM roles in your account.",
+      "Understand the importance of role policies in securing cloud resources."
+    ],
+    "common_mistakes": [
+      "Forgetting to use the correct command",
+      "Misinterpreting the output"
+    ]
+  },
+  "lab": {
+    "type": "guided-cli",
+    "setup": "",
+    "steps": [
+      "aws iam list-roles --query \"Roles[].RoleName\" --output text"
+    ],
+    "safety": [
+      "Do not modify or delete any IAM roles during this exercise."
+    ],
+    "validate": {
+      "command": "aws iam list-roles --query \"Roles[].RoleName\" --output text",
+      "expected": "",
+      "match": "contains"
+    }
+  },
+  "elite_competence": {
+    "scenario_name": "Secure Cloud Resources",
+    "role_simulation": "Cloud Operator",
+    "bug_injection": {
+      "bug": "Incorrect IAM role permissions causing access denied error.",
+      "symptom": "Users cannot access cloud resources due to permission issues.",
+      "fix": "Review and update IAM role policies to ensure correct permissions."
+    },
+    "success_criteria": {
+      "pass_conditions": [
+        "All IAM roles are listed correctly.",
+        "Role policies are up-to-date."
+      ],
+      "fail_conditions": [
+        "Incorrect IAM roles are listed.",
+        "Role policies need updates."
+      ]
+    },
+    "interrogation_questions": [
+      "What is the purpose of IAM roles in securing cloud resources?",
+      "How do you list all IAM roles in your account using AWS CLI?"
+    ]
+  },
+  "legal_context": {
+    "allowed": [
+      "List IAM roles",
+      "Review and update role policies"
+    ],
+    "prohibited": [
+      "Modify or delete IAM roles without permission"
+    ]
+  },
+  "resume_bullets": [
+    "Managed IAM roles and permissions for secure cloud access.",
+    "Updated role policies to ensure correct permissions."
+  ]
+}
