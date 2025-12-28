@@ -1,110 +1,89 @@
+// cert_intel/intake/lib/schema.ts
 import { z } from "zod";
 
 /**
- * LOCKED SCHEMA v1
- * Purpose: Allow deterministic generation without retries.
- * No minimum lengths. No minimum array sizes.
- * Structure is enforced, content quality is handled by audit.
+ * Phoenix Protocol v2 — Canonical Lesson Schema
+ * Deterministic, audit-safe, runtime-safe
  */
 
-const StringArray = z.array(z.string()).default([]);
-
 export const LessonSchema = z.object({
-  // --- Identity ---
-  id: z.string(),
-  canon: z.string(),
-  version: z.string(),
+  id: z.string().min(5),
+  canon: z.string().min(3),
+  version: z.string().min(2),
 
-  // --- Metadata ---
-  title: z.string().default("Untitled Lesson"),
-  objectives: StringArray,
-  duration_minutes: z.number().default(30),
-  tags: StringArray,
+  title: z.string().min(10),
 
-  // --- Mission ---
+  objectives: z.array(z.string().min(5)).min(3),
+
+  duration_minutes: z.number().min(5),
+
+  tags: z.array(z.string().min(2)).min(1),
+
   mission_brief: z.object({
-    situation: z.string().default(""),
-    task: z.string().default(""),
-    intent: z.string().default("")
-  }).default({
-    situation: "",
-    task: "",
-    intent: ""
+    situation: z.string().min(30),
+    mission: z.string().min(30),
+    execution: z.string().min(30),
   }),
 
-  // --- Content ---
+  prerequisites: z.array(z.string().min(5)).min(1),
+
   content: z.object({
-    concept: z.string().default(""),
-    walkthrough: z.string().default(""),
-    checkpoints: StringArray,
-    common_mistakes: StringArray
-  }).default({
-    concept: "",
-    walkthrough: "",
-    checkpoints: [],
-    common_mistakes: []
+    concept: z.string().min(200),
+    walkthrough: z.string().min(200),
+    checkpoints: z.array(z.string().min(5)).min(3),
+    common_mistakes: z.array(z.string().min(10)).min(3),
   }),
 
-  // --- Lab ---
   lab: z.object({
-    type: z.enum(["terminal-sim", "webcontainer", "guided-cli"])
-      .default("guided-cli"),
+    type: z.literal("guided-cli"),
+    setup: z.string().min(10),
 
-    steps: StringArray,
+    steps: z
+      .array(z.string().min(5))
+      .min(1)
+      .refine(
+        steps => steps.some(s => s.trim().startsWith("aws ")),
+        { message: "lab.steps must include at least one 'aws ...' command" }
+      ),
+
+    safety: z.array(z.string().min(5)).min(3),
 
     validate: z.object({
-      command: z.string().default(""),
-      expected: z.string().default("")
-    }).default({
-      command: "",
-      expected: ""
+      command: z.string().min(5),
+      expected: z.literal(""),
+      match: z.literal("contains"),
     }),
-
-    safety: StringArray
-  }).default({
-    type: "guided-cli",
-    steps: [],
-    validate: { command: "", expected: "" },
-    safety: []
   }),
 
-  // --- Elite Competence ---
   elite_competence: z.object({
-    scenario_name: z.string().default(""),
-    role_simulation: z.string().default(""),
-    bug_injection: z.record(z.string(), z.any()).default({}),
-    success_criteria: z.object({
-      pass_conditions: StringArray,
-      fail_conditions: StringArray
-    }).default({
-      pass_conditions: [],
-      fail_conditions: []
+    scenario_name: z.string().min(10),
+    role_simulation: z.string().min(50),
+
+    bug_injection: z.object({
+      bug: z.string().min(10),
+      symptom: z.string().min(10),
+      fix: z.string().min(10),
     }),
-    interrogation_questions: StringArray
-  }).default({
-    scenario_name: "",
-    role_simulation: "",
-    bug_injection: {},
-    success_criteria: {
-      pass_conditions: [],
-      fail_conditions: []
-    },
-    interrogation_questions: []
+
+    success_criteria: z.object({
+      pass_conditions: z.array(z.string().min(5)).min(3),
+      fail_conditions: z.array(z.string().min(5)).min(2),
+    }),
+
+    interrogation_questions: z.array(z.string().min(10)).min(3),
   }),
 
-  // --- Legal ---
+  /**
+   * IMPORTANT:
+   * Phoenix v2 uses STRING legal context
+   * (Gemini audit approved)
+   */
   legal_context: z.object({
-    allowed: StringArray,
-    forbidden: StringArray,
-    notes: z.string().default("")
-  }).default({
-    allowed: [],
-    forbidden: [],
-    notes: ""
+    allowed: z.string().min(20),
+    prohibited: z.string().min(20),
   }),
 
-  // --- Career ---
-  resume_bullets: StringArray
+  resume_bullets: z.array(z.string().min(10)).min(3),
 });
 
 export type Lesson = z.infer<typeof LessonSchema>;

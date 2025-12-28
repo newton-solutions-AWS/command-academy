@@ -1,30 +1,26 @@
-export function jsonSafeParse(raw: string) {
-  // Extract JSON block
-  const start = raw.indexOf("{");
-  const end = raw.lastIndexOf("}");
+// cert_intel/intake/lib/jsonSafeParse.ts
 
-  if (start === -1 || end === -1) {
-    throw new Error("No JSON object detected in LLM output");
+export function jsonSafeParse(raw: string): any {
+  if (!raw || typeof raw !== "string") {
+    throw new Error("Empty or non-string model output");
   }
 
-  let slice = raw.slice(start, end + 1);
+  // HARD STRIP everything before first {
+  const firstBrace = raw.indexOf("{");
+  const lastBrace = raw.lastIndexOf("}");
 
-  // 1. Remove illegal control characters (except \n \r \t)
-  slice = slice.replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g, "");
+  if (firstBrace === -1 || lastBrace === -1 || lastBrace <= firstBrace) {
+    throw new Error("No valid JSON object boundaries found in model output");
+  }
 
-  // 2. Normalize unescaped newlines inside strings
-  slice = slice.replace(/(?<!\\)\n/g, "\\n");
-
-  // 3. Fix trailing commas
-  slice = slice
-    .replace(/,\s*}/g, "}")
-    .replace(/,\s*]/g, "]");
+  const jsonSlice = raw.slice(firstBrace, lastBrace + 1);
 
   try {
-    return JSON.parse(slice);
-  } catch (err: any) {
+    return JSON.parse(jsonSlice);
+  } catch (err) {
     throw new Error(
-      `JSON parse failed after sanitization: ${err.message}`
+      "Invalid JSON after sanitization:\n" +
+        jsonSlice.slice(0, 500)
     );
   }
 }
