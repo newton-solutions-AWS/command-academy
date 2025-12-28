@@ -1,82 +1,96 @@
 {
   "id": "phoenix-protocol-secure-cloud-operator-l001",
-  "canon": "tils-newton-command-academy-lesson-1",
-  "version": "v1.0",
-  "title": "Introduction to AWS CLI - Getting Account Information",
+  "canon": "phoenix-protocol-secure-cloud-operator",
+  "version": "v2",
+  "title": "Phoenix Protocol: Verify AWS Identity Context Using Deterministic CLI Output",
   "objectives": [
-    "Understand the basics of AWS CLI",
-    "Be able to retrieve account information using AWS CLI"
+    "Verify AWS identity context using a standard AWS CLI command",
+    "Interpret deterministic command output safely",
+    "Avoid assumptions about account state or existing resources"
   ],
   "duration_minutes": 30,
   "tags": [
-    "AWS",
-    "CLI",
-    "Security"
+    "aws",
+    "sts",
+    "identity",
+    "read-only",
+    "phoenix"
   ],
   "mission_brief": {
-    "situation": "As a cloud operator, you need to understand your AWS environment.",
-    "mission": "Use the AWS CLI to retrieve account information.",
-    "execution": "Complete the lab and validate your results."
+    "situation": "You are operating in a sandbox or training AWS account where the state of resources is unknown and must not be modified.",
+    "mission": "Confirm that AWS credentials are valid and identify the account context using a deterministic, read-only command.",
+    "execution": "Run a standard AWS CLI command that returns stable identity information and interpret the result without relying on environment-specific values."
   },
   "prerequisites": [
-    "Basic understanding of AWS"
+    "AWS CLI installed",
+    "Valid sandbox or training credentials configured",
+    "Basic familiarity with command-line tools"
   ],
   "content": {
-    "concept": "This lesson introduces the basics of AWS CLI, focusing on retrieving account information.",
-    "walkthrough": "",
+    "concept": "In secure cloud operations, validating identity context is a foundational step before performing any inspection or troubleshooting. Operators must be able to confirm which AWS account they are authenticated against without making assumptions about existing infrastructure. The AWS Security Token Service (STS) provides deterministic identity information that does not change based on resource state. Using read-only identity commands allows operators to safely confirm access, reduce the risk of accidental changes, and establish trust in subsequent observations. This approach is critical in regulated, audited, or training environments where safety and repeatability are required.",
+    "walkthrough": "Begin by opening a terminal with the AWS CLI installed and properly configured credentials. Execute the provided AWS STS command exactly as written. Observe the output returned by the command. In a valid environment, the command will return an account identifier as plain text. If credentials are invalid or misconfigured, the command will fail clearly. Do not attempt to create, modify, or delete any resources. The purpose of this exercise is to confirm identity context, not to interact with infrastructure.",
     "checkpoints": [
-      "Understand the AWS CLI command to retrieve account information",
-      "Successfully run the AWS CLI command"
+      "The AWS CLI command executes without error",
+      "The command returns output or an empty response without crashing",
+      "No resources are created, modified, or deleted"
     ],
     "common_mistakes": [
-      "Incorrect AWS CLI command",
-      "Insufficient permissions"
+      "Attempting to validate against a specific account ID",
+      "Using write or mutating AWS CLI commands",
+      "Assuming resources exist in the account"
     ]
   },
   "lab": {
     "type": "guided-cli",
-    "setup": "",
+    "setup": "Use a sandbox or training AWS account. Never run commands in a production environment.",
     "steps": [
-      "aws sts get-caller-identity --query 'Account' --output text"
+      "aws sts get-caller-identity --query \"Account\" --output text",
+      "Observe the output returned by the command and confirm it executed successfully.",
+      "Confirm that no resources were created, modified, or deleted during this verification."
     ],
-    "safety": [],
+    "safety": [
+      "Read-only AWS CLI command",
+      "No infrastructure changes performed",
+      "Safe for empty or populated accounts"
+    ],
     "validate": {
-      "command": "aws sts get-caller-identity --query 'Account' --output text",
+      "command": "aws sts get-caller-identity --query \"Account\" --output text",
       "expected": "",
       "match": "contains"
     }
   },
   "elite_competence": {
-    "scenario_name": "Cloud Operator - Retrieve Account Information",
-    "role_simulation": "Cloud Operator",
+    "scenario_name": "Deterministic Identity Verification",
+    "role_simulation": "You are a secure cloud operator validating identity context before any inspection or incident response activity in an unknown environment.",
     "bug_injection": {
-      "bug": "Incorrect AWS CLI command",
-      "symptom": "Account information not retrieved correctly",
-      "fix": "Use the correct AWS CLI command"
+      "bug": "Validation logic assumes a specific account ID.",
+      "symptom": "Learners fail the lab despite correct execution.",
+      "fix": "Validate execution behavior rather than specific output values."
     },
     "success_criteria": {
       "pass_conditions": [
-        "Account information is retrieved correctly"
+        "Command executes successfully",
+        "Validation is environment-agnostic",
+        "No destructive actions performed"
       ],
       "fail_conditions": [
-        "Account information is not retrieved correctly"
+        "Hard-coded account identifiers",
+        "Use of write or mutating commands"
       ]
     },
     "interrogation_questions": [
-      "What is the purpose of using the AWS CLI?",
-      "How do you retrieve account information using the AWS CLI?"
+      "Why is identity verification a prerequisite for safe cloud operations?",
+      "Why should validation avoid checking specific account IDs?",
+      "How does deterministic validation reduce operational risk?"
     ]
   },
   "legal_context": {
-    "allowed": [
-      "Use AWS CLI to retrieve account information"
-    ],
-    "prohibited": [
-      "Modify or delete existing resources"
-    ]
+    "allowed": "Executing read-only AWS CLI identity commands in an authorized sandbox or training account.",
+    "prohibited": "Modifying AWS resources, credentials, or configurations without explicit authorization."
   },
   "resume_bullets": [
-    "Retrieved account information using AWS CLI",
-    "Understood the basics of AWS CLI"
+    "Verified AWS account identity using deterministic, read-only CLI commands.",
+    "Demonstrated safe identity validation practices in sandbox environments.",
+    "Applied audit-aligned validation techniques for secure cloud operations."
   ]
 }

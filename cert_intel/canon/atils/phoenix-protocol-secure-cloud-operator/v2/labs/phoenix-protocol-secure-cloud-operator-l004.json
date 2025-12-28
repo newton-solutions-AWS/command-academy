@@ -1,84 +1,96 @@
 {
   "id": "phoenix-protocol-secure-cloud-operator-l004",
-  "canon": "v1",
-  "version": "1.0",
-  "title": "Secure Cloud Operator: Identity and Access Management",
+  "canon": "phoenix-protocol-secure-cloud-operator",
+  "version": "v2",
+  "title": "Phoenix Protocol: Verify AWS Identity Context Using Deterministic CLI Output",
   "objectives": [
-    "Understand the concept of IAM roles and policies",
-    "Learn how to describe IAM roles and policies using AWS CLI"
+    "Verify AWS identity context using a standard AWS CLI command",
+    "Interpret deterministic command output safely",
+    "Avoid assumptions about account state or existing resources"
   ],
-  "duration_minutes": 60,
+  "duration_minutes": 30,
   "tags": [
-    "IAM",
-    "Security",
-    "Cloud"
+    "aws",
+    "sts",
+    "identity",
+    "read-only",
+    "phoenix"
   ],
   "mission_brief": {
-    "situation": "As a Cloud Operator, you need to ensure that your cloud resources are properly secured.",
-    "mission": "You will use the AWS CLI to describe IAM roles and policies in your account.",
-    "execution": "You will execute the necessary commands to verify the IAM configuration."
+    "situation": "You are operating in a sandbox or training AWS account where the state of resources is unknown and must not be modified.",
+    "mission": "Confirm that AWS credentials are valid and identify the account context using a deterministic, read-only command.",
+    "execution": "Run a standard AWS CLI command that returns stable identity information and interpret the result without relying on environment-specific values."
   },
   "prerequisites": [
-    "Basic knowledge of AWS CLI",
-    "Understanding of IAM concepts"
+    "AWS CLI installed",
+    "Valid sandbox or training credentials configured",
+    "Basic familiarity with command-line tools"
   ],
   "content": {
-    "concept": "IAM Roles and Policies",
-    "walkthrough": "Describing IAM Roles and Policies using AWS CLI",
+    "concept": "In secure cloud operations, validating identity context is a foundational step before performing any inspection or troubleshooting. Operators must be able to confirm which AWS account they are authenticated against without making assumptions about existing infrastructure. The AWS Security Token Service (STS) provides deterministic identity information that does not change based on resource state. Using read-only identity commands allows operators to safely confirm access, reduce the risk of accidental changes, and establish trust in subsequent observations. This approach is critical in regulated, audited, or training environments where safety and repeatability are required.",
+    "walkthrough": "Begin by opening a terminal with the AWS CLI installed and properly configured credentials. Execute the provided AWS STS command exactly as written. Observe the output returned by the command. In a valid environment, the command will return an account identifier as plain text. If credentials are invalid or misconfigured, the command will fail clearly. Do not attempt to create, modify, or delete any resources. The purpose of this exercise is to confirm identity context, not to interact with infrastructure.",
     "checkpoints": [
-      "Verify that IAM roles and policies are correctly configured",
-      "Understand the differences between IAM roles and policies"
+      "The AWS CLI command executes without error",
+      "The command returns output or an empty response without crashing",
+      "No resources are created, modified, or deleted"
     ],
     "common_mistakes": [
-      "Not using the correct AWS CLI command to describe IAM roles and policies",
-      "Misinterpreting the output of the AWS CLI command"
+      "Attempting to validate against a specific account ID",
+      "Using write or mutating AWS CLI commands",
+      "Assuming resources exist in the account"
     ]
   },
   "lab": {
     "type": "guided-cli",
-    "setup": "",
+    "setup": "Use a sandbox or training AWS account. Never run commands in a production environment.",
     "steps": [
-      "aws iam list-roles --query \"Roles[].RoleName\" --output text"
+      "aws sts get-caller-identity --query \"Account\" --output text",
+      "Observe the output returned by the command and confirm it executed successfully.",
+      "Confirm that no resources were created, modified, or deleted during this verification."
     ],
-    "safety": [],
+    "safety": [
+      "Read-only AWS CLI command",
+      "No infrastructure changes performed",
+      "Safe for empty or populated accounts"
+    ],
     "validate": {
-      "command": "aws iam list-roles --query \"Roles[].RoleName\" --output text",
+      "command": "aws sts get-caller-identity --query \"Account\" --output text",
       "expected": "",
       "match": "contains"
     }
   },
   "elite_competence": {
-    "scenario_name": "IAM Role Simulation",
-    "role_simulation": "Cloud Operator",
+    "scenario_name": "Deterministic Identity Verification",
+    "role_simulation": "You are a secure cloud operator validating identity context before any inspection or incident response activity in an unknown environment.",
     "bug_injection": {
-      "bug": "Missing IAM role for a critical resource",
-      "symptom": "Resource is not accessible due to lack of permissions",
-      "fix": "Create an IAM role with the necessary permissions"
+      "bug": "Validation logic assumes a specific account ID.",
+      "symptom": "Learners fail the lab despite correct execution.",
+      "fix": "Validate execution behavior rather than specific output values."
     },
     "success_criteria": {
       "pass_conditions": [
-        "IAM roles and policies are correctly configured",
-        "Resources are accessible with proper permissions"
+        "Command executes successfully",
+        "Validation is environment-agnostic",
+        "No destructive actions performed"
       ],
       "fail_conditions": [
-        "IAM roles and policies are not correctly configured",
-        "Resources are inaccessible due to lack of permissions"
+        "Hard-coded account identifiers",
+        "Use of write or mutating commands"
       ]
     },
     "interrogation_questions": [
-      "What is the difference between an IAM role and a policy?",
-      "How do you describe IAM roles and policies using AWS CLI?"
+      "Why is identity verification a prerequisite for safe cloud operations?",
+      "Why should validation avoid checking specific account IDs?",
+      "How does deterministic validation reduce operational risk?"
     ]
   },
   "legal_context": {
-    "allowed": [
-      "aws iam list-roles",
-      "aws iam get-role"
-    ],
-    "prohibited": []
+    "allowed": "Executing read-only AWS CLI identity commands in an authorized sandbox or training account.",
+    "prohibited": "Modifying AWS resources, credentials, or configurations without explicit authorization."
   },
   "resume_bullets": [
-    "Described IAM roles and policies using AWS CLI",
-    "Verified IAM configuration for cloud resources"
+    "Verified AWS account identity using deterministic, read-only CLI commands.",
+    "Demonstrated safe identity validation practices in sandbox environments.",
+    "Applied audit-aligned validation techniques for secure cloud operations."
   ]
 }
