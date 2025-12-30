@@ -1,49 +1,25 @@
-# Phoenix Protocol v2 — Module Contract
+# Modules (Phoenix v2 content blocks)
 
-Every Phoenix v2 lesson MUST comply with the following structure.
-
-## Metadata
-- id
-- canon
-- version
-- title
-- tags
-- duration_minutes
-
-## Objectives
-- Minimum of 3 objectives
-- Action-oriented and measurable
-
-## Mission Brief
-- situation
-- mission
-- execution
-
-## Content
-- concept (minimum 200 characters)
-- walkthrough (minimum 200 characters)
-- checkpoints (minimum 3)
-- common_mistakes (minimum 3)
-
-## Lab
-- type: guided-cli
-- setup explanation
-- steps (must include at least one `aws ...` command)
-- safety (minimum 3 items)
-- validate:
-  - command must equal the lab aws command
-  - expected must be deterministic
-  - match strategy defined
-
-## Elite Competence
-- scenario_name
-- role_simulation (minimum 50 characters)
-- bug_injection
-- success_criteria:
-  - pass_conditions (minimum 3)
-  - fail_conditions (minimum 2)
-- interrogation_questions (minimum 3)
-
-## Legal & Career
-- legal_context
-- resume_bullets (minimum 3)
+Every lesson artifact contains:
+- id / canon / version / title
+- objectives (>=3)
+- mission_brief (situation/mission/execution)
+- prerequisites (>=1)
+- content:
+  - concept (>=200 chars)
+  - walkthrough (>=200 chars)
+  - checkpoints (>=3 strings)
+  - common_mistakes (>=3 strings)
+- lab:
+  - type (guided-cli for Phoenix v2)
+  - setup (string)
+  - steps (>=5 strings, must include at least one real command for the archetype)
+  - safety (>=3 strings)
+  - validate { command, expected, match } (must align with lab command policy)
+- elite_competence:
+  - scenario_name, role_simulation
+  - bug_injection { bug, symptom, fix }
+  - success_criteria { pass_conditions, fail_conditions }
+  - interrogation_questions (>=3)
+- legal_context { allowed, prohibited }
+- resume_bullets (>=3)

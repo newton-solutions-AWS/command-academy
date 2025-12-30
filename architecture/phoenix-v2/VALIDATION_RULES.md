@@ -1,27 +1,17 @@
-# Phoenix Protocol v2 — Validation Rules
+# Phoenix v2 Validation Rules
 
-These rules are NON-NEGOTIABLE.
+Phoenix v2 uses **Behavior-Based Validation**:
+- Validate that a real command executes successfully.
+- Avoid requiring the existence of specific resources (buckets, instance IDs, etc.)
+- Prefer read-only inspection commands unless a canon explicitly opts into creation labs.
 
-## Rule 1 — Read-Only Operations
-Only read-only AWS CLI commands are permitted.
-No create, update, delete, or mutate operations.
-
-## Rule 2 — Deterministic Validation
-Validation must NOT depend on:
-- Specific resource names
-- Account IDs
-- Region-specific assets
-
-Use empty-string containment validation where appropriate.
-
-## Rule 3 — Command Equality
-The validation command MUST exactly match the lab aws command.
-
-## Rule 4 — Empty Environment Safety
-Lessons must PASS even when the environment contains no resources.
-
-## Rule 5 — Audit Readiness
-Lessons must be runnable in:
-- Sandbox accounts
-- Training environments
-- Production read-only contexts
+Rule set:
+1) **No fictional tools**. Only standard tools for the archetype.
+2) **No dead repos/URLs** unless verified and vendored.
+3) **Validation must align with the lab**:
+   - validate.command must match the primary command used in lab steps (or the specific command stated as “validation command”).
+4) **Deterministic output**:
+   - use --query and --output text for AWS CLI where possible.
+   - expected may be "__EMPTY__" in transcripts to represent empty string.
+5) **Sandbox safe**:
+   - default to read-only commands (list/describe/get) unless the canon is a write-lab canon.
