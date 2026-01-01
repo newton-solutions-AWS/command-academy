@@ -2,95 +2,93 @@
   "id": "phoenix-protocol-secure-cloud-operator-l001",
   "canon": "phoenix-protocol-secure-cloud-operator",
   "version": "v2",
-  "title": "Phoenix Protocol: Verify AWS Identity Context Using Deterministic CLI Output",
+  "title": "Phoenix Protocol: Verify identity context using STS get-caller-identity (read-only).",
   "objectives": [
-    "Verify AWS identity context using a standard AWS CLI command",
-    "Interpret deterministic command output safely",
-    "Avoid assumptions about account state or existing resources"
+    "Verify identity context using STS get-caller-identity",
+    "Understand the importance of authentication in cloud operations",
+    "Identify potential security risks related to misconfigured AWS services"
   ],
   "duration_minutes": 30,
   "tags": [
     "aws",
-    "sts",
-    "identity",
     "read-only",
-    "phoenix"
+    "deterministic",
+    "phoenix",
+    "v2"
   ],
   "mission_brief": {
-    "situation": "You are operating in a sandbox or training AWS account where the state of resources is unknown and must not be modified.",
-    "mission": "Confirm that AWS credentials are valid and identify the account context using a deterministic, read-only command.",
-    "execution": "Run a standard AWS CLI command that returns stable identity information and interpret the result without relying on environment-specific values."
+    "situation": "You are operating as a secure cloud operator in an authorized sandbox where resources may or may not exist.",
+    "mission": "Verify access safely using read-only AWS CLI commands without assuming any pre-existing resources.",
+    "execution": "Run discovery-only commands and validate success by deterministic behavior (successful execution), not resource presence."
   },
   "prerequisites": [
-    "AWS CLI installed",
-    "Valid sandbox or training credentials configured",
-    "Basic familiarity with command-line tools"
+    "AWS CLI installed and working",
+    "Valid sandbox credentials configured",
+    "No write permissions required"
   ],
   "content": {
-    "concept": "In secure cloud operations, validating identity context is a foundational step before performing any inspection or troubleshooting. Operators must be able to confirm which AWS account they are authenticated against without making assumptions about existing infrastructure. The AWS Security Token Service (STS) provides deterministic identity information that does not change based on resource state. Using read-only identity commands allows operators to safely confirm access, reduce the risk of accidental changes, and establish trust in subsequent observations. This approach is critical in regulated, audited, or training environments where safety and repeatability are required.",
-    "walkthrough": "Begin by opening a terminal with the AWS CLI installed and properly configured credentials. Execute the provided AWS STS command exactly as written. Observe the output returned by the command. In a valid environment, the command will return an account identifier as plain text. If credentials are invalid or misconfigured, the command will fail clearly. Do not attempt to create, modify, or delete any resources. The purpose of this exercise is to confirm identity context, not to interact with infrastructure.",
+    "concept": "STS get-caller-identity retrieves the identity of the caller in a secure and read-only manner, providing essential context for authentication and authorization within cloud infrastructure. Deterministic validation means you confirm the command executed successfully without relying on ",
+    "walkthrough": "To verify your identity context using STS get-caller-identity, navigate to the AWS CLI or SDK tool and execute the command: aws sts get-caller-identity --output json. This command will return a JSON object containing information about the caller's identity, including the principal ARN and type.",
     "checkpoints": [
-      "The AWS CLI command executes without error",
-      "The command returns output or an empty response without crashing",
-      "No resources are created, modified, or deleted"
+      "Execute the aws sts get-caller-identity command with the correct output format",
+      "Verify that the returned JSON object contains the necessary authentication context",
+      "Troubleshoot common errors related to STS get-caller-identity"
     ],
     "common_mistakes": [
-      "Attempting to validate against a specific account ID",
-      "Using write or mutating AWS CLI commands",
-      "Assuming resources exist in the account"
+      "Failing to authenticate properly before attempting to access cloud resources",
+      "Misconfiguring AWS services, leading to unauthorized access or data breaches",
+      "Ignoring security best practices for authentication and authorization"
     ]
   },
   "lab": {
     "type": "guided-cli",
-    "setup": "Use a sandbox or training AWS account. Never run commands in a production environment.",
+    "setup": "Ensure AWS CLI is configured with sandbox credentials. Do not create, modify, or delete any resources.",
     "steps": [
-      "aws sts get-caller-identity --query \"Account\" --output text",
-      "Observe the output returned by the command and confirm it executed successfully.",
-      "Confirm that no resources were created, modified, or deleted during this verification."
+      "aws sts get-caller-identity --query \"Account\" --output text --region us-east-1"
     ],
     "safety": [
-      "Read-only AWS CLI command",
-      "No infrastructure changes performed",
-      "Safe for empty or populated accounts"
+      "Use read-only AWS CLI commands only (list/describe/get).",
+      "Do not reference named resources unless the lesson explicitly created them (this v2 track does not).",
+      "If you see AccessDenied, stop and verify permissions rather than trying write actions."
     ],
     "validate": {
-      "command": "aws sts get-caller-identity --query \"Account\" --output text",
+      "command": "aws sts get-caller-identity --query \"Account\" --output text --region us-east-1",
       "expected": "",
       "match": "contains"
     }
   },
   "elite_competence": {
-    "scenario_name": "Deterministic Identity Verification",
-    "role_simulation": "You are a secure cloud operator validating identity context before any inspection or incident response activity in an unknown environment.",
+    "scenario_name": "Phoenix Protocol — Deterministic Visibility Verification",
+    "role_simulation": "Demonstrate the ability to use STS get-caller-identity as a cloud operator or security administrator",
     "bug_injection": {
-      "bug": "Validation logic assumes a specific account ID.",
-      "symptom": "Learners fail the lab despite correct execution.",
-      "fix": "Validate execution behavior rather than specific output values."
+      "bug": "Operator assumes resources must exist and mislabels empty output as failure.",
+      "symptom": "Student reports 'nothing returned' and believes permissions are broken.",
+      "fix": "Explain empty-sandbox behavior and validate by successful execution + no errors, not by finding assets."
     },
     "success_criteria": {
       "pass_conditions": [
-        "Command executes successfully",
-        "Validation is environment-agnostic",
-        "No destructive actions performed"
+        "The returned JSON object contains the caller's identity information",
+        "Authentication context is correctly provided for subsequent operations",
+        "No named resources, counts, or IDs were assumed."
       ],
       "fail_conditions": [
-        "Hard-coded account identifiers",
-        "Use of write or mutating commands"
+        "Insufficient permissions result in an error executing STS get-caller-identity",
+        "STS get-caller-identity returns an empty or malformed response"
       ]
     },
     "interrogation_questions": [
-      "Why is identity verification a prerequisite for safe cloud operations?",
-      "Why should validation avoid checking specific account IDs?",
-      "How does deterministic validation reduce operational risk?"
+      "What are the primary purposes of using STS get-caller-identity?",
+      "How does STS get-caller-identity contribute to secure cloud operations?",
+      "What are potential security risks associated with misconfigured AWS services?"
     ]
   },
   "legal_context": {
-    "allowed": "Executing read-only AWS CLI identity commands in an authorized sandbox or training account.",
-    "prohibited": "Modifying AWS resources, credentials, or configurations without explicit authorization."
+    "allowed": "Executing read-only AWS CLI commands in an authorized sandbox or training account.",
+    "prohibited": "Creating, deleting, or modifying AWS resources without explicit authorization."
   },
   "resume_bullets": [
-    "Verified AWS account identity using deterministic, read-only CLI commands.",
-    "Demonstrated safe identity validation practices in sandbox environments.",
-    "Applied audit-aligned validation techniques for secure cloud operations."
+    "STS get-caller-identity is a critical command for authentication and authorization in AWS",
+    "Understanding how to use this command ensures secure cloud operations and prevents potential data breaches",
+    "Demonstrated ability to execute STS get-caller-identity with the correct output format and permissions"
   ]
 }

@@ -2,95 +2,93 @@
   "id": "phoenix-protocol-secure-cloud-operator-l007",
   "canon": "phoenix-protocol-secure-cloud-operator",
   "version": "v2",
-  "title": "Phoenix Protocol: Verify AWS Identity Context Using Deterministic CLI Output",
+  "title": "Phoenix Protocol: Verify VPC visibility using describe-vpcs (read-only, deterministic).",
   "objectives": [
-    "Verify AWS identity context using a standard AWS CLI command",
-    "Interpret deterministic command output safely",
-    "Avoid assumptions about account state or existing resources"
+    "Understand the concept of VPC visibility in AWS",
+    "Learn how to use the `describe-vpcs` command to view available VPCs",
+    "Demonstrate ability to identify visible VPCs"
   ],
   "duration_minutes": 30,
   "tags": [
     "aws",
-    "sts",
-    "identity",
     "read-only",
-    "phoenix"
+    "deterministic",
+    "phoenix",
+    "v2"
   ],
   "mission_brief": {
-    "situation": "You are operating in a sandbox or training AWS account where the state of resources is unknown and must not be modified.",
-    "mission": "Confirm that AWS credentials are valid and identify the account context using a deterministic, read-only command.",
-    "execution": "Run a standard AWS CLI command that returns stable identity information and interpret the result without relying on environment-specific values."
+    "situation": "You are operating as a secure cloud operator in an authorized sandbox where resources may or may not exist.",
+    "mission": "Verify access safely using read-only AWS CLI commands without assuming any pre-existing resources.",
+    "execution": "Run discovery-only commands and validate success by deterministic behavior (successful execution), not resource presence."
   },
   "prerequisites": [
-    "AWS CLI installed",
-    "Valid sandbox or training credentials configured",
-    "Basic familiarity with command-line tools"
+    "AWS CLI installed and working",
+    "Valid sandbox credentials configured",
+    "No write permissions required"
   ],
   "content": {
-    "concept": "In secure cloud operations, validating identity context is a foundational step before performing any inspection or troubleshooting. Operators must be able to confirm which AWS account they are authenticated against without making assumptions about existing infrastructure. The AWS Security Token Service (STS) provides deterministic identity information that does not change based on resource state. Using read-only identity commands allows operators to safely confirm access, reduce the risk of accidental changes, and establish trust in subsequent observations. This approach is critical in regulated, audited, or training environments where safety and repeatability are required.",
-    "walkthrough": "Begin by opening a terminal with the AWS CLI installed and properly configured credentials. Execute the provided AWS STS command exactly as written. Observe the output returned by the command. In a valid environment, the command will return an account identifier as plain text. If credentials are invalid or misconfigured, the command will fail clearly. Do not attempt to create, modify, or delete any resources. The purpose of this exercise is to confirm identity context, not to interact with infrastructure.",
+    "concept": "VPC (Virtual Private Cloud) is a virtual network dedicated to a customer's AWS account. Visibility refers to the accessibility of this VPC to other AWS services and accounts. Deterministic validation means you confirm the command executed successfully without relying on resource names",
+    "walkthrough": "To view available VPCs, navigate to the AWS Management Console and search for 'describe-vpcs' in the CLI or terminal. Alternatively, use the AWS CLI command `aws ec2 describe-vpcs --output json` in your local environment.",
     "checkpoints": [
-      "The AWS CLI command executes without error",
-      "The command returns output or an empty response without crashing",
-      "No resources are created, modified, or deleted"
+      "Run the `describe-vpcs` command without any arguments",
+      "Verify the output contains at least one VPC ID",
+      "Check if VPC visibility is set to 'enabled' for a specific VPC"
     ],
     "common_mistakes": [
-      "Attempting to validate against a specific account ID",
-      "Using write or mutating AWS CLI commands",
-      "Assuming resources exist in the account"
+      "Assuming all VPCs are visible by default",
+      "Not specifying the `--output json` flag when running CLI commands",
+      "Using an outdated AWS CLI version that does not support the `describe-vpcs` command"
     ]
   },
   "lab": {
     "type": "guided-cli",
-    "setup": "Use a sandbox or training AWS account. Never run commands in a production environment.",
+    "setup": "Ensure AWS CLI is configured with sandbox credentials. Do not create, modify, or delete any resources.",
     "steps": [
-      "aws sts get-caller-identity --query \"Account\" --output text",
-      "Observe the output returned by the command and confirm it executed successfully.",
-      "Confirm that no resources were created, modified, or deleted during this verification."
+      "aws ec2 describe-vpcs --query \"Vpcs[].VpcId\" --output text --region us-east-1"
     ],
     "safety": [
-      "Read-only AWS CLI command",
-      "No infrastructure changes performed",
-      "Safe for empty or populated accounts"
+      "This lab is read-only and will not modify any resources in your AWS account",
+      "The CLI commands used are deterministic and will produce the same output regardless of your environment",
+      "No sensitive information, such as access keys or secret keys, will be required for this lab"
     ],
     "validate": {
-      "command": "aws sts get-caller-identity --query \"Account\" --output text",
+      "command": "aws ec2 describe-vpcs --query \"Vpcs[].VpcId\" --output text --region us-east-1",
       "expected": "",
       "match": "contains"
     }
   },
   "elite_competence": {
-    "scenario_name": "Deterministic Identity Verification",
-    "role_simulation": "You are a secure cloud operator validating identity context before any inspection or incident response activity in an unknown environment.",
+    "scenario_name": "Phoenix Protocol — Deterministic Visibility Verification",
+    "role_simulation": "Demonstrate expertise in AWS VPC visibility by identifying and explaining at least two visible VPCs.",
     "bug_injection": {
-      "bug": "Validation logic assumes a specific account ID.",
-      "symptom": "Learners fail the lab despite correct execution.",
-      "fix": "Validate execution behavior rather than specific output values."
+      "bug": "Operator assumes resources must exist and mislabels empty output as failure.",
+      "symptom": "Student reports 'nothing returned' and believes permissions are broken.",
+      "fix": "Explain empty-sandbox behavior and validate by successful execution + no errors, not by finding assets."
     },
     "success_criteria": {
       "pass_conditions": [
-        "Command executes successfully",
-        "Validation is environment-agnostic",
-        "No destructive actions performed"
+        "The `describe-vpcs` command is run correctly with no errors",
+        "At least one VPC ID is present in the output",
+        "VPC visibility is set to 'enabled' for a specific VPC"
       ],
       "fail_conditions": [
-        "Hard-coded account identifiers",
-        "Use of write or mutating commands"
+        "The `describe-vpcs` command fails due to incorrect permissions",
+        "No VPCs are visible despite having an enabled visibility setting"
       ]
     },
     "interrogation_questions": [
-      "Why is identity verification a prerequisite for safe cloud operations?",
-      "Why should validation avoid checking specific account IDs?",
-      "How does deterministic validation reduce operational risk?"
+      "What is the purpose of VPC visibility in AWS?",
+      "How do you run the `describe-vpcs` command using the AWS CLI?",
+      "What might cause a VPC to be invisible to other AWS services?"
     ]
   },
   "legal_context": {
-    "allowed": "Executing read-only AWS CLI identity commands in an authorized sandbox or training account.",
-    "prohibited": "Modifying AWS resources, credentials, or configurations without explicit authorization."
+    "allowed": "Executing read-only AWS CLI commands in an authorized sandbox or training account.",
+    "prohibited": "Creating, deleting, or modifying AWS resources without explicit authorization."
   },
   "resume_bullets": [
-    "Verified AWS account identity using deterministic, read-only CLI commands.",
-    "Demonstrated safe identity validation practices in sandbox environments.",
-    "Applied audit-aligned validation techniques for secure cloud operations."
+    "Demonstrated understanding of VPC visibility in AWS",
+    "Successfully ran the `describe-vpcs` command using the AWS CLI",
+    "Identified and explained at least two visible VPCs"
   ]
 }

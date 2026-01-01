@@ -2,95 +2,93 @@
   "id": "phoenix-protocol-secure-cloud-operator-l003",
   "canon": "phoenix-protocol-secure-cloud-operator",
   "version": "v2",
-  "title": "Phoenix Protocol: Verify AWS Identity Context Using Deterministic CLI Output",
+  "title": "Phoenix Protocol: Verify EC2 visibility using describe-instances (read-only, deterministic).",
   "objectives": [
-    "Verify AWS identity context using a standard AWS CLI command",
-    "Interpret deterministic command output safely",
-    "Avoid assumptions about account state or existing resources"
+    "Verify EC2 instance visibility",
+    "Understand EC2 instance configuration",
+    "Configure EC2 security settings"
   ],
   "duration_minutes": 30,
   "tags": [
     "aws",
-    "sts",
-    "identity",
     "read-only",
-    "phoenix"
+    "deterministic",
+    "phoenix",
+    "v2"
   ],
   "mission_brief": {
-    "situation": "You are operating in a sandbox or training AWS account where the state of resources is unknown and must not be modified.",
-    "mission": "Confirm that AWS credentials are valid and identify the account context using a deterministic, read-only command.",
-    "execution": "Run a standard AWS CLI command that returns stable identity information and interpret the result without relying on environment-specific values."
+    "situation": "You are operating as a secure cloud operator in an authorized sandbox where resources may or may not exist.",
+    "mission": "Verify access safely using read-only AWS CLI commands without assuming any pre-existing resources.",
+    "execution": "Run discovery-only commands and validate success by deterministic behavior (successful execution), not resource presence."
   },
   "prerequisites": [
-    "AWS CLI installed",
-    "Valid sandbox or training credentials configured",
-    "Basic familiarity with command-line tools"
+    "AWS CLI installed and working",
+    "Valid sandbox credentials configured",
+    "No write permissions required"
   ],
   "content": {
-    "concept": "In secure cloud operations, validating identity context is a foundational step before performing any inspection or troubleshooting. Operators must be able to confirm which AWS account they are authenticated against without making assumptions about existing infrastructure. The AWS Security Token Service (STS) provides deterministic identity information that does not change based on resource state. Using read-only identity commands allows operators to safely confirm access, reduce the risk of accidental changes, and establish trust in subsequent observations. This approach is critical in regulated, audited, or training environments where safety and repeatability are required.",
-    "walkthrough": "Begin by opening a terminal with the AWS CLI installed and properly configured credentials. Execute the provided AWS STS command exactly as written. Observe the output returned by the command. In a valid environment, the command will return an account identifier as plain text. If credentials are invalid or misconfigured, the command will fail clearly. Do not attempt to create, modify, or delete any resources. The purpose of this exercise is to confirm identity context, not to interact with infrastructure.",
+    "concept": "EC2 instances can be described to retrieve information about their configuration and status. This is a read-only operation and does not modify any resources. Deterministic validation means you confirm the command executed successfully without relying on resource names, counts, or IDs ",
+    "walkthrough": "To verify EC2 visibility, navigate to the AWS CLI and execute the describe-instances command with the --output json flag. Review the output to ensure it contains the expected information about your instances.",
     "checkpoints": [
-      "The AWS CLI command executes without error",
-      "The command returns output or an empty response without crashing",
-      "No resources are created, modified, or deleted"
+      "Verify the 'Reservations' section in the output",
+      "Check the 'Instances' section for accurate instance configuration",
+      "Confirm that the output includes the expected number of instances"
     ],
     "common_mistakes": [
-      "Attempting to validate against a specific account ID",
-      "Using write or mutating AWS CLI commands",
-      "Assuming resources exist in the account"
+      "Treating empty output as failure in a clean sandbox.",
+      "Switching to write commands to 'make it pass'.",
+      "Hardcoding resource names or IDs to validate output."
     ]
   },
   "lab": {
     "type": "guided-cli",
-    "setup": "Use a sandbox or training AWS account. Never run commands in a production environment.",
+    "setup": "Ensure AWS CLI is configured with sandbox credentials. Do not create, modify, or delete any resources.",
     "steps": [
-      "aws sts get-caller-identity --query \"Account\" --output text",
-      "Observe the output returned by the command and confirm it executed successfully.",
-      "Confirm that no resources were created, modified, or deleted during this verification."
+      "aws ec2 describe-instances --query \"Reservations[].Instances[].InstanceId\" --output text --region us-east-1"
     ],
     "safety": [
-      "Read-only AWS CLI command",
-      "No infrastructure changes performed",
-      "Safe for empty or populated accounts"
+      "Use read-only AWS CLI commands only (list/describe/get).",
+      "Do not reference named resources unless the lesson explicitly created them (this v2 track does not).",
+      "If you see AccessDenied, stop and verify permissions rather than trying write actions."
     ],
     "validate": {
-      "command": "aws sts get-caller-identity --query \"Account\" --output text",
+      "command": "aws ec2 describe-instances --query \"Reservations[].Instances[].InstanceId\" --output text --region us-east-1",
       "expected": "",
       "match": "contains"
     }
   },
   "elite_competence": {
-    "scenario_name": "Deterministic Identity Verification",
-    "role_simulation": "You are a secure cloud operator validating identity context before any inspection or incident response activity in an unknown environment.",
+    "scenario_name": "Phoenix Protocol — Deterministic Visibility Verification",
+    "role_simulation": "Configure and verify EC2 instance visibility as a cloud operator",
     "bug_injection": {
-      "bug": "Validation logic assumes a specific account ID.",
-      "symptom": "Learners fail the lab despite correct execution.",
-      "fix": "Validate execution behavior rather than specific output values."
+      "bug": "Operator assumes resources must exist and mislabels empty output as failure.",
+      "symptom": "Student reports 'nothing returned' and believes permissions are broken.",
+      "fix": "Explain empty-sandbox behavior and validate by successful execution + no errors, not by finding assets."
     },
     "success_criteria": {
       "pass_conditions": [
-        "Command executes successfully",
-        "Validation is environment-agnostic",
-        "No destructive actions performed"
+        "Verify the 'Reservations' section in the output",
+        "Check the 'Instances' section for accurate instance configuration",
+        "No named resources, counts, or IDs were assumed."
       ],
       "fail_conditions": [
-        "Hard-coded account identifiers",
-        "Use of write or mutating commands"
+        "Output does not contain expected information about instances",
+        "Student uses write/destructive commands to force output."
       ]
     },
     "interrogation_questions": [
-      "Why is identity verification a prerequisite for safe cloud operations?",
-      "Why should validation avoid checking specific account IDs?",
-      "How does deterministic validation reduce operational risk?"
+      "What is the purpose of the describe-instances command?",
+      "How can you verify EC2 instance visibility?",
+      "What are some common mistakes to avoid when configuring EC2 security settings?"
     ]
   },
   "legal_context": {
-    "allowed": "Executing read-only AWS CLI identity commands in an authorized sandbox or training account.",
-    "prohibited": "Modifying AWS resources, credentials, or configurations without explicit authorization."
+    "allowed": "Executing read-only AWS CLI commands in an authorized sandbox or training account.",
+    "prohibited": "Creating, deleting, or modifying AWS resources without explicit authorization."
   },
   "resume_bullets": [
-    "Verified AWS account identity using deterministic, read-only CLI commands.",
-    "Demonstrated safe identity validation practices in sandbox environments.",
-    "Applied audit-aligned validation techniques for secure cloud operations."
+    "Verified EC2 instance visibility using describe-instances",
+    "Configured and verified EC2 security settings",
+    "Identified and avoided common mistakes in EC2 configuration"
   ]
 }

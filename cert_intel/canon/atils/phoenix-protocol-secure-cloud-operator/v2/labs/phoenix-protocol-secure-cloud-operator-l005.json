@@ -2,95 +2,94 @@
   "id": "phoenix-protocol-secure-cloud-operator-l005",
   "canon": "phoenix-protocol-secure-cloud-operator",
   "version": "v2",
-  "title": "Phoenix Protocol: Verify AWS Identity Context Using Deterministic CLI Output",
+  "title": "Phoenix Protocol: Verify CloudWatch visibility using describe-alarms (read-only, deterministic).",
   "objectives": [
-    "Verify AWS identity context using a standard AWS CLI command",
-    "Interpret deterministic command output safely",
-    "Avoid assumptions about account state or existing resources"
+    "Describe the purpose of CloudWatch in AWS",
+    "Identify the command to list all alarms in a given region",
+    "Understand the importance of alarm visibility"
   ],
   "duration_minutes": 30,
   "tags": [
     "aws",
-    "sts",
-    "identity",
     "read-only",
-    "phoenix"
+    "deterministic",
+    "phoenix",
+    "v2"
   ],
   "mission_brief": {
-    "situation": "You are operating in a sandbox or training AWS account where the state of resources is unknown and must not be modified.",
-    "mission": "Confirm that AWS credentials are valid and identify the account context using a deterministic, read-only command.",
-    "execution": "Run a standard AWS CLI command that returns stable identity information and interpret the result without relying on environment-specific values."
+    "situation": "You are operating as a secure cloud operator in an authorized sandbox where resources may or may not exist.",
+    "mission": "Verify access safely using read-only AWS CLI commands without assuming any pre-existing resources.",
+    "execution": "Run discovery-only commands and validate success by deterministic behavior (successful execution), not resource presence."
   },
   "prerequisites": [
-    "AWS CLI installed",
-    "Valid sandbox or training credentials configured",
-    "Basic familiarity with command-line tools"
+    "AWS CLI installed and working",
+    "Valid sandbox credentials configured",
+    "No write permissions required"
   ],
   "content": {
-    "concept": "In secure cloud operations, validating identity context is a foundational step before performing any inspection or troubleshooting. Operators must be able to confirm which AWS account they are authenticated against without making assumptions about existing infrastructure. The AWS Security Token Service (STS) provides deterministic identity information that does not change based on resource state. Using read-only identity commands allows operators to safely confirm access, reduce the risk of accidental changes, and establish trust in subsequent observations. This approach is critical in regulated, audited, or training environments where safety and repeatability are required.",
-    "walkthrough": "Begin by opening a terminal with the AWS CLI installed and properly configured credentials. Execute the provided AWS STS command exactly as written. Observe the output returned by the command. In a valid environment, the command will return an account identifier as plain text. If credentials are invalid or misconfigured, the command will fail clearly. Do not attempt to create, modify, or delete any resources. The purpose of this exercise is to confirm identity context, not to interact with infrastructure.",
+    "concept": "CloudWatch provides monitoring and logging capabilities for AWS resources. Describing alarms lists all configured alarms, including their status and configuration. Deterministic validation means you confirm the command executed successfully without relying on resource names, counts, o",
+    "walkthrough": "To verify CloudWatch visibility using describe-alarms, navigate to the AWS Management Console and select the region where your alarms are located. Then, click on the 'Alarms' tab in the left-hand menu. Finally, click on the 'Describe Alarms' button to list all configured alarms.",
     "checkpoints": [
-      "The AWS CLI command executes without error",
-      "The command returns output or an empty response without crashing",
-      "No resources are created, modified, or deleted"
+      "Verify that you have access to the CloudWatch console",
+      "Identify the correct region where your alarms are located",
+      "List all configured alarms using describe-alarms"
     ],
     "common_mistakes": [
-      "Attempting to validate against a specific account ID",
-      "Using write or mutating AWS CLI commands",
-      "Assuming resources exist in the account"
+      "Confusing CloudWatch with AWS CloudTrail",
+      "Using describe-alarms on an incorrect region",
+      "Not understanding alarm status and configuration"
     ]
   },
   "lab": {
     "type": "guided-cli",
-    "setup": "Use a sandbox or training AWS account. Never run commands in a production environment.",
+    "setup": "Ensure AWS CLI is configured with sandbox credentials. Do not create, modify, or delete any resources.",
     "steps": [
-      "aws sts get-caller-identity --query \"Account\" --output text",
-      "Observe the output returned by the command and confirm it executed successfully.",
-      "Confirm that no resources were created, modified, or deleted during this verification."
+      "aws cloudwatch describe-alarms --query \"MetricAlarms[].AlarmName\" --output text --region us-east-1"
     ],
     "safety": [
-      "Read-only AWS CLI command",
-      "No infrastructure changes performed",
-      "Safe for empty or populated accounts"
+      "Use read-only AWS CLI commands only (list/describe/get).",
+      "Do not reference named resources unless the lesson explicitly created them (this v2 track does not).",
+      "If you see AccessDenied, stop and verify permissions rather than trying write actions."
     ],
     "validate": {
-      "command": "aws sts get-caller-identity --query \"Account\" --output text",
+      "command": "aws cloudwatch describe-alarms --query \"MetricAlarms[].AlarmName\" --output text --region us-east-1",
       "expected": "",
       "match": "contains"
     }
   },
   "elite_competence": {
-    "scenario_name": "Deterministic Identity Verification",
-    "role_simulation": "You are a secure cloud operator validating identity context before any inspection or incident response activity in an unknown environment.",
+    "scenario_name": "Phoenix Protocol — Deterministic Visibility Verification",
+    "role_simulation": "A CloudWatch administrator is responsible for monitoring and logging AWS resources. They must be able to describe alarms, understand alarm status, and configure alerts.",
     "bug_injection": {
-      "bug": "Validation logic assumes a specific account ID.",
-      "symptom": "Learners fail the lab despite correct execution.",
-      "fix": "Validate execution behavior rather than specific output values."
+      "bug": "Operator assumes resources must exist and mislabels empty output as failure.",
+      "symptom": "Student reports 'nothing returned' and believes permissions are broken.",
+      "fix": "Explain empty-sandbox behavior and validate by successful execution + no errors, not by finding assets."
     },
     "success_criteria": {
       "pass_conditions": [
-        "Command executes successfully",
-        "Validation is environment-agnostic",
-        "No destructive actions performed"
+        "Describing alarms lists all configured alarms",
+        "Alarm visibility is crucial for monitoring and logging",
+        "The correct region was used when describing alarms"
       ],
       "fail_conditions": [
-        "Hard-coded account identifiers",
-        "Use of write or mutating commands"
+        "Access to the CloudWatch console was denied",
+        "Alarms were not listed in the expected format",
+        "The incorrect region was used when describing alarms"
       ]
     },
     "interrogation_questions": [
-      "Why is identity verification a prerequisite for safe cloud operations?",
-      "Why should validation avoid checking specific account IDs?",
-      "How does deterministic validation reduce operational risk?"
+      "What is the purpose of CloudWatch in AWS?",
+      "How do you list all configured alarms using describe-alarms?",
+      "Why is alarm visibility important for monitoring and logging?"
     ]
   },
   "legal_context": {
-    "allowed": "Executing read-only AWS CLI identity commands in an authorized sandbox or training account.",
-    "prohibited": "Modifying AWS resources, credentials, or configurations without explicit authorization."
+    "allowed": "Executing read-only AWS CLI commands in an authorized sandbox or training account.",
+    "prohibited": "Creating, deleting, or modifying AWS resources without explicit authorization."
   },
   "resume_bullets": [
-    "Verified AWS account identity using deterministic, read-only CLI commands.",
-    "Demonstrated safe identity validation practices in sandbox environments.",
-    "Applied audit-aligned validation techniques for secure cloud operations."
+    "Understanding CloudWatch concepts",
+    "Ability to describe alarms using command-line interface",
+    "Knowledge of alarm status and configuration"
   ]
 }
