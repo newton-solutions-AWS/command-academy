@@ -1,5 +1,18 @@
-node_modules
-.env
+# Dependencies
+node_modules/
+
+# Next.js build output
+.next/
+out/
+
+# Environment variables
+.env*
+!.env.example
+
+# OS / Editor noise
 .DS_Store
+*.log
+
+# Canon artifacts (generated, immutable, not runtime)
 cert_intel/canon/**/lessons/*.json
 cert_intel/canon/**/labs/*.json
