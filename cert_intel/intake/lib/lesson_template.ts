@@ -5,137 +5,62 @@ export type PhoenixV2PromptInput = {
   lessonNumber: number;
   canon: string;
   version: string;
-  archetype: string;
+  archetype: "discovery";
   region?: string;
+  topic: string;
 };
 
 export function buildPhoenixV2Prompt(input: PhoenixV2PromptInput): string {
-  const {
-    lessonId,
-    lessonNumber,
-    canon,
-    version,
-    archetype,
-    region,
-  } = input;
-
   return `
-You are generating a SINGLE Phoenix Protocol v2 lesson artifact.
+You are generating a SINGLE Phoenix Protocol v2 lesson.
 
-THIS OUTPUT MUST BE VALID JSON.
-NO MARKDOWN.
-NO COMMENTS.
-NO TEXT OUTSIDE JSON.
-DO NOT EXPLAIN.
+ABSOLUTE RULES (VIOLATION = FAILURE):
+- Output RAW JSON ONLY
+- DO NOT use markdown
+- DO NOT wrap output in \`\`\`
+- DO NOT explain anything
+- DO NOT include comments
+- DO NOT include shell interpolation
+- DO NOT use echo, $(), backticks, or variables
+- lab.steps MUST contain ONLY valid AWS CLI commands
+- Commands MUST be read-only
+- Commands MUST be empty-sandbox safe
+- NEVER reference specific resource names
+- NEVER require resources to exist
+- NEVER use counts as success criteria
+- validate.command MUST EXACTLY MATCH the AWS CLI command
+- validate.expected MUST be an empty string ""
+- validate.match MUST be "contains"
 
-========================
-HARD CONSTRAINTS (MANDATORY)
-========================
+LESSON METADATA:
+- id: ${input.lessonId}
+- canon: ${input.canon}
+- version: ${input.version}
+- archetype: discovery
+- topic: ${input.topic}
 
-1. Every string minimum MUST be met or exceeded.
-2. Arrays MUST meet minimum lengths.
-3. lab.steps MUST contain at least ONE real aws CLI command.
-4. validate.command MUST EXACTLY MATCH the aws command in lab.steps.
-5. Validation must be deterministic (expected: "").
-6. Read-only AWS commands ONLY.
-7. Sandbox safe.
-8. No fictional tools. No fake repos.
+REQUIRED AWS COMMAND PATTERN (choose ONE):
+- aws sts get-caller-identity --output json
+- aws s3 ls
+- aws ec2 describe-instances --output json
+- aws iam list-roles --output json
+- aws lambda list-functions --output json
+- aws ec2 describe-vpcs --output json
+- aws ec2 describe-security-groups --output json
 
-========================
-MINIMUM LENGTH RULES
-========================
+SCHEMA REQUIREMENTS:
+- objectives: >= 3 strings
+- content.concept: >= 200 characters
+- content.walkthrough: >= 200 characters
+- content.checkpoints: >= 3 strings
+- content.common_mistakes: >= 3 strings
+- lab.safety: >= 3 strings
+- elite_competence.role_simulation: >= 50 characters
+- elite_competence.success_criteria.pass_conditions: >= 3
+- elite_competence.success_criteria.fail_conditions: >= 2
+- elite_competence.interrogation_questions: >= 3
+- resume_bullets: >= 3
 
-- content.concept:      ≥ 200 characters
-- content.walkthrough:  ≥ 200 characters
-- elite_competence.role_simulation: ≥ 50 characters
-
-If you are unsure, WRITE MORE.
-
-========================
-STRUCTURE REQUIRED
-========================
-
-{
-  "id": string,
-  "canon": string,
-  "version": string,
-  "title": string,
-  "objectives": [string, string, string],
-  "duration_minutes": number,
-  "tags": [string, string, string],
-  "mission_brief": {
-    "situation": string,
-    "mission": string,
-    "execution": string
-  },
-  "prerequisites": [string],
-  "content": {
-    "concept": string,
-    "walkthrough": string,
-    "checkpoints": [string, string, string],
-    "common_mistakes": [string, string, string]
-  },
-  "lab": {
-    "type": "guided-cli",
-    "setup": string,
-    "steps": [string],
-    "safety": [string, string, string],
-    "validate": {
-      "command": string,
-      "expected": "",
-      "match": "contains"
-    }
-  },
-  "elite_competence": {
-    "scenario_name": string,
-    "role_simulation": string,
-    "bug_injection": {
-      "bug": string,
-      "symptom": string,
-      "fix": string
-    },
-    "success_criteria": {
-      "pass_conditions": [string, string, string],
-      "fail_conditions": [string, string]
-    },
-    "interrogation_questions": [string, string, string]
-  },
-  "legal_context": {
-    "allowed": string,
-    "prohibited": string
-  },
-  "resume_bullets": [string, string, string]
-}
-
-========================
-LESSON CONTEXT
-========================
-
-Lesson ID: ${lessonId}
-Canon: ${canon}
-Version: ${version}
-Lesson Number: ${lessonNumber}
-Archetype: ${archetype}
-AWS Region: ${region ?? "us-east-1"}
-
-========================
-CONTENT GUIDANCE
-========================
-
-- Focus on **verification and visibility**, not creation.
-- Use commands like:
-  - aws sts get-caller-identity
-  - aws s3 ls
-  - aws ec2 describe-instances
-- The walkthrough must be detailed, explanatory, and instructional.
-- The role_simulation must describe a realistic operator scenario in depth.
-
-========================
-FINAL RULE
-========================
-
-If ANY minimum is not met, the lesson FAILS.
-
-Generate the JSON now.
+OUTPUT EXACTLY ONE VALID JSON OBJECT.
 `;
 }
