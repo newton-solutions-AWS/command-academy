@@ -2,7 +2,7 @@ import { loadLessons } from "@/lib/lessons";
 
 export default function VanguardAcademyPage() {
   const lessons = loadLessons({
-    org: "atils",
+    
     canon: "vanguard-protocol-advanced-architecture",
     version: "v1",
   });

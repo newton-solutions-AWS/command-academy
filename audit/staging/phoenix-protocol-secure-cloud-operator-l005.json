@@ -1,0 +1,93 @@
+{
+  "id": "phoenix-protocol-secure-cloud-operator-l005",
+  "canon": "phoenix-protocol-secure-cloud-operator",
+  "version": "v2",
+  "title": "Secure Cloud Operator: Verify and Monitor Resources",
+  "objectives": [
+    "Verify the identity of the current AWS CLI user",
+    "List S3 buckets and their contents",
+    "Describe EC2 instances"
+  ],
+  "duration_minutes": 60,
+  "tags": [
+    "AWS Security",
+    "Cloud Operator",
+    "Verification and Visibility"
+  ],
+  "mission_brief": {
+    "situation": "As a cloud operator, you need to ensure that your AWS resources are secure and properly configured.",
+    "mission": "Use the AWS CLI to verify and monitor your resources.",
+    "execution": "Complete the lab steps to demonstrate your knowledge."
+  },
+  "prerequisites": [
+    "Basic understanding of AWS services",
+    "AWS CLI installed and configured"
+  ],
+  "content": {
+    "concept": "In this lesson, we will focus on verification and visibility. We will use the AWS CLI to check the status of our resources.\n\nThis section reinforces secure, repeatable, audit-safe cloud operations using deterministic, read-only validation techniques suitable for any sandbox or production-like environment.",
+    "walkthrough": "Let's start by verifying the identity of the current user using `aws sts get-caller-identity`. Then, we will list S3 buckets and their contents with `aws s3 ls`. Finally, we will describe EC2 instances using `aws ec2 describe-instances`.",
+    "checkpoints": [
+      "Verify that you can see your AWS account ID",
+      "List at least 5 S3 buckets",
+      "Describe at least 2 EC2 instances"
+    ],
+    "common_mistakes": [
+      "Not using the correct AWS CLI command",
+      "Not checking the output of each command",
+      "Assuming that resources are configured correctly without verifying"
+    ]
+  },
+  "lab": {
+    "type": "guided-cli",
+    "setup": "Ensure that you have the AWS CLI installed and configured on your system.",
+    "steps": [
+      "aws sts get-caller-identity",
+      "aws s3 ls",
+      "aws ec2 describe-instances"
+    ],
+    "safety": [
+      "Do not modify any existing resources or configurations.",
+      "Be cautious when using the AWS CLI, as incorrect commands can lead to unexpected results.",
+      "Use sandbox or training credentials only"
+    ],
+    "validate": {
+      "command": "aws sts get-caller-identity",
+      "expected": "",
+      "match": "contains"
+    }
+  },
+  "elite_competence": {
+    "scenario_name": "Secure Cloud Operator: Verify and Monitor Resources",
+    "role_simulation": "You are a cloud operator responsible for ensuring the security and proper configuration of your AWS resources.",
+    "bug_injection": {
+      "bug": "A misconfigured S3 bucket with public access",
+      "symptom": "The bucket is listed publicly in the S3 console, but not in the AWS CLI output",
+      "fix": "Reconfigure the bucket to have private access and update the ACLs"
+    },
+    "success_criteria": {
+      "pass_conditions": [
+        "The current user's identity is verified successfully",
+        "At least 5 S3 buckets are listed with their contents",
+        "At least 2 EC2 instances are described correctly"
+      ],
+      "fail_conditions": [
+        "The current user's identity is not verified successfully",
+        "Fewer than 5 S3 buckets are listed or have incorrect contents"
+      ]
+    },
+    "interrogation_questions": [
+      "What is the primary purpose of using the `aws sts get-caller-identity` command?",
+      "Why is it essential to list S3 buckets and their contents regularly?",
+      "How can you ensure that your EC2 instances are properly configured?"
+    ]
+  },
+  "legal_context": {
+    "allowed": "Use AWS CLI commands to verify and monitor resources, as well as reconfigure misconfigured resources.",
+    "prohibited": "Modify existing resources or configurations without proper authorization."
+  },
+  "resume_bullets": [
+    "Verified the identity of the current user using `aws sts get-caller-identity`",
+    "Listed S3 buckets and their contents with `aws s3 ls`",
+    "Described EC2 instances using `aws ec2 describe-instances`"
+  ]
+}

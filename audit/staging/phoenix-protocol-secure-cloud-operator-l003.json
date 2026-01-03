@@ -1,0 +1,93 @@
+{
+  "id": "phoenix-protocol-secure-cloud-operator-l003",
+  "canon": "phoenix-protocol-secure-cloud-operator",
+  "version": "v2",
+  "title": "Secure Cloud Operator - Verification and Visibility",
+  "objectives": [
+    "Verify AWS account configuration",
+    "Describe S3 bucket contents",
+    "Identify EC2 instance details"
+  ],
+  "duration_minutes": 60,
+  "tags": [
+    "security",
+    "cloud",
+    "verification"
+  ],
+  "mission_brief": {
+    "situation": "As a Cloud Operator, ensure the security and integrity of AWS resources.",
+    "mission": "Verify the configuration of your AWS account and resources.",
+    "execution": "Use AWS CLI commands to retrieve information about S3 buckets and EC2 instances."
+  },
+  "prerequisites": [
+    "AWS CLI installed on workstation",
+    "Valid AWS credentials configured"
+  ],
+  "content": {
+    "concept": "Verification and visibility are crucial for secure cloud operations. Understanding how to use AWS CLI commands can help identify potential security threats.\n\nThis section reinforces secure, repeatable, audit-safe cloud operations using deterministic, read-only validation techniques suitable for any sandbox or production-like environment.",
+    "walkthrough": "In this lab, you will learn how to verify the configuration of your AWS account and resources using AWS CLI commands. This includes describing S3 bucket contents and identifying EC2 instance details.\n\nThe walkthrough emphasizes safe execution, careful observation of command behavior, and validation based on successful execution rather than the presence of specific cloud resources.",
+    "checkpoints": [
+      "Verify that the correct AWS region is set",
+      "Describe the contents of a specified S3 bucket",
+      "Identify the details of an EC2 instance"
+    ],
+    "common_mistakes": [
+      "Incorrectly specifying the AWS region",
+      "Failing to provide valid credentials",
+      "Misinterpreting CLI output"
+    ]
+  },
+  "lab": {
+    "type": "guided-cli",
+    "setup": "Set up your workstation with the AWS CLI and valid AWS credentials.",
+    "steps": [
+      "aws sts get-caller-identity",
+      "aws s3 ls s3://my-bucket/",
+      "aws ec2 describe-instances"
+    ],
+    "safety": [
+      "Never use unverified AWS credentials",
+      "Avoid running commands with elevated privileges",
+      "Keep sensitive information secure"
+    ],
+    "validate": {
+      "command": "aws sts get-caller-identity",
+      "expected": "",
+      "match": "contains"
+    }
+  },
+  "elite_competence": {
+    "scenario_name": "Cloud Security Threat Investigation",
+    "role_simulation": "You are a Cloud Security Specialist tasked with investigating an unauthorized EC2 instance.",
+    "bug_injection": {
+      "bug": "Unauthorized access to sensitive data in S3 bucket",
+      "symptom": "EC2 instance is not responding as expected",
+      "fix": "Remove access permissions and revoke credentials"
+    },
+    "success_criteria": {
+      "pass_conditions": [
+        "Correctly identify the unauthorized EC2 instance",
+        "Describe the security implications of the breach",
+        "Implement corrective actions to prevent future incidents"
+      ],
+      "fail_conditions": [
+        "Incorrectly identifying the EC2 instance or S3 bucket",
+        "Failing to describe the security implications of the breach"
+      ]
+    },
+    "interrogation_questions": [
+      "What are the immediate steps you would take to investigate the breach?",
+      "How would you implement corrective actions to prevent future incidents?",
+      "Can you explain why it's essential to regularly monitor AWS account configuration?"
+    ]
+  },
+  "legal_context": {
+    "allowed": "Use AWS CLI commands to verify AWS account and resource configuration",
+    "prohibited": "Access or modify sensitive data without proper authorization"
+  },
+  "resume_bullets": [
+    "Verified AWS account and resource configuration using AWS CLI commands.",
+    "Identified unauthorized EC2 instance and described security implications.",
+    "Implemented corrective actions to prevent future incidents."
+  ]
+}

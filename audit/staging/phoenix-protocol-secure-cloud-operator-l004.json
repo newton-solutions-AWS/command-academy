@@ -1,0 +1,94 @@
+{
+  "id": "phoenix-protocol-secure-cloud-operator-l004",
+  "canon": "phoenix-protocol-secure-cloud-operator",
+  "version": "v2",
+  "title": "Secure Cloud Operator - Verification and Visibility",
+  "objectives": [
+    "Verify IAM roles and permissions",
+    "Monitor S3 bucket access logs",
+    "Identify EC2 instance details"
+  ],
+  "duration_minutes": 45,
+  "tags": [
+    "security",
+    "iam",
+    "s3",
+    "ec2"
+  ],
+  "mission_brief": {
+    "situation": "As a cloud operator, you need to ensure the security and integrity of your AWS resources.",
+    "mission": "Verify IAM roles and permissions, monitor S3 bucket access logs, and identify EC2 instance details.",
+    "execution": "Use AWS CLI commands to gather information about IAM roles, S3 buckets, and EC2 instances."
+  },
+  "prerequisites": [
+    "Basic understanding of AWS services",
+    "AWS CLI installed on your system"
+  ],
+  "content": {
+    "concept": "Verification and visibility are crucial for cloud security. AWS provides various tools to monitor and audit resources.\n\nThis section reinforces secure, repeatable, audit-safe cloud operations using deterministic, read-only validation techniques suitable for any sandbox or production-like environment.",
+    "walkthrough": "This lesson will guide you through using AWS CLI commands to verify IAM roles, monitor S3 bucket access logs, and identify EC2 instance details. You will learn how to use the `aws sts get-caller-identity` command to retrieve your IAM role information, the `aws s3 ls` command to list objects in an S3 bucket, and the `aws ec2 describe-instances` command to retrieve information about EC2 instances.",
+    "checkpoints": [
+      "Verify IAM role information",
+      "Monitor S3 bucket access logs",
+      "Identify EC2 instance details"
+    ],
+    "common_mistakes": [
+      "Incorrectly configuring IAM roles",
+      "Ignoring S3 bucket access logs",
+      "Not regularly monitoring EC2 instances"
+    ]
+  },
+  "lab": {
+    "type": "guided-cli",
+    "setup": "Create an AWS CLI profile with the necessary permissions to access the resources mentioned in this lesson.",
+    "steps": [
+      "aws sts get-caller-identity",
+      "aws s3 ls s3://your-bucket-name/",
+      "aws ec2 describe-instances"
+    ],
+    "safety": [
+      "Use a test IAM role for verification and visibility checks",
+      "Monitor S3 bucket access logs to detect potential security threats",
+      "Regularly identify EC2 instance details to ensure proper configuration"
+    ],
+    "validate": {
+      "command": "aws sts get-caller-identity",
+      "expected": "",
+      "match": "contains"
+    }
+  },
+  "elite_competence": {
+    "scenario_name": "Cloud Security Audit",
+    "role_simulation": "As a cloud security auditor, you need to verify the IAM roles and permissions of an organization. You also need to monitor S3 bucket access logs and identify EC2 instance details.",
+    "bug_injection": {
+      "bug": "Incorrectly configured IAM role",
+      "symptom": "Unauthorized access to S3 buckets",
+      "fix": "Reconfigure IAM role with proper permissions"
+    },
+    "success_criteria": {
+      "pass_conditions": [
+        "Correctly verified IAM role information",
+        "Properly monitored S3 bucket access logs",
+        "Regularly identified EC2 instance details"
+      ],
+      "fail_conditions": [
+        "Incorrectly configured IAM role",
+        "Ignoring S3 bucket access logs"
+      ]
+    },
+    "interrogation_questions": [
+      "What are the benefits of using AWS CLI commands for verification and visibility?",
+      "How can you ensure proper configuration of IAM roles and permissions?",
+      "What are the potential security threats if S3 bucket access logs are ignored?"
+    ]
+  },
+  "legal_context": {
+    "allowed": "Use of AWS CLI commands to gather information about IAM roles, S3 buckets, and EC2 instances.",
+    "prohibited": "Unauthorized access or modification of resources."
+  },
+  "resume_bullets": [
+    "Verified IAM role information using AWS CLI",
+    "Monitored S3 bucket access logs for potential security threats",
+    "Identified EC2 instance details for proper configuration"
+  ]
+}

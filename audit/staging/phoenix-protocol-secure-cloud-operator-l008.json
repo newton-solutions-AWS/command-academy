@@ -1,0 +1,93 @@
+{
+  "id": "phoenix-protocol-secure-cloud-operator-l008",
+  "canon": "phoenix-protocol-secure-cloud-operator",
+  "version": "v2",
+  "title": "Secure Cloud Operator - Verification and Visibility",
+  "objectives": [
+    "Verify IAM roles and permissions",
+    "List S3 buckets and EC2 instances",
+    "Describe the caller's identity"
+  ],
+  "duration_minutes": 60,
+  "tags": [
+    "security",
+    "aws",
+    "operator"
+  ],
+  "mission_brief": {
+    "situation": "As a cloud operator, I need to ensure that my resources are secure.",
+    "mission": "Verify IAM roles and permissions for S3 buckets and EC2 instances.",
+    "execution": "Use AWS CLI commands to list and describe resources."
+  },
+  "prerequisites": [
+    "AWS CLI installed",
+    "IAM role with necessary permissions"
+  ],
+  "content": {
+    "concept": "Verification and visibility are crucial for secure cloud operations. IAM roles and permissions must be regularly checked to ensure that only authorized access is granted.\n\nThis section reinforces secure, repeatable, audit-safe cloud operations using deterministic, read-only validation techniques suitable for any sandbox or production-like environment.",
+    "walkthrough": "In this lab, you will use AWS CLI commands to verify IAM roles and permissions for S3 buckets and EC2 instances. You will list the resources and describe their attributes to ensure they are properly configured.",
+    "checkpoints": [
+      "Verify IAM role attached to S3 bucket",
+      "List EC2 instances with specific tag",
+      "Checkpoint validated successfully"
+    ],
+    "common_mistakes": [
+      "Incorrect IAM role configuration",
+      "Unauthorized access to sensitive resources",
+      "Assuming environment-specific resources exist"
+    ]
+  },
+  "lab": {
+    "type": "guided-cli",
+    "setup": "aws sts get-caller-identity",
+    "steps": [
+      "aws iam list-roles --query 'Roles[?Arn == `arn:aws:iam::123456789012:role/MyRole`]'",
+      "aws s3 ls --recursive --prefix MyBucket/",
+      "aws ec2 describe-instances --filters Name=tag:Name,Values=MyInstance"
+    ],
+    "safety": [
+      "Use IAM role with necessary permissions",
+      "Avoid unauthorized access to sensitive resources",
+      "Use sandbox or training credentials only"
+    ],
+    "validate": {
+      "command": "aws iam list-roles --query 'Roles[?Arn == `arn:aws:iam::123456789012:role/MyRole`]'",
+      "expected": "",
+      "match": "contains"
+    }
+  },
+  "elite_competence": {
+    "scenario_name": "Cloud Operator",
+    "role_simulation": "You are a cloud operator responsible for ensuring the security and compliance of your organization's AWS resources.",
+    "bug_injection": {
+      "bug": "Incorrect IAM role configuration",
+      "symptom": "Unauthorized access to S3 bucket",
+      "fix": "Attach correct IAM role to S3 bucket"
+    },
+    "success_criteria": {
+      "pass_conditions": [
+        "IAM role attached to S3 bucket is correct",
+        "EC2 instances have specific tag",
+        "Command executes successfully"
+      ],
+      "fail_conditions": [
+        "Unauthorized access to sensitive resources",
+        "Incorrect IAM role configuration"
+      ]
+    },
+    "interrogation_questions": [
+      "What are the implications of incorrect IAM role configuration?",
+      "How do you ensure that only authorized access is granted to sensitive resources?",
+      "Why is behavior-based validation safer than resource-based validation?"
+    ]
+  },
+  "legal_context": {
+    "allowed": "Use AWS CLI commands to verify IAM roles and permissions",
+    "prohibited": "Unauthorized access to sensitive resources"
+  },
+  "resume_bullets": [
+    "Verified IAM role attached to S3 bucket",
+    "Listed EC2 instances with specific tag",
+    "Ensured correct IAM role configuration for sensitive resources"
+  ]
+}

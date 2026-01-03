@@ -2,92 +2,92 @@
   "id": "phoenix-protocol-secure-cloud-operator-l002",
   "canon": "phoenix-protocol-secure-cloud-operator",
   "version": "v2",
-  "title": "Phoenix Protocol: Verify S3 Read Access Using Deterministic CLI Output",
+  "title": "Secure Cloud Operator: Verification and Visibility",
   "objectives": [
-    "Confirm S3 read access using standard AWS CLI",
-    "Interpret deterministic CLI output safely",
-    "Avoid validation against dynamic or random identifiers"
+    "Verify IAM user identity using sts get-caller-identity",
+    "List S3 buckets with s3 ls command",
+    "Describe EC2 instances with ec2 describe-instances"
   ],
-  "duration_minutes": 30,
-  "tags": ["aws", "s3", "read-only", "deterministic", "phoenix"],
+  "duration_minutes": 60,
+  "tags": [
+    "aws",
+    "security",
+    "verification"
+  ],
   "mission_brief": {
-    "situation": "You are operating as a secure cloud operator in a controlled sandbox. Before interacting with data services, you must verify read access without modifying any resources.",
-    "mission": "Use AWS CLI to confirm S3 read permissions and correctly interpret the output without relying on assumed bucket names.",
-    "execution": "Run read-only AWS S3 commands and validate results using stable, deterministic behavior rather than specific resource identifiers."
+    "situation": "As a cloud operator, you need to ensure the security of your AWS resources.",
+    "mission": "Verify the identity of IAM users and inspect S3 buckets and EC2 instances for potential issues.",
+    "execution": "Use the correct AWS CLI commands to gather information without creating any resources."
   },
   "prerequisites": [
-    "AWS CLI installed and working",
-    "Valid sandbox credentials configured",
-    "Basic understanding of AWS S3 concepts"
+    "Basic knowledge of AWS CLI",
+    "AWS credentials configured on local machine"
   ],
   "content": {
-    "concept": "Amazon S3 is globally scoped and often the first service operators interact with. Read-only validation must not assume the existence of specific buckets. Instead, operators validate access by confirming that the CLI responds correctly and consistently, even when zero resources are returned.",
-    "walkthrough": "You will execute a read-only S3 listing command. Depending on the sandbox, the account may contain zero or more buckets. Both outcomes are valid. The key signal is that the command executes successfully without permission errors.",
+    "concept": "Verification and visibility are crucial for securing cloud resources. This lesson focuses on using the right AWS CLI commands to inspect and verify your environment without creating new resources.\n\nThis section reinforces secure, repeatable, audit-safe cloud operations using deterministic, read-only validation techniques suitable for any sandbox or production-like environment.",
+    "walkthrough": "In this walkthrough, we will go over three essential AWS CLI commands: sts get-caller-identity for IAM user verification, s3 ls for listing S3 buckets, and ec2 describe-instances for EC2 instance details. Each command is carefully chosen to provide the required information without modifying your environment.",
     "checkpoints": [
-      "AWS CLI executes s3 command successfully",
-      "Command returns output or an empty result without errors",
-      "Validation confirms deterministic execution"
+      "Verify IAM user identity",
+      "List all S3 buckets in your account",
+      "Describe active EC2 instances"
     ],
     "common_mistakes": [
-      "Assuming a specific bucket name exists",
-      "Treating empty output as a failure",
-      "Attempting to create buckets during a verification lab"
+      "Using creation commands instead of inspection commands",
+      "Not verifying IAM user permissions",
+      "Ignoring critical security issues in the environment"
     ]
   },
   "lab": {
     "type": "guided-cli",
-    "setup": "This lab uses a sandbox or training account. Do not create, delete, or modify any S3 buckets.",
+    "setup": "Ensure you have AWS CLI installed and configured on your local machine.",
     "steps": [
-      "Confirm AWS CLI identity: aws sts get-caller-identity --query \"Account\" --output text",
-      "List S3 buckets: aws s3 ls",
-      "Observe whether the command returns bucket names or an empty response",
-      "Confirm no AccessDenied or permission errors are shown",
-      "Proceed only if the command completes successfully"
+      "aws sts get-caller-identity --query 'Arn'",
+      "aws s3 ls",
+      "aws ec2 describe-instances --filters \"Name=instance-state-name,Values=running\""
     ],
     "safety": [
-      "Read-only operations only",
-      "No bucket creation or deletion",
-      "No use of production credentials"
+      "Be cautious when listing S3 buckets as this may show sensitive data.",
+      "Avoid modifying any resources or permissions during this exercise.",
+      "Keep your AWS credentials secure at all times."
     ],
     "validate": {
-      "command": "aws s3 ls",
+      "command": "aws sts get-caller-identity --query 'Arn'",
       "expected": "",
       "match": "contains"
     }
   },
   "elite_competence": {
-    "scenario_name": "Read Before Write",
-    "role_simulation": "You are responsible for validating access before touching data. Your task is to confirm capability without assuming environment state.",
+    "scenario_name": "Security Threat Detection",
+    "role_simulation": "You are the cloud security lead and have been alerted to a potential threat. Your task is to quickly verify IAM user permissions, inspect S3 buckets for unusual activity, and check EC2 instances for any signs of compromise.",
     "bug_injection": {
-      "bug": "Validation checks for a specific bucket name that may not exist.",
-      "symptom": "Learners fail the lab despite having correct permissions.",
-      "fix": "Validate successful command execution rather than specific resource names."
+      "bug": "A rogue IAM user has gained elevated privileges",
+      "symptom": "Unexpected changes in S3 bucket access patterns",
+      "fix": "Revoke the IAM user's permissions and rotate credentials"
     },
     "success_criteria": {
       "pass_conditions": [
-        "aws s3 ls executes without error",
-        "No fictional tools are used",
-        "Validation logic is environment-agnostic"
+        "Correctly identify the rogue IAM user",
+        "List all S3 buckets with unusual activity",
+        "Describe EC2 instances with signs of compromise"
       ],
       "fail_conditions": [
-        "Assumes specific bucket names",
-        "Uses write or destructive commands",
-        "Relies on dynamic identifiers"
+        "Incorrectly identified IAM user or permissions issue",
+        "Failed to list S3 buckets due to lack of credentials"
       ]
     },
     "interrogation_questions": [
-      "Why is empty output from aws s3 ls not a failure?",
-      "How can read-only validation reduce operational risk?",
-      "Why should operators avoid assuming resource existence?"
+      "What are the first steps in responding to a security threat?",
+      "How would you investigate unusual activity in S3 buckets?",
+      "What measures can be taken to prevent future security breaches?"
     ]
   },
   "legal_context": {
-    "allowed": "Executing read-only AWS CLI commands in an authorized sandbox or training account.",
-    "prohibited": "Creating, deleting, or modifying S3 resources without explicit authorization."
+    "allowed": "Using AWS CLI commands for verification and inspection purposes",
+    "prohibited": "Creating new resources or modifying existing ones without explicit permission"
   },
   "resume_bullets": [
-    "Verified AWS S3 read access using deterministic CLI validation techniques.",
-    "Demonstrated safe, non-destructive cloud verification workflows.",
-    "Applied environment-agnostic validation practices aligned with audit requirements."
+    "Verified IAM user identity using sts get-caller-identity command",
+    "Listed all S3 buckets with s3 ls command",
+    "Described active EC2 instances with ec2 describe-instances command"
   ]
 }

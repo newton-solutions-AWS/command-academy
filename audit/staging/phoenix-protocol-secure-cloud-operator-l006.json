@@ -1,0 +1,93 @@
+{
+  "id": "phoenix-protocol-secure-cloud-operator-l006",
+  "canon": "phoenix-protocol-secure-cloud-operator",
+  "version": "v2",
+  "title": "Verify and Monitor AWS Resources with CLI Commands",
+  "objectives": [
+    "List all S3 buckets in the region",
+    "Describe all EC2 instances in the region",
+    "Get caller identity for verification"
+  ],
+  "duration_minutes": 45,
+  "tags": [
+    "AWS",
+    "CLI",
+    "Security"
+  ],
+  "mission_brief": {
+    "situation": "You are an AWS cloud operator tasked with verifying and monitoring resources in your account.",
+    "mission": "Use the AWS CLI to gather information about S3 buckets, EC2 instances, and caller identity.",
+    "execution": "Complete the lab steps using real AWS CLI commands."
+  },
+  "prerequisites": [
+    "Basic knowledge of AWS CLI",
+    "AWS CLI installed on local machine"
+  ],
+  "content": {
+    "concept": "The AWS CLI provides a simple and powerful way to interact with AWS resources. Verification and visibility are crucial for cloud security.\n\nThis section reinforces secure, repeatable, audit-safe cloud operations using deterministic, read-only validation techniques suitable for any sandbox or production-like environment.",
+    "walkthrough": "In this lesson, you will use the `aws s3 ls` command to list all S3 buckets in the region, the `aws ec2 describe-instances` command to describe all EC2 instances, and the `aws sts get-caller-identity` command to verify caller identity.",
+    "checkpoints": [
+      "Verify that the AWS CLI is installed and configured correctly",
+      "Use the correct AWS CLI commands for the lab steps",
+      "Checkpoint validated successfully"
+    ],
+    "common_mistakes": [
+      "Using incorrect or outdated AWS CLI versions",
+      "Failing to properly configure AWS CLI credentials",
+      "Assuming environment-specific resources exist"
+    ]
+  },
+  "lab": {
+    "type": "guided-cli",
+    "setup": "Create an IAM user with the necessary permissions for the lab steps",
+    "steps": [
+      "aws s3 ls",
+      "aws ec2 describe-instances",
+      "aws sts get-caller-identity"
+    ],
+    "safety": [
+      "Use caution when listing sensitive resources",
+      "Verify caller identity before executing commands",
+      "Use sandbox or training credentials only"
+    ],
+    "validate": {
+      "command": "aws s3 ls",
+      "expected": "",
+      "match": "contains"
+    }
+  },
+  "elite_competence": {
+    "scenario_name": "Secure Cloud Operator Scenario",
+    "role_simulation": "You are the AWS cloud operator responsible for ensuring that all resources in your account are secure and compliant.",
+    "bug_injection": {
+      "bug": "A malicious user has created an S3 bucket with public access enabled",
+      "symptom": "The S3 bucket is listed as publicly accessible on the AWS Management Console",
+      "fix": "Update IAM policies to restrict public access for S3 buckets"
+    },
+    "success_criteria": {
+      "pass_conditions": [
+        "All S3 buckets have private access enabled",
+        "All EC2 instances have the latest security patches applied",
+        "Command executes successfully"
+      ],
+      "fail_conditions": [
+        "Any S3 bucket has public access enabled",
+        "Any EC2 instance lacks a security patch"
+      ]
+    },
+    "interrogation_questions": [
+      "What are the consequences of leaving an S3 bucket with public access enabled?",
+      "How would you troubleshoot an issue where an EC2 instance is missing a security patch?",
+      "Why is behavior-based validation safer than resource-based validation?"
+    ]
+  },
+  "legal_context": {
+    "allowed": "Use AWS CLI commands to verify and monitor resources",
+    "prohibited": "Create or modify IAM policies without authorization"
+  },
+  "resume_bullets": [
+    "Listed all S3 buckets in the region using `aws s3 ls` command",
+    "Described all EC2 instances in the region using `aws ec2 describe-instances` command",
+    "Verified caller identity using `aws sts get-caller-identity` command"
+  ]
+}

@@ -1,0 +1,94 @@
+{
+  "id": "phoenix-protocol-secure-cloud-operator-l007",
+  "canon": "phoenix-protocol-secure-cloud-operator",
+  "version": "v2",
+  "title": "Secure Cloud Operator Verification and Visibility",
+  "objectives": [
+    "Verify IAM user identity",
+    "List S3 buckets and their contents",
+    "Describe EC2 instances"
+  ],
+  "duration_minutes": 45,
+  "tags": [
+    "aws",
+    "iam",
+    "s3",
+    "ec2"
+  ],
+  "mission_brief": {
+    "situation": "As a cloud operator, you need to ensure that your AWS account is properly configured and secure.",
+    "mission": "Verify the identity of IAM users and access S3 buckets and EC2 instances.",
+    "execution": "Use AWS CLI commands to verify and visualize security settings."
+  },
+  "prerequisites": [
+    "aws-cli installed",
+    "AWS account with necessary permissions"
+  ],
+  "content": {
+    "concept": "Verification and visibility are crucial for cloud security. This lesson focuses on using AWS CLI commands to ensure proper configuration and access.\n\nThis section reinforces secure, repeatable, audit-safe cloud operations using deterministic, read-only validation techniques suitable for any sandbox or production-like environment.",
+    "walkthrough": "In this lesson, you will use the `aws sts get-caller-identity` command to verify your IAM user identity, list S3 buckets with their contents using `aws s3 ls`, and describe EC2 instances using `aws ec2 describe-instances`. Each step is designed to ensure that you have proper visibility into your AWS account.",
+    "checkpoints": [
+      "Verify IAM user identity",
+      "List S3 buckets and their contents",
+      "Describe EC2 instances"
+    ],
+    "common_mistakes": [
+      "Not using the correct AWS CLI command",
+      "Forgetting to check permissions",
+      "Assuming environment-specific resources exist"
+    ]
+  },
+  "lab": {
+    "type": "guided-cli",
+    "setup": "Install aws-cli using pip: `pip install awscli --upgrade`",
+    "steps": [
+      "aws sts get-caller-identity",
+      "aws s3 ls",
+      "aws ec2 describe-instances"
+    ],
+    "safety": [
+      "Use the correct AWS CLI command for each step",
+      "Verify permissions before executing commands",
+      "Be cautious when listing S3 buckets and EC2 instances"
+    ],
+    "validate": {
+      "command": "aws sts get-caller-identity",
+      "expected": "",
+      "match": "contains"
+    }
+  },
+  "elite_competence": {
+    "scenario_name": "Secure Cloud Operator Scenario",
+    "role_simulation": "You are the cloud operator for a large e-commerce company. Your task is to verify that your AWS account is properly configured and secure.",
+    "bug_injection": {
+      "bug": " IAM user has incorrect permissions",
+      "symptom": "IAM user cannot access certain resources",
+      "fix": "Update IAM user permissions"
+    },
+    "success_criteria": {
+      "pass_conditions": [
+        "IAM user identity verified",
+        "S3 buckets listed and their contents visible",
+        "EC2 instances described"
+      ],
+      "fail_conditions": [
+        "Incorrect AWS CLI command used",
+        "Permissions not checked"
+      ]
+    },
+    "interrogation_questions": [
+      "What is the IAM user's identity?",
+      "How do you list S3 buckets and their contents?",
+      "What information can be gathered from EC2 instance descriptions?"
+    ]
+  },
+  "legal_context": {
+    "allowed": "Using AWS CLI commands to verify and visualize security settings",
+    "prohibited": "Modifying IAM user permissions without authorization"
+  },
+  "resume_bullets": [
+    "Verified IAM user identity using `aws sts get-caller-identity`",
+    "Listed S3 buckets and their contents using `aws s3 ls`",
+    "Described EC2 instances using `aws ec2 describe-instances`"
+  ]
+}

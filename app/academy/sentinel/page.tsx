@@ -2,7 +2,7 @@ import { loadLessons } from "@/lib/lessons";
 
 export default function SentinelAcademyPage() {
   const lessons = loadLessons({
-    org: "atils",
+   
     canon: "sentinel-protocol-defensive-operations",
     version: "v1",
   });

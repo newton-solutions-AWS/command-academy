@@ -1,0 +1,93 @@
+{
+  "id": "phoenix-protocol-secure-cloud-operator-l001",
+  "canon": "phoenix-protocol-secure-cloud-operator",
+  "version": "v2",
+  "title": "Secure Cloud Operator Verification and Visibility",
+  "objectives": [
+    "Verify AWS IAM user identity",
+    "List S3 bucket contents",
+    "Describe EC2 instances"
+  ],
+  "duration_minutes": 60,
+  "tags": [
+    "AWS Security",
+    "Cloud Computing",
+    "Verification and Visibility"
+  ],
+  "mission_brief": {
+    "situation": "As a cloud operator, I need to verify the identity of IAM users and ensure visibility into S3 bucket contents and EC2 instances.",
+    "mission": "Verify user identity and list S3 bucket contents using AWS CLI.",
+    "execution": "Describe EC2 instances to ensure accurate visibility."
+  },
+  "prerequisites": [
+    "AWS CLI installed on local machine",
+    "IAM user with necessary permissions"
+  ],
+  "content": {
+    "concept": "Verification and visibility are essential for secure cloud operations. IAM users can be verified using AWS CLI commands, while S3 bucket contents and EC2 instances can be listed to ensure accurate visibility.",
+    "walkthrough": "To verify user identity, use the `aws sts get-caller-identity` command. To list S3 bucket contents, use the `aws s3 ls` command. To describe EC2 instances, use the `aws ec2 describe-instances` command.",
+    "checkpoints": [
+      "Verify IAM user identity using AWS CLI",
+      "List S3 bucket contents to ensure accurate visibility",
+      "Describe EC2 instances to confirm accurate visibility"
+    ],
+    "common_mistakes": [
+      "Incorrectly assuming IAM user identity without verification",
+      "Failing to list S3 bucket contents, leading to incomplete visibility",
+      "Ignoring EC2 instance descriptions, resulting in inaccurate visibility"
+    ]
+  },
+  "lab": {
+    "type": "guided-cli",
+    "setup": "Create an IAM user with necessary permissions and install AWS CLI on local machine.",
+    "steps": [
+      "aws sts get-caller-identity",
+      "aws s3 ls",
+      "aws ec2 describe-instances"
+    ],
+    "safety": [
+      "Avoid using AWS root account for operations",
+      "Regularly monitor IAM user permissions and revoke unnecessary access",
+      "Use AWS CLI commands to list S3 bucket contents and EC2 instances instead of manual checks"
+    ],
+    "validate": {
+      "command": "aws sts get-caller-identity",
+      "expected": "",
+      "match": "contains"
+    }
+  },
+  "elite_competence": {
+    "scenario_name": "Cloud Operator Verification Challenge",
+    "role_simulation": "A cloud operator is responsible for verifying IAM user identity, listing S3 bucket contents, and describing EC2 instances to ensure accurate visibility.",
+    "bug_injection": {
+      "bug": "Incorrectly assuming IAM user identity without verification",
+      "symptom": "Incomplete or inaccurate visibility into S3 bucket contents and EC2 instances",
+      "fix": "Regularly verify IAM user identity using AWS CLI commands"
+    },
+    "success_criteria": {
+      "pass_conditions": [
+        "Verification of IAM user identity is accurate",
+        "S3 bucket contents are listed correctly",
+        "EC2 instance descriptions confirm accurate visibility"
+      ],
+      "fail_conditions": [
+        "Incomplete or inaccurate verification of IAM user identity",
+        "Failing to list S3 bucket contents, leading to incomplete visibility"
+      ]
+    },
+    "interrogation_questions": [
+      "What is the importance of verifying IAM user identity?",
+      "How can cloud operators ensure accurate visibility into S3 bucket contents and EC2 instances?",
+      "What are common mistakes that can lead to incomplete or inaccurate visibility?"
+    ]
+  },
+  "legal_context": {
+    "allowed": "Using AWS CLI commands to verify IAM user identity, list S3 bucket contents, and describe EC2 instances.",
+    "prohibited": "Using AWS root account for operations, ignoring EC2 instance descriptions, and failing to regularly monitor IAM user permissions."
+  },
+  "resume_bullets": [
+    "Verified IAM user identity using AWS CLI",
+    "Listed S3 bucket contents to ensure accurate visibility",
+    "Described EC2 instances to confirm accurate visibility"
+  ]
+}
