@@ -65,3 +65,10 @@ cert_intel/         → Canon, schemas, generator, validation
 engine/output/      → Rendered artifacts (derived)
 audit/              → Executable Reality audit evidence
 architecture/       → Doctrine and system architecture
+
+## Governance Note
+
+This repository is governed by organization-level branch protection.
+Administrator bypass is disabled by policy.
+
+All changes to Phoenix Protocol v2 require pull requests and review.
