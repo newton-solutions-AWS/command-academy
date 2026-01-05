@@ -2,56 +2,85 @@
 
 import Link from "next/link";
 
-export default function AcademyHomePage() {
+export default function AcademyLandingPage() {
   return (
-    <main className="p-8 max-w-4xl mx-auto">
-      <h1 className="text-4xl font-bold mb-4">
-        Command Academy
-      </h1>
+    <main className="mx-auto max-w-5xl px-6 py-16 space-y-16">
+      {/* HERO */}
+      <section className="space-y-4">
+        <h1 className="text-4xl font-bold tracking-tight">
+          Command Academy
+        </h1>
+        <p className="text-lg text-neutral-400 max-w-3xl">
+          From Service to Cyber — executed with discipline.
+          <br />
+          A doctrine-driven academy built for operators, engineers, and leaders.
+        </p>
+      </section>
 
-      <p className="text-lg text-gray-600 mb-8">
-        Welcome to the Command Academy. Select a division to begin structured,
-        audit-safe, real-world training.
-      </p>
-
-      <div className="grid gap-6 md:grid-cols-3">
-        <Link
-          href="/academy/phoenix"
-          className="border rounded-lg p-6 hover:bg-gray-50 transition"
-        >
-          <h2 className="text-xl font-semibold mb-2">
-            🔥 Phoenix Division
-          </h2>
-          <p className="text-gray-600">
-            Secure Cloud Operator training. Identity, visibility, and operational
-            confidence in live AWS environments.
+      {/* DIVISIONS */}
+      <section className="grid gap-8 md:grid-cols-3">
+        {/* PHOENIX */}
+        <div className="rounded-xl border border-neutral-800 p-6 space-y-4">
+          <h2 className="text-xl font-semibold">Phoenix Division</h2>
+          <p className="text-sm text-neutral-400">
+            Foundation and operational readiness. Identity, cloud security,
+            and disciplined execution.
           </p>
-        </Link>
-
-        <Link
-          href="/academy/sentinel"
-          className="border rounded-lg p-6 hover:bg-gray-50 transition"
-        >
-          <h2 className="text-xl font-semibold mb-2">
-            🛡 Sentinel Division
-          </h2>
-          <p className="text-gray-600">
-            Defensive security, detection engineering, and operational monitoring.
+          <p className="text-sm text-emerald-400">
+            🔒 Phoenix Protocol v2 — Audited & Immutable
           </p>
-        </Link>
+          <Link
+            href="/academy/phoenix"
+            className="inline-block text-sm font-medium text-emerald-400 hover:underline"
+          >
+            Enter Phoenix →
+          </Link>
+        </div>
 
-        <Link
-          href="/academy/vanguard"
-          className="border rounded-lg p-6 hover:bg-gray-50 transition"
-        >
-          <h2 className="text-xl font-semibold mb-2">
-            ⚔️ Vanguard Division
-          </h2>
-          <p className="text-gray-600">
-            Advanced architecture, systems design, and strategic cloud engineering.
+        {/* SENTINEL */}
+        <div className="rounded-xl border border-neutral-800 p-6 space-y-4">
+          <h2 className="text-xl font-semibold">Sentinel Division</h2>
+          <p className="text-sm text-neutral-400">
+            Coding, automation, and cyber capability.
+            Offensive and defensive skill-building.
           </p>
-        </Link>
-      </div>
+          <p className="text-sm text-yellow-400">
+            🟡 Active Development
+          </p>
+          <Link
+            href="/academy/sentinel"
+            className="inline-block text-sm font-medium text-yellow-400 hover:underline"
+          >
+            View Sentinel →
+          </Link>
+        </div>
+
+        {/* VANGUARD */}
+        <div className="rounded-xl border border-neutral-800 p-6 space-y-4">
+          <h2 className="text-xl font-semibold">Vanguard Division</h2>
+          <p className="text-sm text-neutral-400">
+            Architecture, systems thinking, and leadership at scale.
+          </p>
+          <p className="text-sm text-yellow-400">
+            🟡 Active Development
+          </p>
+          <Link
+            href="/academy/vanguard"
+            className="inline-block text-sm font-medium text-yellow-400 hover:underline"
+          >
+            View Vanguard →
+          </Link>
+        </div>
+      </section>
+
+      {/* CANON NOTICE */}
+      <section className="rounded-xl border border-neutral-800 bg-neutral-950 p-6 space-y-2">
+        <h3 className="font-semibold">Canon Governance</h3>
+        <p className="text-sm text-neutral-400">
+          Phoenix Protocol v2 has passed full static audit and is frozen as
+          immutable canon. Any future changes require a new protocol version.
+        </p>
+      </section>
     </main>
   );
 }
