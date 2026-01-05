@@ -1,74 +1,64 @@
 # Command Academy
 
-Command Academy is a deterministic, audit-safe cloud and cybersecurity training platform built under the **Executable Reality doctrine**.
+**Command Academy** is the canonical execution environment for Newton Solutions training protocols.
 
-This repository is the **source-of-truth engine** powering Phoenix Protocol v2 and future Command Academy tracks.
-
----
-
-## 🔥 What Makes This Different
-
-Command Academy is not a traditional course platform.
-
-It enforces:
-
-- Deterministic lesson generation
-- Empty-sandbox safe labs
-- Read-only cloud execution
-- Behavior-based validation
-- Immutable audit trails
-
-Every lesson must execute successfully in:
-- Brand new cloud accounts
-- Empty sandboxes
-- Enterprise environments
-
-No assumptions. No hallucinations. No brittle checks.
+This repository contains **audited, deterministic, and immutable learning canons** designed for real-world cloud operators.
 
 ---
 
-## 🧠 Core Doctrine (Non-Negotiable)
+## Phoenix Protocol v2 — Canon Status
 
-All content must obey:
+Phoenix Protocol v2 has passed **full independent static audit (Parts 1 & 2)**.
 
-- ❌ No hardcoded resource names (no `s3://my-bucket`)
-- ❌ No quantity assumptions (`count > 0`)
-- ❌ No hardcoded account IDs
-- ✅ Read-only AWS CLI only
-- ✅ Success = command execution, not resource presence
-- ✅ Validation logic must match executed command
+**Status: LOCKED / IMMUTABLE**
 
-Violations fail generation.
+This canon MUST NOT be modified.
 
----
+Any change requires a **new protocol version**.
 
-## 🛡️ Phoenix Protocol v2 — Status
+### Canon Guarantees
 
-| Component | Status |
-|---------|--------|
-| Generator | Hardened |
-| Schema | Locked |
-| Contract | Enforced |
-| Lessons (L001–L008) | Audited |
-| Empty Sandbox Safe | ✅ |
-| Deterministic | ✅ |
-
-**Audit Tag:** `PHOENIX_V2_AUDITED`
+- Read-only AWS CLI only
+- Empty-sandbox safe
+- No named resources
+- No quantity assumptions
+- No hardcoded account IDs
+- Deterministic generation enforced at build-time
+- Static artifact audit passed (100%)
 
 ---
 
-## 📁 Repository Structure
+## Repository Governance
 
-```text
-app/academy/        → Frontend academy runtime
-cert_intel/         → Canon, schemas, generator, validation
-engine/output/      → Rendered artifacts (derived)
-audit/              → Executable Reality audit evidence
-architecture/       → Doctrine and system architecture
+- Direct pushes to `main` are disabled
+- All changes require Pull Requests
+- Review is mandatory
+- Canon integrity is enforced by policy, not convention
 
-## Governance Note
+Phoenix Protocol v2 is governed as **law**, not content.
 
-This repository is governed by organization-level branch protection.
-Administrator bypass is disabled by policy.
+---
 
-All changes to Phoenix Protocol v2 require pull requests and review.
+## Scope of This Repository
+
+- Phoenix Protocol v2 (LOCKED)
+- Canon architecture & validation rules
+- Academy runtime scaffolding
+- Audit artifacts and provenance
+
+This repository is not a sandbox.
+It is a **reference implementation**.
+
+---
+
+## Deployment
+
+Command Academy is deployed via:
+
+- GitHub (source of truth)
+- Vercel (execution environment)
+- Custom domain (production access)
+
+---
+
+© Newton Solutions. All rights reserved.
