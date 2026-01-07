@@ -1,8 +1,12 @@
-# Phoenix Protocol v2 — IMMUTABLE CANON
+kPHOENIX PROTOCOL v2 — LOCKED
 
-Status: LOCKED  
-Audit: PASSED (Parts 1 & 2)  
-Date: 2026-01-01  
+This version has passed audit.
 
-This canon MUST NOT be modified.  
-Any changes require a new protocol version.
+DO NOT EDIT.
+DO NOT MODIFY.
+DO NOT PATCH.
+
+Any change requires Phoenix v3.
+
+Canon location:
+cert_intel/canon/atils/phoenix-protocol-secure-cloud-operator/v2/labs
