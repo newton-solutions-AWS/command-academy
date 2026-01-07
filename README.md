@@ -1,64 +1,64 @@
-# Command Academy
-
-**Command Academy** is the canonical execution environment for Newton Solutions training protocols.
-
-This repository contains **audited, deterministic, and immutable learning canons** designed for real-world cloud operators.
+# COMMAND ACADEMY
+**Newton Solutions // From Service to Cyber**
+A doctrine-driven training runtime that generates **audit-safe**, **empty-sandbox safe**, **read-only** cloud labs — and proves them before they ship.
 
 ---
 
-## Phoenix Protocol v2 — Canon Status
+## What This Is
+Command Academy is not “a course site”.
 
-Phoenix Protocol v2 has passed **full independent static audit (Parts 1 & 2)**.
+It is a **canon factory + runtime**:
+- **Canon** = immutable, versioned lesson artifacts (JSON)
+- **Engine** = deterministic generator + validators
+- **Academy UI** = lightweight front-end that renders canon like an operating system for learning
 
-**Status: LOCKED / IMMUTABLE**
+This repo exists to do one thing exceptionally well:
 
-This canon MUST NOT be modified.
-
-Any change requires a **new protocol version**.
-
-### Canon Guarantees
-
-- Read-only AWS CLI only
-- Empty-sandbox safe
-- No named resources
-- No quantity assumptions
-- No hardcoded account IDs
-- Deterministic generation enforced at build-time
-- Static artifact audit passed (100%)
+> **Generate lessons that can be executed in the real world.**  
+> No hallucinated tools. No magic strings. No “assume the bucket exists.”  
+> **If it passes audit, it ships.**
 
 ---
 
-## Repository Governance
+## Phoenix Protocol v2 (AUDITED CANON)
+Phoenix Protocol v2 is the first fully hardened doctrine inside this repo.
 
-- Direct pushes to `main` are disabled
-- All changes require Pull Requests
-- Review is mandatory
-- Canon integrity is enforced by policy, not convention
+### Status
+✅ **PASSED full static audit** (Parts 1 & 2)  
+✅ **Empty-sandbox safe**  
+✅ **Read-only AWS CLI only**  
+✅ **No named resources** (no `s3://my-bucket`)  
+✅ **No quantity assumptions** (no “must find 5 buckets”)  
+✅ **No hardcoded account IDs**  
+✅ **Behavior-based validation** (verifies execution, not state)
 
-Phoenix Protocol v2 is governed as **law**, not content.
+### Canon Location
+`cert_intel/canon/atils/phoenix-protocol-secure-cloud-operator/v2/labs`
 
----
+### Doctrine
+Phoenix v2 is governed by the **Executable Reality doctrine**:
 
-## Scope of This Repository
-
-- Phoenix Protocol v2 (LOCKED)
-- Canon architecture & validation rules
-- Academy runtime scaffolding
-- Audit artifacts and provenance
-
-This repository is not a sandbox.
-It is a **reference implementation**.
-
----
-
-## Deployment
-
-Command Academy is deployed via:
-
-- GitHub (source of truth)
-- Vercel (execution environment)
-- Custom domain (production access)
+- **Reality > Narrative**
+- **Determinism > Luck**
+- **Behavior-based validation > State-based validation**
+- **Empty sandboxes must still pass**
+- **Audits are mandatory**
+- **Canon is immutable once locked**
 
 ---
 
-© Newton Solutions. All rights reserved.
+## Canon Immutability
+Phoenix Protocol v2 is treated as **immutable canon**.
+
+- **Do not modify v2 artifacts** after audit.
+- Any change requires a **new protocol version** (e.g., `v3`).
+- Changes must flow through PR review (repository rules enforce this).
+
+See: `architecture/phoenix-v2/LOCKED.md`
+
+---
+
+## Quickstart (Local)
+### Install
+```bash
+npm install
