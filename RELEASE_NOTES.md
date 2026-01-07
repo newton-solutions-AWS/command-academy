@@ -1,12 +1,13 @@
-RELEASE NOTES
+# RELEASE NOTES
 
-Version 0.1
+## v0.1 — Phoenix Protocol v2
 
-Phoenix Protocol v2:
-- Passed full audit
-- Safe in empty AWS accounts
+Phoenix Protocol v2 is the first fully audited canon.
+
+Status:
+- Audit passed (Parts 1 & 2)
+- Empty-sandbox safe
 - Read-only commands only
-- No hardcoded resources
-- Canon locked and frozen
+- Canon frozen and locked
 
-This is the baseline release.
+This release establishes the Command Academy baseline.

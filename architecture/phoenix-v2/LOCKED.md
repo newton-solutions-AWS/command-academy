@@ -1,12 +1,12 @@
-kPHOENIX PROTOCOL v2 — LOCKED
+PHOENIX PROTOCOL v2 — LOCKED
 
-This version has passed audit.
+This canon has passed full audit.
 
-DO NOT EDIT.
 DO NOT MODIFY.
 DO NOT PATCH.
+DO NOT EDIT.
 
-Any change requires Phoenix v3.
+Any change requires Phoenix Protocol v3.
 
-Canon location:
+Canon path:
 cert_intel/canon/atils/phoenix-protocol-secure-cloud-operator/v2/labs
