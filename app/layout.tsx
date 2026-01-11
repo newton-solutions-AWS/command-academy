@@ -1,27 +1,16 @@
 // app/layout.tsx
-
 import type { Metadata } from "next";
+import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Command Academy",
-  description: "From Service to Cyber — Command Academy",
+  title: "Newton Command Academy",
+  description: "Executable Reality • Deterministic Doctrine • Immutable Canon",
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body
-        style={{
-          margin: 0,
-          fontFamily: "system-ui, -apple-system, BlinkMacSystemFont, sans-serif",
-          backgroundColor: "#050505",
-          color: "#e5e5e5",
-        }}
-      >
+      <body className="min-h-screen bg-black text-white antialiased">
         {children}
       </body>
     </html>
