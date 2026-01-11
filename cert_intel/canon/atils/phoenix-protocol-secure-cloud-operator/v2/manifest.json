@@ -1,0 +1,14 @@
+{
+  "canon": "phoenix-protocol-secure-cloud-operator",
+  "version": "v2",
+  "lessons": [
+    "phoenix-protocol-secure-cloud-operator-l001",
+    "phoenix-protocol-secure-cloud-operator-l002",
+    "phoenix-protocol-secure-cloud-operator-l003",
+    "phoenix-protocol-secure-cloud-operator-l004",
+    "phoenix-protocol-secure-cloud-operator-l005",
+    "phoenix-protocol-secure-cloud-operator-l006",
+    "phoenix-protocol-secure-cloud-operator-l007",
+    "phoenix-protocol-secure-cloud-operator-l008"
+  ]
+}
