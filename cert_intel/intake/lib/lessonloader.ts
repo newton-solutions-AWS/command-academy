@@ -1,26 +1,24 @@
 import fs from "fs";
 import path from "path";
 
-export type LoadCanonLessonsInput = {
-  canon: string;
-  version: string;
-};
-
-export type CanonLesson = {
+export interface CanonLesson {
   id: string;
-  canon: string;
   title: string;
-  description?: string;
+  canon: string;
   version: string;
   path: string;
-  order?: number;
-};
+  description?: string;
+}
 
-export function loadLessons({
-  canon,
-  version,
-}: LoadCanonLessonsInput): CanonLesson[] {
-  const baseDir = path.join(
+interface LoadCanonLessonsInput {
+  canon: string;
+  version: string;
+}
+
+export function loadLessons(input: LoadCanonLessonsInput): CanonLesson[] {
+  const { canon, version } = input;
+
+  const labsDir = path.join(
     process.cwd(),
     "cert_intel",
     "canon",
@@ -30,34 +28,29 @@ export function loadLessons({
     "labs"
   );
 
-  if (!fs.existsSync(baseDir)) {
-    console.warn("[lessonloader] Missing labs dir:", baseDir);
-    return [];
-  }
+  if (!fs.existsSync(labsDir)) return [];
 
   const files = fs
-    .readdirSync(baseDir)
-    .filter((f) => f.endsWith(".json"))
-    .sort();
+    .readdirSync(labsDir)
+    .filter((f) => f.endsWith(".json"));
 
-  return files.map((file, index) => {
-    const fullPath = path.join(baseDir, file);
+  return files.map((file) => {
+    const fullPath = path.join(labsDir, file);
     const raw = JSON.parse(fs.readFileSync(fullPath, "utf-8"));
 
     return {
-      id: raw.id,
-      title: raw.title,
-      description: raw.description ?? "",
+      id: raw.id ?? file.replace(".json", ""),
+      title: raw.title ?? raw.name ?? "Untitled Lesson",
       canon,
       version,
       path: fullPath,
-      order: index + 1,
+      description: raw.description,
     };
   });
 }
 
 /**
- * Alias used by Next.js app routes
+ * Alias used by Next.js routes
  * DO NOT REMOVE
  */
 export const loadCanonLessons = loadLessons;
