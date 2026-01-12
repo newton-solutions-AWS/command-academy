@@ -1,0 +1,106 @@
+{
+  "id": "vpaa-l003",
+  "canon": "vanguard-protocol-advanced-architecture",
+  "version": "v1",
+  "title": "Implementing Cloud Security for Data at Rest: Encrypted Volumes with AWS EBS and KMS",
+  "objectives": [
+    "Understand the importance of encrypting data at rest in cloud environments",
+    "Configure encrypted volumes using Amazon Elastic Block Store (EBS) and AWS Key Management Service (KMS)",
+    "Integrate KMS keys with IAM roles for seamless encryption and decryption"
+  ],
+  "prerequisites": [
+    "vvpaa-l001: Identity and Access Management Fundamentals",
+    "vvpaa-l002: Network Security Fundamentals"
+  ],
+  "duration_minutes": 45,
+  "tags": [
+    "security",
+    "cloud",
+    "operations"
+  ],
+  "mission_brief": {
+    "shadow_corp": "Aegis Logistics",
+    "briefing": "Your team has been tasked with securing sensitive data stored in an AWS EC2 instance. The data is currently unencrypted and must be protected from unauthorized access.",
+    "rules_of_engagement": [
+      "Ensure that all data at rest within the EC2 instance is encrypted using industry-standard protocols",
+      "Configure IAM roles to integrate with KMS keys for seamless encryption and decryption",
+      "Verify that EBS volumes are properly encrypted and accessible only through authorized channels"
+    ]
+  },
+  "content": {
+    "concept": "Encrypting data at rest is crucial in cloud environments due to the shared responsibility model. AWS provides services such as Amazon Elastic Block Store (EBS) for persistent block-level storage and AWS Key Management Service (KMS) for securely storing, managing, and rotating encryption keys.",
+    "walkthrough": "To configure encrypted volumes using EBS and KMS, create an IAM role that integrates with a KMS key. Then, attach the EBS volume to your EC2 instance, specifying the KMS key during creation. Verify that the EBS volume is properly encrypted by checking for the 'encrypted' status in the AWS Management Console.",
+    "checkpoints": [
+      "Verify that the IAM role has been correctly integrated with a KMS key",
+      "Ensure that the EBS volume is attached to the correct EC2 instance",
+      "Confirm that the EBS volume is properly encrypted"
+    ],
+    "common_mistakes": [
+      "Forgetting to specify the KMS key during EBS volume creation",
+      "Not verifying the encryption status of the EBS volume",
+      "Failing to integrate the IAM role with a KMS key"
+    ]
+  },
+  "lab": {
+    "type": "guided-cli",
+    "setup": "Create an AWS EC2 instance, an IAM role, and an EBS volume. Ensure that the IAM role is integrated with a KMS key.",
+    "steps": [
+      "Login to your AWS account using CLI or Management Console",
+      "Create a new IAM role that integrates with a KMS key",
+      "Attach the EBS volume to your EC2 instance, specifying the KMS key during creation",
+      "Verify that the EBS volume is properly encrypted by checking for the 'encrypted' status in the AWS Management Console",
+      "Integrate the IAM role with the KMS key using CLI commands"
+    ],
+    "validate": {
+      "command": "aws ec2 describe-volumes --volume-id <VOLUME_ID>",
+      "expected": "The EBS volume is encrypted and properly attached to your EC2 instance."
+    },
+    "safety": [
+      "Use the 'default' AWS region for this exercise",
+      "Do not delete any existing resources within your account",
+      "Verify that you have correctly integrated the IAM role with a KMS key before proceeding"
+    ]
+  },
+  "elite_competence": {
+    "scenario_name": "Advanced Cloud Security: Data at Rest Protection",
+    "role_simulation": "Cloud Security Engineer",
+    "bug_injection": {
+      "description": "The EBS volume is not encrypted due to a missing KMS key specification.",
+      "bad_state": "EBS Volume <VOLUME_ID> is not encrypted"
+    },
+    "success_criteria": {
+      "verification_command": "aws ec2 describe-volumes --volume-id <VOLUME_ID>",
+      "expected_output": "The EBS volume is encrypted and properly attached to your EC2 instance."
+    },
+    "interrogation_questions": [
+      "What are the key benefits of encrypting data at rest in cloud environments?",
+      "How do you configure IAM roles to integrate with KMS keys for seamless encryption and decryption?",
+      "What are common mistakes that can lead to EBS volume encryption failure?"
+    ]
+  },
+  "legal_context": {
+    "jurisdiction": "UK",
+    "laws": [
+      "UK GDPR",
+      "Computer Misuse Act 1990"
+    ],
+    "compliance_focus": [
+      "data protection",
+      "least privilege"
+    ],
+    "operator_duties": [
+      "Protect sensitive data",
+      "Operate within authorised access boundaries"
+    ]
+  },
+  "accessibility": {
+    "reading_level": "standard",
+    "dyslexia_friendly": true,
+    "alt_text_summary": "A diagram illustrating the integration of EBS volumes with KMS keys for secure encryption and decryption in cloud environments."
+  },
+  "resume_bullets": [
+    "Configured encrypted volumes using Amazon Elastic Block Store (EBS) and AWS Key Management Service (KMS)",
+    "Integrated IAM roles with KMS keys for seamless encryption and decryption",
+    "Ensured proper encryption of EBS volumes using CLI commands"
+  ]
+}

@@ -1,0 +1,107 @@
+{
+  "id": "spdo-l002",
+  "canon": "sentinel-protocol-defensive-operations",
+  "version": "v1",
+  "title": "Implementing Cloud Security Monitoring with AWS CloudWatch and Prometheus",
+  "objectives": [
+    "Configure AWS CloudWatch to monitor cloud resources for security threats",
+    "Set up Prometheus to collect metrics from cloud services",
+    "Integrate CloudWatch with Prometheus for real-time anomaly detection"
+  ],
+  "prerequisites": [
+    "Basic knowledge of AWS CloudFormation and IAM roles",
+    "Understanding of Prometheus configuration and query language",
+    "Familiarity with Linux shell scripting and command-line tools"
+  ],
+  "duration_minutes": 45,
+  "tags": [
+    "security",
+    "cloud",
+    "operations"
+  ],
+  "mission_brief": {
+    "shadow_corp": "Aegis Logistics",
+    "briefing": "Your mission, should you choose to accept it, is to monitor and detect security threats on our cloud infrastructure.",
+    "rules_of_engagement": [
+      "You must implement AWS CloudWatch alarms for CPU usage above 70% on all EC2 instances",
+      "You must configure Prometheus to collect metrics from the RDS database instance",
+      "You must integrate CloudWatch with Prometheus to trigger alerts when threshold values are exceeded"
+    ]
+  },
+  "content": {
+    "concept": "Cloud security monitoring is a critical aspect of maintaining the integrity and confidentiality of cloud-based resources. AWS CloudWatch provides real-time monitoring and logging capabilities, while Prometheus collects metrics from various services. By integrating these tools, we can identify potential security threats and respond promptly.",
+    "walkthrough": "To implement cloud security monitoring with AWS CloudWatch and Prometheus, we'll first configure CloudWatch to monitor EC2 instances for CPU usage above 70%. Then, we'll set up Prometheus to collect metrics from the RDS database instance. Finally, we'll integrate CloudWatch with Prometheus to trigger alerts when threshold values are exceeded.",
+    "checkpoints": [
+      "Verify that AWS CloudWatch alarms are triggered for CPU usage above 70% on all EC2 instances",
+      "Check that Prometheus is collecting metrics from the RDS database instance",
+      "Confirm that alerts are triggered in real-time when threshold values are exceeded"
+    ],
+    "common_mistakes": [
+      "Failing to configure IAM roles correctly for AWS CloudWatch and Prometheus integration",
+      "Incorrectly setting up alert thresholds in CloudWatch and Prometheus",
+      "Neglecting to validate metrics collection from various services"
+    ]
+  },
+  "lab": {
+    "type": "guided-cli",
+    "setup": "# Install necessary packages on the EC2 instance\nsudo yum install -y awscli\n# Configure AWS CLI credentials for CloudWatch access\naws configure set aws_access_key_id YOUR_ACCESS_KEY_ID\naws configure set aws_secret_access_key YOUR_SECRET_ACCESS_KEY",
+    "steps": [
+      "# Create an IAM role for AWS CloudWatch to monitor EC2 instances\naws iam create-role --role-name cloudwatch-monitoring --description \"Role for AWS CloudWatch monitoring\"",
+      "# Attach necessary policies to the IAM role\naws iam attach-role-policy --role-name cloudwatch-monitoring --policy-arn arn:aws:iam::aws:policy/CloudWatchAgentServerlessRole",
+      "# Configure Prometheus to collect metrics from RDS database instance\nsudo yum install -y epel-release\nsudo amazon-linux-extras enable prometheus\nsudo rpm -Uvh https://s3.amazonaws.com/prometheus-kubernetes/latest/prometheus-node-exporter-0.16.0.x86_64.rpm",
+      "# Integrate CloudWatch with Prometheus to trigger alerts when threshold values are exceeded\naws cloudwatch put-metric-alarm --alarm-name cpu-high-alert --metric-name CPUUtilization --namespace AWS/EC2 --statistic Average --period 300 --threshold 70",
+      "# Verify that alerts are triggered in real-time when threshold values are exceeded\naws cloudwatch get-metric-statistics --namespace AWS/EC2 --metric-name CPUUtilization --dimension Name=InstanceId,i-12345678 --statistics Average"
+    ],
+    "validate": {
+      "command": "aws cloudwatch describe-metrics --namespace AWS/EC2",
+      "expected": "CPUUtilization, namespace: AWS/EC2"
+    },
+    "safety": [
+      "Be cautious when creating IAM roles and attaching policies to prevent unauthorized access.",
+      "Monitor CPU usage and memory consumption on EC2 instances to avoid overloading the system.",
+      "Regularly update Prometheus and CloudWatch packages to ensure security patches are applied."
+    ]
+  },
+  "elite_competence": {
+    "scenario_name": "Cloud Security Monitoring: A Real-World Scenario",
+    "role_simulation": "You are the Cloud Security Engineer responsible for monitoring and detecting security threats on a cloud infrastructure.",
+    "bug_injection": {
+      "description": "A critical vulnerability in an EC2 instance is causing CPU usage to exceed 90%.",
+      "bad_state": "# Simulate the critical vulnerability by modifying the EC2 instance configuration\naws ec2 modify-instance-attribute --instance-id i-12345678 --attribute InstanceType --value t2.micro"
+    },
+    "success_criteria": {
+      "verification_command": "aws cloudwatch describe-metrics --namespace AWS/EC2",
+      "expected_output": "CPUUtilization, namespace: AWS/EC2"
+    },
+    "interrogation_questions": [
+      "What are the primary differences between CloudWatch and Prometheus in terms of functionality?",
+      "How would you troubleshoot a situation where alerts are not triggering correctly?",
+      "Explain the concept of \"least privilege\" in relation to IAM roles and policies."
+    ]
+  },
+  "legal_context": {
+    "jurisdiction": "UK",
+    "laws": [
+      "UK GDPR",
+      "Computer Misuse Act 1990"
+    ],
+    "compliance_focus": [
+      "data protection",
+      "least privilege"
+    ],
+    "operator_duties": [
+      "Protect sensitive data",
+      "Operate within authorised access boundaries"
+    ]
+  },
+  "accessibility": {
+    "reading_level": "standard",
+    "dyslexia_friendly": true,
+    "alt_text_summary": "Implementing cloud security monitoring with AWS CloudWatch and Prometheus to detect and respond to potential threats."
+  },
+  "resume_bullets": [
+    "Configured AWS CloudWatch to monitor EC2 instances for CPU usage above 70%",
+    "Set up Prometheus to collect metrics from RDS database instance",
+    "Integrated CloudWatch with Prometheus to trigger alerts when threshold values are exceeded"
+  ]
+}

@@ -1,0 +1,107 @@
+{
+  "id": "vpaa-l005",
+  "canon": "vanguard-protocol-advanced-architecture",
+  "version": "v1",
+  "title": "Cloud Security for Aegis Logistics: Implementing Vanguard Protocol",
+  "objectives": [
+    "Design a cloud security architecture using the Vanguard Protocol for Aegis Logistics",
+    "Implement necessary security controls to protect sensitive data in transit and at rest",
+    "Configure access control mechanisms to ensure least privilege and authorised access"
+  ],
+  "prerequisites": [
+    "Familiarity with cloud computing concepts and cloud service models (IaaS, PaaS, SaaS)",
+    "Understanding of security and compliance frameworks (e.g. NIST, ISO 27001)",
+    "Experience with scripting languages (e.g. Bash) for automation"
+  ],
+  "duration_minutes": 45,
+  "tags": [
+    "security",
+    "cloud",
+    "operations"
+  ],
+  "mission_brief": {
+    "shadow_corp": "Aegis Logistics",
+    "briefing": "Your team has been tasked with implementing a cloud security architecture for Aegis Logistics, a logistics company handling sensitive cargo. Your primary objective is to design and implement a secure architecture using the Vanguard Protocol.",
+    "rules_of_engagement": [
+      "Prioritise security and compliance throughout the design process",
+      "Ensure access control mechanisms are configured correctly to prevent unauthorised access",
+      "Document all configuration changes for auditing purposes"
+    ]
+  },
+  "content": {
+    "concept": "The Vanguard Protocol is an advanced architecture designed to ensure secure data transmission and storage in cloud environments. It combines cutting-edge encryption methods with strict access controls, making it ideal for companies handling sensitive cargo.",
+    "walkthrough": "This module will walk you through the implementation of the Vanguard Protocol on Aegis Logistics' cloud infrastructure. We will cover topics such as key management, encryption protocols, and access control mechanisms.\n\nExpansion: Walk through expected command outputs, common failure modes, and a verification loop (change → verify → record).",
+    "checkpoints": [
+      "Understanding the importance of key rotation in maintaining cryptographic security",
+      "Configuring encryption protocols to ensure data confidentiality",
+      "Implementing role-based access controls for least privilege"
+    ],
+    "common_mistakes": [
+      "Ignoring key rotation, leading to weak cryptography",
+      "Insufficiently configuring encryption protocols, resulting in compromised data",
+      "Inadequate access control measures, allowing unauthorised users"
+    ]
+  },
+  "lab": {
+    "type": "guided-cli",
+    "setup": "Create a virtual environment with AWS Cloud9 and install necessary dependencies (e.g. AWS CLI, bash)",
+    "steps": [
+      "Set up an S3 bucket to store encrypted data using AWS KMS",
+      "Configure encryption protocols for data in transit using SSL/TLS",
+      "Implement IAM policies for role-based access control",
+      "Add an additional verification step: run a relevant command (e.g., 'ls -la', 'id', 'whoami') and explain what the output confirms.",
+      "Add an additional verification step: run a relevant command (e.g., 'ls -la', 'id', 'whoami') and explain what the output confirms."
+    ],
+    "validate": {
+      "command": "aws s3 ls --recursive <bucket_name>",
+      "expected": "Successfully listed objects in bucket <bucket_name>"
+    },
+    "safety": [
+      "Verify IAM policies are configured correctly to prevent unauthorised access",
+      "Ensure encryption protocols are implemented correctly to protect data",
+      "Document all configuration changes for auditing purposes"
+    ]
+  },
+  "elite_competence": {
+    "scenario_name": "Vanguard Protocol Implementation on Aegis Logistics Cloud Infrastructure",
+    "role_simulation": "Cloud Security Architect for Aegis Logistics",
+    "bug_injection": {
+      "description": "Introduce a bug in the IAM policy configuration, allowing unauthorised access to sensitive data",
+      "bad_state": "Unauthorised user is able to access encrypted data without proper credentials"
+    },
+    "success_criteria": {
+      "verification_command": "aws iam get-role --role-name <role_name>",
+      "expected_output": "Role has correct permissions and access control measures in place"
+    },
+    "interrogation_questions": [
+      "What are the primary security concerns when implementing cloud-based data storage?",
+      "How would you configure encryption protocols to ensure confidentiality of sensitive data?",
+      "Can you explain the importance of role-based access controls for least privilege?"
+    ]
+  },
+  "legal_context": {
+    "jurisdiction": "UK",
+    "laws": [
+      "UK GDPR",
+      "Computer Misuse Act 1990"
+    ],
+    "compliance_focus": [
+      "data protection",
+      "least privilege"
+    ],
+    "operator_duties": [
+      "Protect sensitive data",
+      "Operate within authorised access boundaries"
+    ]
+  },
+  "accessibility": {
+    "reading_level": "standard",
+    "dyslexia_friendly": true,
+    "alt_text_summary": "Cloud Security Architecture for Aegis Logistics using Vanguard Protocol"
+  },
+  "resume_bullets": [
+    "Designed and implemented a cloud security architecture using the Vanguard Protocol for Aegis Logistics",
+    "Configured encryption protocols to ensure data confidentiality and integrity",
+    "Implemented role-based access controls for least privilege and authorised access"
+  ]
+}
