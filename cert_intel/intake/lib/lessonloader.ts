@@ -8,20 +8,19 @@ export type LoadCanonLessonsInput = {
 
 export type CanonLesson = {
   id: string;
-  title?: string;
   canon: string;
+  title: string;
+  description?: string;
   version: string;
   path: string;
+  order?: number;
 };
 
-/**
- * Canonical lesson loader (filesystem-backed).
- * Node-only. Deterministic. No caching.
- */
-export function loadLessons(input: LoadCanonLessonsInput): CanonLesson[] {
-  const { canon, version } = input;
-
-  const labsDir = path.join(
+export function loadLessons({
+  canon,
+  version,
+}: LoadCanonLessonsInput): CanonLesson[] {
+  const baseDir = path.join(
     process.cwd(),
     "cert_intel",
     "canon",
@@ -31,31 +30,34 @@ export function loadLessons(input: LoadCanonLessonsInput): CanonLesson[] {
     "labs"
   );
 
-  if (!fs.existsSync(labsDir)) {
+  if (!fs.existsSync(baseDir)) {
+    console.warn("[lessonloader] Missing labs dir:", baseDir);
     return [];
   }
 
   const files = fs
-    .readdirSync(labsDir)
+    .readdirSync(baseDir)
     .filter((f) => f.endsWith(".json"))
     .sort();
 
-  return files.map((file) => {
-    const fullPath = path.join(labsDir, file);
-    const raw = JSON.parse(fs.readFileSync(fullPath, "utf8"));
+  return files.map((file, index) => {
+    const fullPath = path.join(baseDir, file);
+    const raw = JSON.parse(fs.readFileSync(fullPath, "utf-8"));
 
     return {
       id: raw.id,
       title: raw.title,
+      description: raw.description ?? "",
       canon,
       version,
       path: fullPath,
+      order: index + 1,
     };
   });
 }
 
 /**
- * Alias used by Next.js app routes.
- * DO NOT REMOVE — this is what Phoenix imports.
+ * Alias used by Next.js app routes
+ * DO NOT REMOVE
  */
 export const loadCanonLessons = loadLessons;
