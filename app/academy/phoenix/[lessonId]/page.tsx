@@ -1,32 +1,33 @@
-import fs from "fs";
-import { notFound } from "next/navigation";
-import { loadPhoenixLessons } from "@/cert_intel/intake/lib/lessonloader";
+import { loadCanonLessons } from "@/cert_intel/intake/lib/lessonloader";
+import Link from "next/link";
 
-type Props = {
-  params: { lessonId: string };
-};
-
-export default function PhoenixLessonPage({ params }: Props) {
-  const lessons = loadPhoenixLessons();
-  const lesson = lessons.find((l) => l.id === params.lessonId);
-
-  if (!lesson || !fs.existsSync(lesson.path)) {
-    notFound();
-  }
-
-  const data = JSON.parse(fs.readFileSync(lesson.path, "utf-8"));
+export default function PhoenixIndex() {
+  const lessons = loadCanonLessons("phoenix");
 
   return (
-    <section className="space-y-6">
-      <h1 className="text-3xl font-semibold">{data.title}</h1>
+    <main className="max-w-5xl mx-auto px-6 py-12">
+      <h1 className="text-3xl font-semibold mb-6">
+        Phoenix Protocol · Lessons
+      </h1>
 
-      {data.description && (
-        <p className="text-white/70">{data.description}</p>
+      {lessons.length === 0 && (
+        <p className="text-white/60">0 lessons detected</p>
       )}
 
-      <pre className="rounded-xl border border-white/10 bg-black/40 p-4 text-xs overflow-x-auto">
-        {JSON.stringify(data, null, 2)}
-      </pre>
-    </section>
+      <ul className="space-y-4">
+        {lessons.map((l) => (
+          <li key={l.id} className="border border-white/10 rounded-xl p-4">
+            <Link href={`/academy/phoenix/${l.id}`}>
+              <div className="text-lg">{l.title}</div>
+              {l.description && (
+                <p className="text-white/60 text-sm mt-1">
+                  {l.description}
+                </p>
+              )}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </main>
   );
 }
