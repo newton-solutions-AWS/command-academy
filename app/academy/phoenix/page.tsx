@@ -1,14 +1,18 @@
-import { loadCanonLessons } from "@/cert_intel/intake/lib/lessonloader";
 import Link from "next/link";
+import { loadCanonLessons } from "@/cert_intel/intake/lib/lessonloader";
 
-export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
-export default function PhoenixAcademyPage() {
-  const lessons = loadCanonLessons({
-    canon: "phoenix-protocol-secure-cloud-operator",
-    version: "v2",
-  });
+export default async function PhoenixAcademyPage() {
+  // Force runtime execution boundary
+  const lessons = await Promise.resolve(
+    loadCanonLessons({
+      canon: "phoenix-protocol-secure-cloud-operator",
+      version: "v2",
+    })
+  );
 
   return (
     <div className="mx-auto max-w-6xl px-6 py-12">
@@ -40,7 +44,7 @@ export default function PhoenixAcademyPage() {
                   LESSON {String(idx + 1).padStart(2, "0")}
                 </p>
                 <h3 className="mt-1 text-lg font-medium">
-                  {lesson.title ?? lesson.id}
+                  {lesson.title}
                 </h3>
               </div>
               <span className="text-xs text-white/40 group-hover:text-white">
