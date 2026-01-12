@@ -4,31 +4,20 @@ import { loadLessonById, toRenderBlocks } from "@/lib/lessonloader";
 
 export const dynamic = "force-dynamic";
 
-type Props = {
-  params: { lessonId: string };
-};
+type Props = { params: { lessonId: string } };
 
-const CANON = "phoenix-protocol-secure-cloud-operator";
+const CANON = "vanguard-protocol-architecture-operator";
 const VERSION = "v2";
 
-function Section({
-  title,
-  items,
-}: {
-  title: string;
-  items: string[];
-}) {
+function Section({ title, items }: { title: string; items: string[] }) {
   if (!items.length) return null;
-
   return (
     <section className="mt-8">
       <h2 className="text-xs uppercase tracking-[0.35em] text-white/50">{title}</h2>
       <div className="mt-3 rounded-xl border border-white/10 bg-black/40 p-5">
         <ul className="list-disc pl-5 text-sm text-white/75 space-y-2">
           {items.map((x, i) => (
-            <li key={`${title}-${i}`} className="leading-relaxed">
-              {x}
-            </li>
+            <li key={`${title}-${i}`} className="leading-relaxed">{x}</li>
           ))}
         </ul>
       </div>
@@ -36,9 +25,8 @@ function Section({
   );
 }
 
-export default function PhoenixLessonPage({ params }: Props) {
+export default function VanguardLessonPage({ params }: Props) {
   const lesson = loadLessonById({ canon: CANON, version: VERSION, lessonId: params.lessonId });
-
   if (!lesson) return notFound();
 
   const blocks = toRenderBlocks(lesson);
@@ -47,35 +35,19 @@ export default function PhoenixLessonPage({ params }: Props) {
     <div className="mx-auto max-w-5xl px-6 py-14">
       <div className="flex items-center justify-between gap-4">
         <p className="text-xs uppercase tracking-[0.35em] text-white/50">
-          Phoenix Division · Canon Lesson
+          Vanguard Division · Canon Lesson
         </p>
 
         <Link
-          href="/academy/phoenix"
+          href="/academy/vanguard"
           className="rounded-xl border border-white/15 bg-white/5 px-4 py-2 text-sm text-white hover:bg-white/10"
         >
-          ← Back to Phoenix
+          ← Back to Vanguard
         </Link>
       </div>
 
       <h1 className="mt-4 text-3xl font-semibold leading-tight">{lesson.title}</h1>
-
-      {lesson.description ? (
-        <p className="mt-4 text-white/70">{lesson.description}</p>
-      ) : null}
-
-      <div className="mt-6 grid gap-3 text-xs text-white/45">
-        <div className="rounded-xl border border-white/10 bg-black/40 p-4">
-          <div className="flex flex-wrap gap-x-6 gap-y-2">
-            <span><span className="text-white/60">Canon:</span> {lesson.canon}</span>
-            <span><span className="text-white/60">Version:</span> {lesson.version}</span>
-            <span><span className="text-white/60">Order:</span> {lesson.order}</span>
-          </div>
-          <div className="mt-2 break-all">
-            <span className="text-white/60">Lesson ID:</span> {lesson.id}
-          </div>
-        </div>
-      </div>
+      {lesson.description ? <p className="mt-4 text-white/70">{lesson.description}</p> : null}
 
       {lesson.mission ? (
         <section className="mt-10">

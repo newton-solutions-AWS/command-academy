@@ -1,0 +1,107 @@
+{
+  "id": "spdo-l003",
+  "canon": "sentinel-protocol-defensive-operations",
+  "version": "v1",
+  "title": "Implementing SentinalOne Vulnerability Detection and Response for AWS Environments",
+  "objectives": [
+    "Configure SentinelOne to monitor AWS environments for vulnerability detection and response.",
+    "Integrate SentinelOne with AWS services to enable real-time threat detection and response.",
+    "Utilize SentinelOne's automated incident response capabilities to contain and remediate security threats."
+  ],
+  "prerequisites": [
+    "SentinelOne Cloud Agent installed on AWS instances",
+    "AWS Account with IAM permissions for SentinelOne integration",
+    "Basic understanding of cloud security and compliance"
+  ],
+  "duration_minutes": 45,
+  "tags": [
+    "security",
+    "cloud",
+    "operations"
+  ],
+  "mission_brief": {
+    "shadow_corp": "Aegis Logistics",
+    "briefing": "Your team has been tasked with implementing a cloud-native security solution to monitor and respond to vulnerabilities in the AWS environment. Your mission is to configure SentinelOne to integrate with AWS services, enabling real-time threat detection and response.",
+    "rules_of_engagement": [
+      "Collaborate with your team to achieve the mission objective",
+      "Utilize official documentation for SentinelOne and AWS integration",
+      "Test and validate the solution in a non-production environment before deployment"
+    ]
+  },
+  "content": {
+    "concept": "SentinelOne's cloud-native security platform enables organisations to detect, respond to, and prevent cyber threats across their entire cloud estate. The platform integrates with various cloud services, including AWS, to provide real-time threat detection and response capabilities.",
+    "walkthrough": "To implement SentinelOne in an AWS environment, follow these steps: (1) Install the SentinelOne Cloud Agent on AWS instances, (2) Configure AWS IAM permissions for SentinelOne integration, and (3) Integrate SentinelOne with AWS services using the official documentation. Once integrated, utilise SentinelOne's automated incident response capabilities to contain and remediate security threats.",
+    "checkpoints": [
+      "SentinelOne Cloud Agent installed on AWS instances",
+      "AWS IAM permissions configured for SentinelOne integration",
+      "SentinelOne integrated with AWS services"
+    ],
+    "common_mistakes": [
+      "Incorrectly configuring AWS IAM permissions for SentinelOne integration",
+      "Failing to install the SentinelOne Cloud Agent on all AWS instances",
+      "Not integrating SentinelOne with AWS services correctly"
+    ]
+  },
+  "lab": {
+    "type": "guided-cli",
+    "setup": "Create an AWS account and configure the IAM role for SentinelOne integration.",
+    "steps": [
+      "Install the SentinelOne Cloud Agent on an AWS instance using the official documentation.",
+      "Configure AWS IAM permissions for SentinelOne integration using the AWS Management Console.",
+      "Integrate SentinelOne with AWS services using the official documentation.",
+      "Test and validate the solution in a non-production environment before deployment.",
+      "Utilise SentinelOne's automated incident response capabilities to contain and remediate security threats."
+    ],
+    "validate": {
+      "command": "aws iam list-roles",
+      "expected": "The AWS IAM role is correctly configured for SentinelOne integration"
+    },
+    "safety": [
+      "Ensure the SentinelOne Cloud Agent is installed on all AWS instances.",
+      "Configure AWS IAM permissions correctly to avoid security risks.",
+      "Integrate SentinelOne with AWS services carefully to avoid data loss or corruption."
+    ]
+  },
+  "elite_competence": {
+    "scenario_name": "SentinelOne Vulnerability Detection and Response Scenario",
+    "role_simulation": "Cloud Security Engineer tasked with implementing SentinelOne in an AWS environment",
+    "bug_injection": {
+      "description": "Inject a vulnerability into the AWS environment to test SentinelOne's detection and response capabilities.",
+      "bad_state": "The AWS instance is compromised with a known vulnerability."
+    },
+    "success_criteria": {
+      "verification_command": "aws iam list-roles",
+      "expected_output": "The AWS IAM role is correctly configured for SentinelOne integration, and the vulnerability is detected and contained by SentinelOne."
+    },
+    "interrogation_questions": [
+      "How do you ensure correct configuration of AWS IAM permissions for SentinelOne integration?",
+      "What are the benefits of utilising SentinelOne's automated incident response capabilities?",
+      "How do you validate the solution in a non-production environment before deployment?"
+    ]
+  },
+  "legal_context": {
+    "jurisdiction": "UK",
+    "laws": [
+      "UK GDPR",
+      "Computer Misuse Act 1990"
+    ],
+    "compliance_focus": [
+      "data protection",
+      "least privilege"
+    ],
+    "operator_duties": [
+      "Protect sensitive data",
+      "Operate within authorised access boundaries"
+    ]
+  },
+  "accessibility": {
+    "reading_level": "standard",
+    "dyslexia_friendly": true,
+    "alt_text_summary": "This lesson covers the implementation of SentinelOne in an AWS environment for vulnerability detection and response."
+  },
+  "resume_bullets": [
+    "Configured SentinelOne to monitor AWS environments for vulnerability detection and response.",
+    "Integrated SentinelOne with AWS services to enable real-time threat detection and response.",
+    "Utilised SentinelOne's automated incident response capabilities to contain and remediate security threats."
+  ]
+}

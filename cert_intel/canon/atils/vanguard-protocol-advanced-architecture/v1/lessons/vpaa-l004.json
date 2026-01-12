@@ -1,0 +1,107 @@
+{
+  "id": "vpaa-l004",
+  "canon": "vanguard-protocol-advanced-architecture",
+  "version": "v1",
+  "title": "Vulnerability Scanning and Remediation in AWS Cloud",
+  "objectives": [
+    "Understand the importance of vulnerability scanning in AWS cloud security",
+    "Learn how to remediate common vulnerabilities using AWS services",
+    "Develop skills in configuring AWS Config and Amazon Inspector"
+  ],
+  "prerequisites": [
+    "Basic understanding of AWS cloud architecture and services",
+    "Familiarity with AWS CLI and SDKs",
+    "Knowledge of AWS IAM roles and permissions"
+  ],
+  "duration_minutes": 45,
+  "tags": [
+    "security",
+    "cloud",
+    "operations"
+  ],
+  "mission_brief": {
+    "shadow_corp": "Aegis Logistics",
+    "briefing": "Your team is responsible for securing the Aegis Logistics cloud environment. You have been tasked with identifying and remediating any vulnerabilities in the AWS infrastructure.",
+    "rules_of_engagement": [
+      "Do not introduce new vulnerabilities or security risks to the environment",
+      "Ensure all actions are documented and justified",
+      "Collaborate with team members to ensure comprehensive coverage"
+    ]
+  },
+  "content": {
+    "concept": "Vulnerability scanning is a critical component of AWS cloud security. It involves identifying potential weaknesses in the environment that could be exploited by attackers. In this lesson, you will learn how to configure and use AWS services such as Amazon Inspector and AWS Config to identify and remediate vulnerabilities.",
+    "walkthrough": "To begin, navigate to the AWS Management Console and select the AWS Config service. From there, create a new configuration recorder and specify the resources you want to monitor. Next, enable Amazon Inspector and define the scan types you want to run. Finally, review the findings and take remediation actions as necessary.",
+    "checkpoints": [
+      "AWS Config is enabled and configured correctly",
+      "Amazon Inspector scans are running regularly",
+      "Vulnerabilities are being remediated in a timely manner"
+    ],
+    "common_mistakes": [
+      "Failing to configure AWS Config properly",
+      "Ignoring Amazon Inspector scan findings",
+      "Not documenting remediation actions"
+    ]
+  },
+  "lab": {
+    "type": "guided-cli",
+    "setup": "Create an AWS account and enable the necessary services. Install the AWS CLI on your local machine.",
+    "steps": [
+      "Navigate to the AWS Management Console and select AWS Config",
+      "Create a new configuration recorder and specify the resources you want to monitor",
+      "Enable Amazon Inspector and define the scan types you want to run",
+      "Run an Amazon Inspector scan and review the findings",
+      "Remediate any vulnerabilities identified by Amazon Inspector"
+    ],
+    "validate": {
+      "command": "aws configservice get-configuration-recorder-status",
+      "expected": "CONFIGURATION_RECORDER_RUNNING"
+    },
+    "safety": [
+      "Do not make any changes to production environments without proper authorization",
+      "Ensure all actions are documented and justified",
+      "Collaborate with team members to ensure comprehensive coverage"
+    ]
+  },
+  "elite_competence": {
+    "scenario_name": "Vulnerability Scanning and Remediation in AWS Cloud",
+    "role_simulation": "AWS Security Specialist",
+    "bug_injection": {
+      "description": "A critical vulnerability has been introduced into the environment. The bug injection will simulate a real-world scenario where an attacker is attempting to exploit a known vulnerability.",
+      "bad_state": "The environment has been compromised and sensitive data has been leaked."
+    },
+    "success_criteria": {
+      "verification_command": "aws iam list-users",
+      "expected_output": "There are no users with elevated privileges"
+    },
+    "interrogation_questions": [
+      "How would you configure AWS Config to monitor for vulnerabilities?",
+      "What steps would you take to remediate a critical vulnerability identified by Amazon Inspector?",
+      "How do you ensure that all actions taken during the lab are documented and justified?"
+    ]
+  },
+  "legal_context": {
+    "jurisdiction": "UK",
+    "laws": [
+      "UK GDPR",
+      "Computer Misuse Act 1990"
+    ],
+    "compliance_focus": [
+      "data protection",
+      "least privilege"
+    ],
+    "operator_duties": [
+      "Protect sensitive data",
+      "Operate within authorised access boundaries"
+    ]
+  },
+  "accessibility": {
+    "reading_level": "standard",
+    "dyslexia_friendly": true,
+    "alt_text_summary": "This lesson covers vulnerability scanning and remediation in AWS cloud security."
+  },
+  "resume_bullets": [
+    "Configured and enabled AWS Config and Amazon Inspector for vulnerability scanning",
+    "Remediated critical vulnerabilities identified by Amazon Inspector",
+    "Developed skills in configuring AWS services for security"
+  ]
+}
