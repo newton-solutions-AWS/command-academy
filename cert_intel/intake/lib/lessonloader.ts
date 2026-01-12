@@ -1,56 +1,58 @@
 import fs from "fs";
 import path from "path";
 
-export interface CanonLesson {
+export type CanonLesson = {
   id: string;
   title: string;
   canon: string;
-  version: string;
+  version: "v2";
   path: string;
-  description?: string;
-}
+};
 
-interface LoadCanonLessonsInput {
-  canon: string;
-  version: string;
-}
+const CANON_ROOT = path.join(
+  process.cwd(),
+  "cert_intel",
+  "canon",
+  "atils"
+);
 
-export function loadLessons(input: LoadCanonLessonsInput): CanonLesson[] {
-  const { canon, version } = input;
+function loadCanonLessons(canon: string): CanonLesson[] {
+  const labsDir = path.join(CANON_ROOT, canon, "v2", "labs");
 
-  const labsDir = path.join(
-    process.cwd(),
-    "cert_intel",
-    "canon",
-    "atils",
-    canon,
-    version,
-    "labs"
-  );
+  if (!fs.existsSync(labsDir)) {
+    console.warn(`[CANON] Missing labs dir: ${labsDir}`);
+    return [];
+  }
 
-  if (!fs.existsSync(labsDir)) return [];
-
-  const files = fs
+  return fs
     .readdirSync(labsDir)
-    .filter((f) => f.endsWith(".json"));
+    .filter((f) => f.endsWith(".json"))
+    .map((file) => {
+      const fullPath = path.join(labsDir, file);
+      const raw = JSON.parse(fs.readFileSync(fullPath, "utf-8"));
 
-  return files.map((file) => {
-    const fullPath = path.join(labsDir, file);
-    const raw = JSON.parse(fs.readFileSync(fullPath, "utf-8"));
-
-    return {
-      id: raw.id ?? file.replace(".json", ""),
-      title: raw.title ?? raw.name ?? "Untitled Lesson",
-      canon,
-      version,
-      path: fullPath,
-      description: raw.description,
-    };
-  });
+      return {
+        id: raw.id,
+        title: raw.title,
+        canon,
+        version: "v2",
+        path: fullPath,
+      };
+    });
 }
 
-/**
- * Alias used by Next.js routes
- * DO NOT REMOVE
- */
-export const loadCanonLessons = loadLessons;
+/* ───────────────────────────────────────────── */
+/* DIVISION EXPORTS — DO NOT DRIFT FROM THESE     */
+/* ───────────────────────────────────────────── */
+
+export function loadPhoenixLessons() {
+  return loadCanonLessons("phoenix-protocol-secure-cloud-operator");
+}
+
+export function loadVanguardLessons() {
+  return loadCanonLessons("vanguard-protocol-advanced-architecture");
+}
+
+export function loadSentinelLessons() {
+  return loadCanonLessons("sentinel-protocol-defensive-operations");
+}

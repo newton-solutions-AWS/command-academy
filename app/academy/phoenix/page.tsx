@@ -1,17 +1,23 @@
 import Link from "next/link";
-import { loadCanonLessons } from "@/cert_intel/intake/lib/lessonloader";
+import { loadPhoenixLessons } from "@/cert_intel/intake/lib/lessonloader";
 
-export default function PhoenixPage() {
-  const lessons = loadCanonLessons({
-    canon: "phoenix-protocol-secure-cloud-operator",
-    version: "v2",
-  });
+export default function PhoenixIndexPage() {
+  const lessons = loadPhoenixLessons();
 
   return (
-    <main className="p-10 text-white">
-      <h1 className="text-3xl font-bold mb-6">Phoenix Division</h1>
+    <section className="space-y-6">
+      <h1 className="text-3xl font-semibold">Phoenix Division</h1>
 
-      <ul className="space-y-4">
+      {lessons.length === 0 && (
+        <p className="text-white/60">
+          No lessons found. Expected:
+          <code className="block mt-2 text-xs">
+            cert_intel/canon/atils/phoenix-protocol-secure-cloud-operator/v2/labs/*.json
+          </code>
+        </p>
+      )}
+
+      <ul className="space-y-3">
         {lessons.map((lesson) => (
           <li key={lesson.id}>
             <Link
@@ -23,6 +29,6 @@ export default function PhoenixPage() {
           </li>
         ))}
       </ul>
-    </main>
+    </section>
   );
 }

@@ -1,43 +1,32 @@
-import { loadCanonLessons } from "@/cert_intel/intake/lib/lessonloader";
+import fs from "fs";
 import { notFound } from "next/navigation";
-
-export const dynamic = "force-dynamic";
+import { loadVanguardLessons } from "@/cert_intel/intake/lib/lessonloader";
 
 type Props = {
   params: { lessonId: string };
 };
 
 export default function VanguardLessonPage({ params }: Props) {
-  const lessons = loadCanonLessons({
-    canon: "vanguard-protocol-advanced-architecture",
-    version: "v1",
-  });
-
+  const lessons = loadVanguardLessons();
   const lesson = lessons.find((l) => l.id === params.lessonId);
 
-  if (!lesson) return notFound();
+  if (!lesson || !fs.existsSync(lesson.path)) {
+    notFound();
+  }
+
+  const data = JSON.parse(fs.readFileSync(lesson.path, "utf-8"));
 
   return (
-    <div className="mx-auto max-w-4xl px-6 py-14">
-      <p className="text-xs uppercase tracking-[0.35em] text-white/50">
-        Vanguard Division · Canon Module
-      </p>
+    <section className="space-y-6">
+      <h1 className="text-3xl font-semibold">{data.title}</h1>
 
-      <h1 className="mt-4 text-3xl font-semibold leading-tight">
-        {lesson.title}
-      </h1>
-
-      {lesson.description && (
-        <p className="mt-4 text-white/70">
-          {lesson.description}
-        </p>
+      {data.description && (
+        <p className="text-white/70">{data.description}</p>
       )}
 
-      <div className="mt-10 rounded-xl border border-white/10 bg-black/40 p-6 text-xs text-white/60">
-        <pre className="overflow-x-auto">
-          {JSON.stringify(lesson, null, 2)}
-        </pre>
-      </div>
-    </div>
+      <pre className="rounded-xl border border-white/10 bg-black/40 p-4 text-xs overflow-x-auto">
+        {JSON.stringify(data, null, 2)}
+      </pre>
+    </section>
   );
 }

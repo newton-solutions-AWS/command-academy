@@ -1,34 +1,32 @@
-import { loadCanonLessons } from "@/cert_intel/intake/lib/lessonloader";
+import fs from "fs";
+import { notFound } from "next/navigation";
+import { loadPhoenixLessons } from "@/cert_intel/intake/lib/lessonloader";
 
-interface Props {
+type Props = {
   params: { lessonId: string };
-}
+};
 
 export default function PhoenixLessonPage({ params }: Props) {
-  const lessons = loadCanonLessons({
-    canon: "phoenix-protocol-secure-cloud-operator",
-    version: "v2",
-  });
-
+  const lessons = loadPhoenixLessons();
   const lesson = lessons.find((l) => l.id === params.lessonId);
 
-  if (!lesson) {
-    return <div className="p-10 text-white">Lesson not found.</div>;
+  if (!lesson || !fs.existsSync(lesson.path)) {
+    notFound();
   }
 
-  return (
-    <main className="p-10 text-white">
-      <h1 className="text-3xl font-bold">{lesson.title}</h1>
+  const data = JSON.parse(fs.readFileSync(lesson.path, "utf-8"));
 
-      {lesson.description && (
-        <p className="mt-4 text-white/70">{lesson.description}</p>
+  return (
+    <section className="space-y-6">
+      <h1 className="text-3xl font-semibold">{data.title}</h1>
+
+      {data.description && (
+        <p className="text-white/70">{data.description}</p>
       )}
 
-      <div className="mt-10 rounded-xl border border-white/10 bg-black/40 p-6 text-xs">
-        <pre className="overflow-x-auto">
-          {JSON.stringify(lesson, null, 2)}
-        </pre>
-      </div>
-    </main>
+      <pre className="rounded-xl border border-white/10 bg-black/40 p-4 text-xs overflow-x-auto">
+        {JSON.stringify(data, null, 2)}
+      </pre>
+    </section>
   );
 }
