@@ -1,21 +1,61 @@
 import fs from "fs";
 import path from "path";
 
-export function loadLessonById(id: string) {
-  const base = path.join(process.cwd(), "cert_intel", "canon", "atils");
+export type LoadCanonLessonsInput = {
+  canon: string;
+  version: string;
+};
 
-  const divisions = [
-    "phoenix-protocol-secure-cloud-operator",
-    "sentinel-protocol-defensive-operations",
-    "vanguard-protocol-advanced-architecture"
-  ];
+export type CanonLesson = {
+  id: string;
+  title?: string;
+  canon: string;
+  version: string;
+  path: string;
+};
 
-  for (const canon of divisions) {
-    const lessonPath = path.join(base, canon, "v1", "lessons", `${id}.json`);
-    if (fs.existsSync(lessonPath)) {
-      return JSON.parse(fs.readFileSync(lessonPath, "utf8"));
-    }
+/**
+ * Canonical lesson loader (filesystem-backed).
+ * Node-only. Deterministic. No caching.
+ */
+export function loadLessons(input: LoadCanonLessonsInput): CanonLesson[] {
+  const { canon, version } = input;
+
+  const labsDir = path.join(
+    process.cwd(),
+    "cert_intel",
+    "canon",
+    "atils",
+    canon,
+    version,
+    "labs"
+  );
+
+  if (!fs.existsSync(labsDir)) {
+    return [];
   }
 
-  return null;
+  const files = fs
+    .readdirSync(labsDir)
+    .filter((f) => f.endsWith(".json"))
+    .sort();
+
+  return files.map((file) => {
+    const fullPath = path.join(labsDir, file);
+    const raw = JSON.parse(fs.readFileSync(fullPath, "utf8"));
+
+    return {
+      id: raw.id,
+      title: raw.title,
+      canon,
+      version,
+      path: fullPath,
+    };
+  });
 }
+
+/**
+ * Alias used by Next.js app routes.
+ * DO NOT REMOVE — this is what Phoenix imports.
+ */
+export const loadCanonLessons = loadLessons;

@@ -14,5 +14,5 @@ out/
 *.log
 
 # Canon artifacts (generated, immutable, not runtime)
-cert_intel/canon/**/lessons/*.json
-cert_intel/canon/**/labs/*.json
+# Ignore only temporary generated artifacts
+cert_intel/canon/**/_generated/**
