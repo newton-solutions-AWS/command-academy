@@ -6,12 +6,11 @@ import { evaluateCertification } from "./evaluateCertification";
 const [, , learnerId] = process.argv;
 
 if (!learnerId) {
-  console.error("Usage: cert-check <learner_id>");
+  console.error("Usage: cli.ts <learnerId>");
   process.exit(1);
 }
 
 const transcript = generateTranscript(learnerId);
-const results = evaluateCertification(transcript);
+const result = evaluateCertification(transcript);
 
-console.log(JSON.stringify(results, null, 2));
-
+console.log(JSON.stringify(result, null, 2));

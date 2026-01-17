@@ -1,16 +1,14 @@
-// app/layout.tsx
-import type { Metadata } from "next";
 import "./globals.css";
 
-export const metadata: Metadata = {
+export const metadata = {
   title: "Newton Command Academy",
-  description: "Executable Reality • Deterministic Doctrine • Immutable Canon",
+  description: "Executable Reality Command Interface",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className="min-h-screen bg-black text-white antialiased">
+      <body className="bg-black text-neutral-200">
         {children}
       </body>
     </html>

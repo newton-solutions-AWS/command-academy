@@ -1,0 +1,19 @@
+[
+  {
+    "id": "phoenix-sts-identity",
+    "division": "phoenix",
+    "title": "Phoenix Protocol: Verify identity context using STS get-caller-identity (read-only).",
+    "concept": "STS get-caller-identity retrieves the identity of the caller in a secure and read-only manner, providing essential context for authentication and authorization within cloud infrastructure.",
+    "walkthrough": "Execute the AWS CLI command:\n\naws sts get-caller-identity --output json\n\nThis returns the account ID, ARN, and principal type. This command is non-destructive and deterministic.",
+    "checkpoints": [
+      "Command executes successfully",
+      "Returned JSON contains Account, Arn, and UserId",
+      "No write permissions required"
+    ],
+    "common_mistakes": [
+      "AWS CLI not authenticated before execution",
+      "Wrong AWS profile selected",
+      "Expecting resource data instead of identity context"
+    ]
+  }
+]

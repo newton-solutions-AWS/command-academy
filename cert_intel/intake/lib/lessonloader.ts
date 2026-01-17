@@ -1,68 +1,50 @@
-import fs from "fs";
-import path from "path";
-
-export type CanonLesson = {
-  id: string;
-  title: string;
-  module?: string;
-  description?: string;
-  version: string;
-  division: "phoenix" | "vanguard" | "sentinel";
-};
-
-const CANON_ROOT = path.join(process.cwd(), "cert_intel", "canon", "atils");
-
-const CANON_MAP: Record<
-  CanonLesson["division"],
-  { slug: string; version: string }
-> = {
-  phoenix: {
-    slug: "phoenix-protocol-secure-cloud-operator",
-    version: "v2",
-  },
-  vanguard: {
-    slug: "vanguard-protocol-advanced-architecture",
-    version: "v2",
-  },
-  sentinel: {
-    slug: "sentinel-protocol-defensive-operations",
-    version: "v2",
-  },
-};
+import type { CanonLesson } from "./canonTypes";
 
 export function loadCanonLessons(
-  division: CanonLesson["division"]
+  division?: "phoenix" | "vanguard" | "sentinel"
 ): CanonLesson[] {
-  const config = CANON_MAP[division];
-  if (!config) return [];
+  const allLessons: CanonLesson[] = [
+    {
+      id: "intro-001",
+      title: "Welcome to the Newton Command Academy",
+      division: "phoenix",
+      difficulty: "foundation",
+      duration_minutes: 20,
+      concept: "Orientation to the Command Academy mission and structure.",
+      walkthrough: "You will be introduced to the academy systems and ranks.",
+      objectives: ["Understand academy structure"],
+    },
+    {
+      id: "linux-001",
+      title: "Linux Fundamentals",
+      division: "vanguard",
+      difficulty: "foundation",
+      duration_minutes: 45,
+      concept: "Linux basics for operators.",
+      walkthrough: "Learn filesystem, permissions, and CLI basics.",
+      objectives: ["Navigate Linux"],
+    },
+    {
+      id: "threat-001",
+      title: "Threat Landscape",
+      division: "sentinel",
+      difficulty: "advanced",
+      duration_minutes: 60,
+      concept: "Understanding modern cyber threats.",
+      walkthrough: "Analyse attacker motivations and methods.",
+      objectives: ["Identify threats"],
+    },
+  ];
 
-  const labsDir = path.join(
-    CANON_ROOT,
-    config.slug,
-    config.version,
-    "labs"
-  );
+  return division
+    ? allLessons.filter(l => l.division === division)
+    : allLessons;
+}
 
-  if (!fs.existsSync(labsDir)) {
-    console.warn(`[CANON] Missing labs dir: ${labsDir}`);
-    return [];
-  }
-
-  return fs
-    .readdirSync(labsDir)
-    .filter((f) => f.endsWith(".json"))
-    .sort()
-    .map((file) => {
-      const fullPath = path.join(labsDir, file);
-      const raw = JSON.parse(fs.readFileSync(fullPath, "utf-8"));
-
-      return {
-        id: raw.id ?? file.replace(".json", ""),
-        title: raw.title ?? "Untitled Lesson",
-        module: raw.module,
-        description: raw.description,
-        version: config.version,
-        division,
-      };
-    });
+/** 🔒 CANON LOOKUP — THIS IS THE KEY */
+export function loadLessonById(
+  division: "phoenix" | "vanguard" | "sentinel",
+  lessonId: string
+): CanonLesson | undefined {
+  return loadCanonLessons(division).find(l => l.id === lessonId);
 }

@@ -1,18 +1,19 @@
 import { loadLessonById } from "@/cert_intel/intake/lib/lessonloader";
 
-interface PageProps {
+interface LessonPageProps {
   params: {
+    division: "phoenix" | "vanguard" | "sentinel";
     lessonId: string;
   };
 }
 
-export default function PhoenixLessonPage({ params }: PageProps) {
-  const lesson = loadLessonById("phoenix", params.lessonId);
+export default function LessonPage({ params }: LessonPageProps) {
+  const lesson = loadLessonById(params.division, params.lessonId);
 
   if (!lesson) {
     return (
       <div className="p-8 text-red-400">
-        ❌ No Phoenix lesson found: {params.lessonId}
+        ❌ No lesson found for {params.division}/{params.lessonId}
       </div>
     );
   }

@@ -1,34 +1,27 @@
 import Link from "next/link";
-import { loadPhoenixLessons } from "@/cert_intel/intake/lib/lessonloader";
+import { loadCanonLessons } from "@/cert_intel/intake/lib/lessonloader";
 
-export default function PhoenixIndexPage() {
-  const lessons = loadPhoenixLessons();
+export default function PhoenixPage() {
+  const lessons = loadCanonLessons("phoenix");
 
   return (
-    <section className="space-y-6">
-      <h1 className="text-3xl font-semibold">Phoenix Division</h1>
+    <div style={{ padding: 40 }}>
+      <h1>Phoenix Protocol · Lessons</h1>
 
-      {lessons.length === 0 && (
-        <p className="text-white/60">
-          No lessons found. Expected:
-          <code className="block mt-2 text-xs">
-            cert_intel/canon/atils/phoenix-protocol-secure-cloud-operator/v2/labs/*.json
-          </code>
-        </p>
-      )}
+      {lessons.length === 0 && <p>No lessons detected</p>}
 
-      <ul className="space-y-3">
-        {lessons.map((lesson) => (
-          <li key={lesson.id}>
+      <ul style={{ marginTop: 20 }}>
+        {lessons.map((l) => (
+          <li key={l.id} style={{ marginBottom: 10 }}>
             <Link
-              href={`/academy/phoenix/${lesson.id}`}
-              className="text-blue-400 hover:underline"
+              href={`/academy/phoenix/${l.id}`}
+              style={{ color: "#00ff88", textDecoration: "underline" }}
             >
-              {lesson.title}
+              {l.title}
             </Link>
           </li>
         ))}
       </ul>
-    </section>
+    </div>
   );
 }

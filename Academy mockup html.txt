@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Newton Command Academy</title>
+
+<style>
+:root {
+  --bg-main: #050b1a;
+  --bg-panel: #0c1633;
+  --bg-card: #111e44;
+  --blue: #4da3ff;
+  --blue-soft: #7fb6ff;
+  --text-main: #e6edff;
+  --text-muted: #9fb2e5;
+  --border: rgba(255,255,255,0.08);
+  --glow: rgba(77,163,255,0.25);
+  --phoenix: #00ff88;
+  --vanguard: #4da3ff;
+  --sentinel: #ff4d4d;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: Inter, system-ui, sans-serif;
+  background: radial-gradient(circle at top, #0a1430, var(--bg-main));
+  color: var(--text-main);
+}
+
+/* ===== HEADER ===== */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 22px 36px;
+  background: linear-gradient(180deg, #0c1738, #050b1a);
+  border-bottom: 1px solid var(--border);
+}
+
+.brand {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+.brand .logo {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #1e3a8a, #020617);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  font-size: 22px;
+}
+
+.brand .title {
+  font-size: 20px;
+  letter-spacing: 1px;
+}
+
+.brand .subtitle {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+nav a {
+  margin-left: 22px;
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 13px;
+}
+
+nav a:hover { color: var(--blue); }
+
+/* ===== MAIN ===== */
+main {
+  padding: 36px;
+  max-width: 1400px;
+  margin: auto;
+}
+
+.section {
+  margin-bottom: 60px;
+}
+
+.section h2 {
+  font-size: 26px;
+  margin-bottom: 6px;
+}
+
+.section p {
+  color: var(--text-muted);
+  font-size: 14px;
+  margin-bottom: 26px;
+}
+
+/* ===== GRID ===== */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+/* ===== CARD ===== */
+.card {
+  background: linear-gradient(180deg, #122155, var(--bg-card));
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 22px;
+  transition: all 0.25s ease;
+  position: relative;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 0 40px var(--glow);
+}
+
+.card h3 {
+  margin: 0 0 8px;
+  font-size: 18px;
+}
+
+.card p {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.badge {
+  display: inline-block;
+  margin-top: 14px;
+  padding: 6px 12px;
+  font-size: 11px;
+  border-radius: 999px;
+}
+
+/* ===== DIVISION COLORS ===== */
+.phoenix { background: rgba(0,255,136,0.15); color: var(--phoenix); }
+.vanguard { background: rgba(77,163,255,0.15); color: var(--vanguard); }
+.sentinel { background: rgba(255,77,77,0.15); color: var(--sentinel); }
+
+/* ===== LESSON CARD ===== */
+.lesson {
+  border-left: 3px solid var(--phoenix);
+}
+
+.lesson h4 {
+  margin: 0 0 6px;
+  font-size: 15px;
+}
+
+.lesson span {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+/* ===== FOOTER ===== */
+footer {
+  margin-top: 80px;
+  padding: 28px;
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-muted);
+  border-top: 1px solid var(--border);
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="brand">
+    <div class="logo">N</div>
+    <div>
+      <div class="title">Newton Command Academy</div>
+      <div class="subtitle">Powered by the ATILS Engine</div>
+    </div>
+  </div>
+  <nav>
+    <a>HQ</a>
+    <a>Divisions</a>
+    <a>Canon</a>
+    <a>Exit →</a>
+  </nav>
+</header>
+
+<main>
+
+<!-- HQ -->
+<section class="section">
+  <h2>Command HQ</h2>
+  <p>Executive reality. Deterministic doctrine. Immutable canon.</p>
+
+  <div class="grid">
+    <div class="card">
+      <h3>Operator Status</h3>
+      <p>Founder · Full Clearance · All Divisions</p>
+      <span class="badge phoenix">ATILS ONLINE</span>
+    </div>
+
+    <div class="card">
+      <h3>Progression Engine</h3>
+      <p>Rank-based access. Skill validation. No shortcuts.</p>
+      <span class="badge vanguard">ACTIVE</span>
+    </div>
+
+    <div class="card">
+      <h3>Canon Integrity</h3>
+      <p>Audited lessons. Deterministic output.</p>
+      <span class="badge sentinel">IMMUTABLE</span>
+    </div>
+  </div>
+</section>
+
+<!-- DIVISIONS -->
+<section class="section">
+  <h2>Divisions</h2>
+  <p>Access is earned. Prestige is enforced.</p>
+
+  <div class="grid">
+    <div class="card">
+      <h3>Phoenix Division</h3>
+      <p>From Service to Cyber. Transition with honour.</p>
+      <span class="badge phoenix">FULL ACCESS</span>
+    </div>
+
+    <div class="card">
+      <h3>Vanguard Division</h3>
+      <p>Cloud, infrastructure, real-world operations.</p>
+      <span class="badge vanguard">OPERATIONAL</span>
+    </div>
+
+    <div class="card">
+      <h3>Sentinel Division</h3>
+      <p>Advanced offensive & defensive cyber.</p>
+      <span class="badge sentinel">RESTRICTED</span>
+    </div>
+  </div>
+</section>
+
+<!-- PHOENIX -->
+<section class="section">
+  <h2>Phoenix Division</h2>
+  <p>Discipline, clarity, and confidence — rebuilt for cyber.</p>
+
+  <div class="grid">
+    <div class="card lesson">
+      <h4>Phoenix Protocol: Identity Verification</h4>
+      <p>STS get-caller-identity. Read-only. Deterministic.</p>
+      <span>Lesson · Mission Simulator</span>
+    </div>
+
+    <div class="card lesson">
+      <h4>Phoenix Protocol: IAM Visibility</h4>
+      <p>Roles, trust boundaries, access clarity.</p>
+      <span>Lesson · Mission Simulator</span>
+    </div>
+
+    <div class="card lesson">
+      <h4>Phoenix Protocol: VPC Recon</h4>
+      <p>Account-level network awareness.</p>
+      <span>Lesson · Mission Simulator</span>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  Newton Command Academy · ATILS Engine · Guardian Angel Online  
+  <br/>From Service to Cyber
+</footer>
+
+</body>
+</html>
