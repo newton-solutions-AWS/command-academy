@@ -1,10 +1,18 @@
-export type Division = "VANGUARD" | "PHOENIX" | "SENTINEL";
-export type LayoutMode = "TACTICAL" | "UNIVERSITY" | "GOVERNMENT";
-export type LearningMode = "GAMIFIED" | "VISUAL" | "TEXT";
+export type Division = "phoenix" | "vanguard" | "sentinel";
+export type InterfaceMode = "operator" | "scholar" | "classified";
+export type LearningMode =
+  | "gamified"
+  | "socratic"
+  | "visual"
+  | "video"
+  | "text"
+  | "exam-cram";
 
-export type UiState = {
+export type LayoutMode = "north-star" | "cod-hq" | "intel-brief";
+
+export interface UiState {
   division: Division;
-  layout: LayoutMode;
-  learning: LearningMode;
-  noiseReduction: boolean;
-};
+  interfaceMode: InterfaceMode;
+  learningMode: LearningMode;
+  layoutMode: LayoutMode;
+}

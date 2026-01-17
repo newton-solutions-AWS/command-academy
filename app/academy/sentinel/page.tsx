@@ -1,14 +1,24 @@
+import React from "react";
+import Shell from "@/components/ui/Shell";
+import Panel from "@/components/ui/Panel";
+import CommandHeader from "@/components/ui/CommandHeader";
 import { loadCanonLessons } from "@/cert_intel/intake/lib/lessonloader";
+import { lessonHref } from "@/lib/nav";
 
 export default function SentinelIndex() {
   const lessons = loadCanonLessons("sentinel");
-
   return (
-    <main className="max-w-5xl mx-auto px-6 py-12">
-      <h1 className="text-3xl font-semibold mb-6">Sentinel Division</h1>
-      <p className="text-white/60">
-        Prestige Add-on. Clearance-gated operational tier.
-      </p>
-    </main>
+    <Shell>
+      <CommandHeader title="Sentinel Lessons" division="sentinel" />
+      <div className="grid gap-4 mt-8">
+        {lessons.map((l) => (
+          <Panel key={l.id} title={l.id} subtitle={l.title} variant="restricted">
+            <a className="underline text-blue-300" href={lessonHref("sentinel", l.id)}>
+              Open lesson
+            </a>
+          </Panel>
+        ))}
+      </div>
+    </Shell>
   );
 }

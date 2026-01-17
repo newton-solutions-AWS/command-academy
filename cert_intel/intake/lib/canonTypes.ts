@@ -7,12 +7,7 @@ export interface CanonLesson {
   division: Division;
   difficulty: Difficulty;
   duration_minutes: number;
-
-  // CORE DOCTRINAL REQUIREMENTS
   concept: string;
   walkthrough: string;
-
-  // OPTIONAL EXTENSIONS
-  labs?: string[];
-  objectives?: string[];
+  objectives: string[];
 }

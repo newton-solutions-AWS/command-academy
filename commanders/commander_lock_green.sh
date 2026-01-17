@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-set -e
+set -euo pipefail
 
-echo "🔒 LOCKING GREEN STATE"
+echo "🔒 LOCKING GREEN STATE — NEWTON COMMAND ACADEMY"
 
 rm -rf .next
 npm run build

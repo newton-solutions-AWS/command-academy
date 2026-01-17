@@ -1,30 +1,31 @@
-"use client";
-
-import { ToggleGroup } from "@/components/ui/ToggleGroup";
-import type { Division } from "@/lib/uiStore";
+import React from "react";
+import Panel from "@/components/ui/Panel";
+import ToggleGroup from "@/components/ui/ToggleGroup";
+import type { Division } from "@/lib/uiTypes";
 
 export default function DivisionDeck({
-  value,
-  onChange,
+  division,
+  setDivision,
 }: {
-  value: Division;
-  onChange: (v: Division) => void;
+  division: Division;
+  setDivision: (d: Division) => void;
 }) {
   return (
-    <section className="panel">
-      <div className="panel-head">
-        <div>
-          <div className="panel-kicker">DIVISION CONTROL</div>
-          <div className="panel-sub">Access & Identity</div>
-        </div>
-      </div>
-
+    <Panel
+      title="DIVISION SELECT"
+      subtitle="Phoenix has full access. Vanguard paid access. Sentinel elite add-on unless Phoenix."
+      variant="active"
+    >
       <ToggleGroup
-        tone="green"
-        options={["VANGUARD", "PHOENIX", "SENTINEL"]}
-        value={value}
-        onChange={onChange}
+        label="Division"
+        value={division}
+        onChange={setDivision}
+        options={[
+          { value: "phoenix", label: "Phoenix", hint: "Service → Cyber. Full access." },
+          { value: "vanguard", label: "Vanguard", hint: "Civilian paid. No Sentinel unless upgraded." },
+          { value: "sentinel", label: "Sentinel", hint: "Elite ops. Hard gates." },
+        ]}
       />
-    </section>
+    </Panel>
   );
 }

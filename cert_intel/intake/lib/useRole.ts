@@ -1,36 +1,14 @@
-"use client";
+export type UserRole = "founder" | "phoenix" | "vanguard" | "sentinel" | "guest";
 
-import { useMemo } from "react";
-
-export type DivisionRole = "vanguard" | "phoenix" | "sentinel";
-
-interface RoleContext {
-  role: DivisionRole;
-  isPhoenix: boolean;
-  isSentinel: boolean;
-  isVanguard: boolean;
+export function getUserRole(): UserRole {
+  // Later: hook to auth/session. For now, keep it predictable.
+  return "founder";
 }
 
-/**
- * Canonical role resolver.
- * Source of truth for division-based gating.
- */
-export function useRole(division?: string): RoleContext {
-  const role = useMemo<DivisionRole>(() => {
-    if (!division) return "vanguard";
-
-    const d = division.toLowerCase();
-
-    if (d === "phoenix") return "phoenix";
-    if (d === "sentinel") return "sentinel";
-
-    return "vanguard";
-  }, [division]);
-
-  return {
-    role,
-    isPhoenix: role === "phoenix",
-    isSentinel: role === "sentinel",
-    isVanguard: role === "vanguard",
-  };
+export function canAccessDivision(role: UserRole, division: "phoenix" | "vanguard" | "sentinel") {
+  if (role === "founder") return true;
+  if (role === "phoenix") return true;
+  if (role === "vanguard") return division !== "sentinel";
+  if (role === "sentinel") return true;
+  return division === "phoenix"; // guest gets only Phoenix preview
 }

@@ -1,26 +1,36 @@
-import HQDeck from "@/components/deck/HQDeck";
+import React from "react";
+import Shell from "@/components/ui/Shell";
+import Panel from "@/components/ui/Panel";
+import CommandHeader from "@/components/ui/CommandHeader";
 
 export default function HQPage() {
   return (
-    <main className="screen">
-      <div className="screen-noise" />
-      <div className="screen-glow bg-green-500/10" />
+    <Shell>
+      <CommandHeader
+        title="Operator HQ"
+        subtitle="COD-HQ style hub. This becomes the mission launcher + progress + war room."
+        division="phoenix"
+      />
 
-      <div className="wrap">
-        <div className="mb-10">
-          <div className="text-xs tracking-[0.3em] text-neutral-500">
-            NEWTON COMMAND ACADEMY
+      <div className="grid gap-4 mt-8 lg:grid-cols-3">
+        <Panel title="MISSION SIMULATOR" subtitle="Launch, run, debrief.">
+          <div className="text-white/70 text-sm">
+            Placeholder for mission queue, guardian angel prompts, and live objectives.
           </div>
-          <h1 className="mt-3 text-4xl font-semibold">
-            HQ DASHBOARD
-          </h1>
-          <p className="mt-3 text-sm text-neutral-400 max-w-xl">
-            Command overview · Oracle access · Division readiness
-          </p>
-        </div>
+        </Panel>
 
-        <HQDeck />
+        <Panel title="CAREER WAR ROOM" subtitle="Proof of work + CV outputs.">
+          <div className="text-white/70 text-sm">
+            Placeholder for signed transcripts, employer trust portal, and skill decay tracking.
+          </div>
+        </Panel>
+
+        <Panel title="BOARD OF INQUIRY" subtitle="Truth Engine QA + exams.">
+          <div className="text-white/70 text-sm">
+            Placeholder for exam crams, interrogations, and mastery checks.
+          </div>
+        </Panel>
       </div>
-    </main>
+    </Shell>
   );
 }

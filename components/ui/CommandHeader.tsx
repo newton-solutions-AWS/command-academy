@@ -1,17 +1,29 @@
-"use client";
+import React from "react";
+import Badge from "./Badge";
 
-export default function CommandHeader() {
+type Props = {
+  title: string;
+  subtitle?: string;
+  division: "phoenix" | "vanguard" | "sentinel";
+};
+
+export default function CommandHeader({ title, subtitle, division }: Props) {
+  const badgeVariant =
+    division === "phoenix" ? "amber" : division === "vanguard" ? "blue" : "red";
+
   return (
-    <header className="mb-10">
-      <div className="text-xs tracking-[0.3em] text-neutral-500">
-        NEWTON COMMAND ACADEMY
+    <header className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+      <div>
+        <div className="text-[12px] tracking-[0.35em] uppercase text-white/60">
+          Newton Command Academy
+        </div>
+        <h1 className="text-2xl sm:text-3xl font-semibold mt-2">{title}</h1>
+        {subtitle && <p className="text-white/60 mt-2 max-w-2xl">{subtitle}</p>}
       </div>
-      <h1 className="mt-3 text-4xl font-semibold tracking-[0.25em]">
-        COMMAND INTERFACE
-      </h1>
-      <p className="mt-3 text-sm text-neutral-400 max-w-xl">
-        Configure operational posture before deployment.
-      </p>
+      <div className="flex items-center gap-2">
+        <Badge variant={badgeVariant}>{division.toUpperCase()} DIVISION</Badge>
+        <Badge variant="blue">ATILS ENGINE</Badge>
+      </div>
     </header>
   );
 }

@@ -1,30 +1,27 @@
-"use client";
-
-import { ToggleGroup } from "@/components/ui/ToggleGroup";
-import type { Layout } from "@/lib/uiStore";
+import React from "react";
+import Panel from "@/components/ui/Panel";
+import ToggleGroup from "@/components/ui/ToggleGroup";
+import type { LayoutMode } from "@/lib/uiTypes";
 
 export default function LayoutDeck({
-  value,
-  onChange,
+  layoutMode,
+  setLayoutMode,
 }: {
-  value: Layout;
-  onChange: (v: Layout) => void;
+  layoutMode: LayoutMode;
+  setLayoutMode: (m: LayoutMode) => void;
 }) {
   return (
-    <section className="panel">
-      <div className="panel-head">
-        <div>
-          <div className="panel-kicker">INTERFACE LAYOUT</div>
-          <div className="panel-sub">Reality Filter</div>
-        </div>
-      </div>
-
+    <Panel title="LAYOUT MODE" subtitle="Your interface skin. Same standards, different vibe.">
       <ToggleGroup
-        tone="green"
-        options={["TACTICAL", "UNIVERSITY", "GOVERNMENT"]}
-        value={value}
-        onChange={onChange}
+        label="Layout"
+        value={layoutMode}
+        onChange={setLayoutMode}
+        options={[
+          { value: "north-star", label: "North Star", hint: "Blue doctrine. Command clean." },
+          { value: "cod-hq", label: "COD HQ", hint: "Gamified ops dashboard." },
+          { value: "intel-brief", label: "Intel Brief", hint: "Govt dossier / briefing." },
+        ]}
       />
-    </section>
+    </Panel>
   );
 }
