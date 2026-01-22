@@ -1,36 +1,25 @@
-import fs from "fs";
-import path from "path";
+import type { CanonLesson } from "./canonTypes";
 
-export type LessonMeta = {
-  id: string;
-  title: string;
+export const phoenixLessons: Record<string, CanonLesson> = {
+  "phoenix-boot-001": {
+    id: "phoenix-boot-001",
+    title: "Phoenix Induction: Mission Zero",
+    division: "phoenix",
+    difficulty: "foundation",
+    concept:
+      "Transition from a service mindset to a cyber operator mindset. This lesson establishes identity, confidence, and mission structure.",
+    objectives: [
+      "Understand Phoenix Division doctrine",
+      "Understand how missions operate",
+      "Adopt the operator mindset",
+    ],
+    walkthrough:
+      "You are entering the Newton Command Academy as a Phoenix operator. This mission introduces how lessons, missions, and progression work.",
+    steps: [
+      "Read Phoenix doctrine",
+      "Understand mission structure",
+      "Acknowledge your transition role",
+    ],
+    duration_minutes: 20,
+  },
 };
-
-export function loadLessons(opts: {
-  org: string;
-  canon: string;
-  version: string;
-}): LessonMeta[] {
-  const dir = path.join(
-    process.cwd(),
-    "cert_intel",
-    "canon",
-    opts.org,
-    opts.canon,
-    opts.version,
-    "lessons"
-  );
-
-  if (!fs.existsSync(dir)) return [];
-
-  return fs
-    .readdirSync(dir)
-    .filter(f => f.endsWith(".json"))
-    .map(f => {
-      const full = JSON.parse(fs.readFileSync(path.join(dir, f), "utf8"));
-      return {
-        id: full.id,
-        title: full.title || full.id
-      };
-    });
-}

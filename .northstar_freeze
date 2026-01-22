@@ -1,0 +1,6 @@
+NORTH STAR FREEZE — HQ SUPREMACY BASELINE
+- Mission runtime store: lib/missionRuntime.ts
+- HQ active mission card: components/hq/ActiveMissionCard.tsx
+- Lesson ↔ HQ handshake: components/command/MissionHandshake.tsx + LessonShell integration
+- Division access doctrine helper: lib/access.ts
+- LessonShell children optional: fixed build break + standard mission layout

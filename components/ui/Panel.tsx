@@ -1,45 +1,55 @@
 import React from "react";
-import clsx from "clsx";
 
-type PanelProps = {
+type Variant = "default" | "active" | "muted" | "danger";
+
+type Props = {
   title?: string;
   subtitle?: string;
-  variant?: "default" | "active" | "restricted";
-  children: React.ReactNode;
+  right?: React.ReactNode;
+  children?: React.ReactNode;
+  className?: string;
+  variant?: Variant;
 };
+
+function variantClasses(variant: Variant) {
+  switch (variant) {
+    case "active":
+      return "border-cyan-400/25 shadow-[0_0_0_1px_rgba(34,211,238,0.12),0_20px_70px_rgba(0,0,0,0.55)]";
+    case "muted":
+      return "border-white/8 bg-black/20";
+    case "danger":
+      return "border-red-400/20 shadow-[0_0_0_1px_rgba(248,113,113,0.10),0_20px_70px_rgba(0,0,0,0.55)]";
+    default:
+      return "border-white/10 shadow-[0_0_0_1px_rgba(255,255,255,0.04),0_20px_70px_rgba(0,0,0,0.55)]";
+  }
+}
 
 export default function Panel({
   title,
   subtitle,
-  variant = "default",
+  right,
   children,
-}: PanelProps) {
+  className = "",
+  variant = "default",
+}: Props) {
   return (
     <section
-      className={clsx(
-        "relative rounded-xl border p-6",
-        "bg-gradient-to-b from-black/60 to-black/30",
-        "backdrop-blur-md",
-        "border-white/10",
-        "shadow-[inset_0_1px_0_rgba(255,255,255,0.05),0_30px_80px_rgba(0,0,0,0.6)]",
-        variant === "active" &&
-          "border-blue-400/50 shadow-[0_0_50px_rgba(59,130,246,0.18)]",
-        variant === "restricted" &&
-          "border-red-500/40 shadow-[0_0_50px_rgba(239,68,68,0.12)]"
-      )}
+      className={[
+        "rounded-3xl border bg-black/25 backdrop-blur-xl overflow-hidden",
+        variantClasses(variant),
+        className,
+      ].join(" ")}
     >
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-
-      {title && (
-        <div className="mb-4">
-          <div className="text-[11px] tracking-widest text-slate-300 uppercase">
-            {title}
+      {(title || subtitle || right) && (
+        <header className="px-6 py-5 border-b border-white/10 flex items-start justify-between gap-4">
+          <div>
+            {title && <div className="text-xs tracking-[0.24em] text-white/55">{title}</div>}
+            {subtitle && <div className="text-sm text-white/70 mt-1">{subtitle}</div>}
           </div>
-          {subtitle && <div className="text-[11px] text-slate-400 mt-1">{subtitle}</div>}
-        </div>
+          {right ? <div className="shrink-0">{right}</div> : null}
+        </header>
       )}
-
-      {children}
+      <div className="p-6">{children}</div>
     </section>
   );
 }

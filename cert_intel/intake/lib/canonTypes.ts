@@ -1,13 +1,16 @@
 export type Division = "phoenix" | "vanguard" | "sentinel";
-export type Difficulty = "foundation" | "intermediate" | "advanced";
+export type Difficulty = "foundation" | "intermediate" | "advanced" | "elite";
 
-export interface CanonLesson {
+export type CanonLesson = {
   id: string;
   title: string;
   division: Division;
   difficulty: Difficulty;
-  duration_minutes: number;
+
   concept: string;
   walkthrough: string;
   objectives: string[];
-}
+
+  duration_minutes: number;
+  steps?: string[];
+};

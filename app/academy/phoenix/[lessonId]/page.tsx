@@ -1,63 +1,21 @@
-import React from "react";
-import Shell from "@/components/ui/Shell";
-import Panel from "@/components/ui/Panel";
-import CommandHeader from "@/components/ui/CommandHeader";
-import { loadLessonById } from "@/cert_intel/intake/lib/lessonloader";
-import type { Division } from "@/cert_intel/intake/lib/canonTypes";
+import LessonShell from "@/components/command/LessonShell";
+import { phoenixLessons } from "@/cert_intel/intake/lib/lessons";
+import type { CanonLesson } from "@/cert_intel/intake/lib/canonTypes";
+import { notFound } from "next/navigation";
 
-interface PageProps {
+type Props = {
   params: {
     lessonId: string;
   };
-}
+};
 
-export default function PhoenixLessonPage({ params }: PageProps) {
-  const lesson = loadLessonById(params.lessonId);
+export default function PhoenixLessonPage({ params }: Props) {
+  const lesson: CanonLesson | undefined =
+    phoenixLessons[params.lessonId];
 
-  if (!lesson || lesson.division !== "phoenix") {
-    return (
-      <Shell>
-        <CommandHeader title="Lesson not found" division="phoenix" />
-        <div className="mt-8">
-          <Panel title="INVALID LESSON" variant="restricted">
-            <a className="underline text-blue-300" href="/academy/phoenix">
-              Back to Phoenix lessons
-            </a>
-          </Panel>
-        </div>
-      </Shell>
-    );
+  if (!lesson) {
+    notFound();
   }
 
-  return (
-    <Shell>
-      <CommandHeader
-        title={lesson.title}
-        subtitle={`Lesson ID: ${lesson.id} • ${lesson.duration_minutes} mins`}
-        division="phoenix"
-      />
-
-      <div className="grid gap-4 mt-8">
-        <Panel title="CONCEPT" variant="active">
-          <p className="text-white/75 whitespace-pre-wrap">
-            {lesson.concept}
-          </p>
-        </Panel>
-
-        <Panel title="WALKTHROUGH">
-          <p className="text-white/75 whitespace-pre-wrap">
-            {lesson.walkthrough}
-          </p>
-        </Panel>
-
-        <Panel title="OBJECTIVES">
-          <ul className="list-disc pl-5 text-white/75 space-y-2">
-            {lesson.objectives.map((o) => (
-              <li key={o}>{o}</li>
-            ))}
-          </ul>
-        </Panel>
-      </div>
-    </Shell>
-  );
+  return <LessonShell lesson={lesson} />;
 }
