@@ -1,10 +1,19 @@
 "use client";
 
-import { ReactNode } from "react";
-import { useHydrated } from "@/lib/useHydrated";
+import { useEffect, useState } from "react";
 
-export function ClientOnly({ children }: { children: ReactNode }) {
-  const hydrated = useHydrated();
-  if (!hydrated) return null;
+export default function ClientOnly({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
+
   return <>{children}</>;
 }

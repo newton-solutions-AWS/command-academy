@@ -1,16 +1,26 @@
-import { CommandProvider } from "@/lib/command/CommandContext";
-import "./globals.css";
-import React from "react";
+import type { Metadata } from "next";
+import "./academy.css";
+import { Inter } from "next/font/google";
 
-export const metadata = {
-  title: "Newton Command Academy",
-  description: "Command UI + ATILS Engine",
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-main",
+});
+
+export const metadata: Metadata = {
+  title: "Command Academy | Newton Solutions",
+  description: "Newton Solutions — Command Academy",
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
-    <html lang="en">
-      <body><CommandProvider>{children}</CommandProvider></body>
+    <html lang="en" className={inter.variable}>
+      <body>{children}</body>
     </html>
   );
 }
