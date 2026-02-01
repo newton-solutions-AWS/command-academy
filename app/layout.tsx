@@ -1,18 +1,26 @@
-// app/layout.tsx
 import type { Metadata } from "next";
-import "./globals.css";
+import "./academy.css";
+import { Inter } from "next/font/google";
+
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-main",
+});
 
 export const metadata: Metadata = {
-  title: "Newton Command Academy",
-  description: "Executable Reality • Deterministic Doctrine • Immutable Canon",
+  title: "Command Academy | Newton Solutions",
+  description: "Newton Solutions — Command Academy",
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
-    <html lang="en">
-      <body className="min-h-screen bg-black text-white antialiased">
-        {children}
-      </body>
+    <html lang="en" className={inter.variable}>
+      <body>{children}</body>
     </html>
   );
 }

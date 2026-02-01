@@ -13,6 +13,9 @@ out/
 .DS_Store
 *.log
 
-# Canon artifacts (generated, immutable, not runtime)
-# Ignore only temporary generated artifacts
-cert_intel/canon/**/_generated/**
+# ===============================
+# CANON (GENERATED – NEVER COMMIT)
+# ===============================
+cert_intel/canon/**/labs/
+cert_intel/canon/**/lessons/
+cert_intel/canon/**/manifest.json

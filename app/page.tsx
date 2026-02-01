@@ -1,124 +1,284 @@
-// app/page.tsx
-import Image from "next/image";
-import Link from "next/link";
+"use client";
 
-function Pill({ children }: { children: React.ReactNode }) {
+import React from "react";
+
+type Mode = "tac" | "uni" | "gov";
+type Difficulty = "easy" | "pro" | "elite";
+type Division = "vanguard" | "phoenix" | "sentinel";
+
+const MODE_COPY: Record<
+  Mode,
+  { heading: string; headingColorClass: string; body: string }
+> = {
+  gov: {
+    heading: "Government UI • Formal Mode",
+    headingColorClass: "mode-green",
+    body: "Stricter, more formal layout. Feels like a secure MOD / gov portal.\nPolicy-grade • Compliance-aware.",
+  },
+  tac: {
+    heading: "Tactical UI • Operator Mode",
+    headingColorClass: "mode-cyan",
+    body: "Dark, glossy, mission-focused layout. High contrast for low-light environments.\nOperator HUD • Mission-Focused.",
+  },
+  uni: {
+    heading: "Universal UI • Standard Mode",
+    headingColorClass: "mode-sky",
+    body: "Balanced layout for general purpose learning.\nStandard-grade • Accessible.",
+  },
+};
+
+const DIVISIONS: Record<
+  Division,
+  {
+    labelTop: "CURRENT" | "SWITCH";
+    title: string;
+    subtitle: string;
+    desc: string;
+    heroHeader: string;
+    heroTitle: string;
+    heroInterface: string;
+  }
+> = {
+  vanguard: {
+    labelTop: "CURRENT",
+    title: "Vanguard Division",
+    subtitle: "Multi-Cloud & DevOps",
+    desc: "Core AWS, Azure & GCP fundamentals. From zero to operator-ready multi-cloud foundations.",
+    heroHeader: "VANGUARD DIVISION • MULTI-CLOUD & DEVOPS",
+    heroTitle: "Core AWS, Azure & GCP fundamentals. From zero to operator-ready.",
+    heroInterface: "Interface: GOV • Division: BASE",
+  },
+  phoenix: {
+    labelTop: "SWITCH",
+    title: "Phoenix Division",
+    subtitle: "Veteran Gateway",
+    desc: "Veterans' mindset, transition & leadership training, wrapped around the multi-cloud track.",
+    heroHeader: "PHOENIX DIVISION • VETERAN GATEWAY",
+    heroTitle: "Transition layer for service-to-cyber. Leadership, mindset, and guided progression.",
+    heroInterface: "Interface: GOV • Division: PHOENIX",
+  },
+  sentinel: {
+    labelTop: "SWITCH",
+    title: "Sentinel Division",
+    subtitle: "Coding & Cyber",
+    desc: "Guard the code, forge the future. Red team tactics, blue team defence.",
+    heroHeader: "SENTINEL DIVISION • CODING & CYBER",
+    heroTitle: "Advanced cyber + engineering ops. Red/Blue capability with elite execution standards.",
+    heroInterface: "Interface: GOV • Division: SENTINEL",
+  },
+};
+
+export default function Page() {
+  const [mode, setMode] = React.useState<Mode>("gov");
+  const [difficulty, setDifficulty] = React.useState<Difficulty>("elite");
+  const [division, setDivision] = React.useState<Division>("vanguard");
+
+  const modeCopy = MODE_COPY[mode];
+  const div = DIVISIONS[division];
+
   return (
-    <span className="inline-flex items-center rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-[11px] tracking-[0.18em] text-white/65">
-      {children}
-    </span>
-  );
-}
+    <div className="academy-root">
+      <aside className="sidebar">
+        <div>
+          <div className="brand">Newton Solutions</div>
 
-export default function HomePage() {
-  return (
-    <main className="relative min-h-screen overflow-hidden">
-      {/* Background */}
-      <div className="pointer-events-none absolute inset-0">
-        <div className="absolute inset-0 opacity-[0.08] [background-image:linear-gradient(to_right,rgba(255,255,255,0.12)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.12)_1px,transparent_1px)] [background-size:120px_120px]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_15%,rgba(255,255,255,0.10),transparent_55%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(255,255,255,0.07),transparent_55%)]" />
-      </div>
+          <div className="section-title">Tracks Available</div>
 
-      <div className="relative mx-auto max-w-6xl px-6 py-14">
-        {/* Crest header */}
-        <div className="flex items-center justify-between gap-6">
-          <div className="flex items-center gap-4">
-            <div className="relative">
-              <div className="pointer-events-none absolute inset-[-18px] rounded-[28px] bg-white/10 blur-2xl" />
-              <div className="relative grid h-[84px] w-[84px] place-items-center rounded-[28px] border border-white/20 bg-black/50 shadow-[0_40px_140px_rgba(0,0,0,0.85)]">
-                <Image
-                  src="/crests/academy/academy.png"
-                  alt="Newton Command Academy"
-                  width={84}
-                  height={84}
-                  className="h-[64px] w-[64px] object-contain"
-                  priority
-                />
+          <div className="track-list">
+            {["AWS", "Azure", "GCP", "Security", "DevOps"].map((t) => (
+              <div className="track-item" key={t}>
+                <span>{t}</span>
+                <span className="status-badge">
+                  <span className="status-dot" />
+                  Online
+                </span>
               </div>
-            </div>
-
-            <div>
-              <div className="text-[11px] tracking-[0.30em] text-white/55">
-                NEWTON SOLUTIONS
-              </div>
-              <div className="mt-1 text-2xl font-semibold tracking-tight">
-                Command Academy
-              </div>
-              <div className="mt-2 flex flex-wrap gap-2">
-                <Pill>EXECUTABLE REALITY</Pill>
-                <Pill>DETERMINISTIC</Pill>
-                <Pill>IMMUTABLE CANON</Pill>
-              </div>
-            </div>
+            ))}
           </div>
-
-          <Link
-            href="/academy"
-            className="hidden rounded-2xl border border-white/15 bg-white px-5 py-3 text-sm font-semibold text-black shadow-[0_18px_70px_rgba(0,0,0,0.65)] transition hover:translate-y-[-1px] hover:shadow-[0_24px_90px_rgba(0,0,0,0.75)] md:inline-flex"
-          >
-            Enter Academy →
-          </Link>
         </div>
 
-        {/* Hero */}
-        <section className="mt-14 grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-          <div>
-            <div className="inline-flex items-center gap-3 rounded-full border border-white/10 bg-white/[0.03] px-4 py-2">
-              <span className="h-2 w-2 rounded-full bg-emerald-400/90 shadow-[0_0_18px_rgba(16,185,129,0.35)]" />
-              <span className="text-[12px] tracking-[0.12em] text-white/70">
-                Phoenix Protocol v2 — Audited • Deterministic • Deployable
-              </span>
-            </div>
+        <div className="difficulty-box">
+          <div className="diff-header">Difficulty Selector Engine</div>
 
-            <h1 className="mt-6 text-5xl font-semibold tracking-tight md:text-6xl">
-              Command Academy is
-              <span className="block text-white/55">not courseware.</span>
-            </h1>
+          <div className="diff-btns">
+            <button
+              className={`btn-diff ${difficulty === "easy" ? "active" : ""}`}
+              onClick={() => setDifficulty("easy")}
+              type="button"
+            >
+              EASY
+            </button>
+            <button
+              className={`btn-diff ${difficulty === "pro" ? "active" : ""}`}
+              onClick={() => setDifficulty("pro")}
+              type="button"
+            >
+              PRO
+            </button>
+            <button
+              className={`btn-diff ${difficulty === "elite" ? "active" : ""}`}
+              onClick={() => setDifficulty("elite")}
+              type="button"
+            >
+              ELITE
+            </button>
+          </div>
 
-            <p className="mt-5 max-w-xl text-sm leading-relaxed text-white/70 md:text-base">
-              A doctrine-first training runtime. We don’t assume resources exist.
-              We validate execution success. If it can’t run in a clean sandbox —
-              it doesn’t ship.
+          <p className="diff-desc">
+            Stealth-ops tempo. Heavy lab focus for those who want to unlock.
+          </p>
+        </div>
+      </aside>
+
+      <main className="main-area">
+        <div className="oracle-header">
+          <div className="oracle-info">
+            <h2 className="oracle-title">
+              Oracle AI • <span className="oracle-accent">Suggestion Engine</span>{" "}
+              <span className="oracle-online">• Online</span>
+            </h2>
+            <p>
+              Try: &quot;Open AWS track (Tac)&quot;, &quot;Go to lesson 3&quot;
+              or &quot;Explain this like I&apos;m brand new.&quot;
             </p>
+          </div>
 
-            <div className="mt-7 flex flex-wrap items-center gap-3">
-              <Link
-                href="/academy"
-                className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white px-6 py-3 text-sm font-semibold text-black shadow-[0_18px_70px_rgba(0,0,0,0.65)] transition hover:translate-y-[-1px]"
-              >
-                Enter Academy →
-              </Link>
+          <div className="oracle-actions">
+            <button className="btn-pill primary" type="button">
+              Open Oracle Console
+            </button>
+            <button className="btn-pill" type="button">
+              Voice (coming soon)
+            </button>
+            <button className="btn-pill" type="button">
+              Console (coming soon)
+            </button>
+          </div>
+        </div>
 
-              <Link
-                href="/academy#canon"
-                className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/[0.04] px-6 py-3 text-sm text-white/85 transition hover:border-white/25 hover:bg-white/[0.06]"
-              >
-                View Canon Standard
-              </Link>
+        <div className="dashboard-grid">
+          <div className="left-col">
+            <div className="modes-row">
+              <div className="panel-box">
+                <div className="section-title" style={{ marginBottom: 10 }}>
+                  Interface Layout Modes
+                </div>
+
+                <div className="mode-toggles">
+                  <button
+                    className={`toggle-btn ${mode === "tac" ? "active" : ""}`}
+                    onClick={() => setMode("tac")}
+                    type="button"
+                  >
+                    TAC
+                  </button>
+                  <button
+                    className={`toggle-btn ${mode === "uni" ? "active" : ""}`}
+                    onClick={() => setMode("uni")}
+                    type="button"
+                  >
+                    UNI
+                  </button>
+                  <button
+                    className={`toggle-btn ${mode === "gov" ? "active" : ""}`}
+                    onClick={() => setMode("gov")}
+                    type="button"
+                  >
+                    GOV
+                  </button>
+                </div>
+
+                <div id="mode-text">
+                  <div className={`highlight-text ${modeCopy.headingColorClass}`}>
+                    {modeCopy.heading}
+                  </div>
+                  <p className="desc-text">
+                    {modeCopy.body.split("\n").map((line, idx) => (
+                      <React.Fragment key={idx}>
+                        {line}
+                        {idx === 0 ? <br /> : null}
+                      </React.Fragment>
+                    ))}
+                  </p>
+                </div>
+              </div>
+
+              <div className="panel-box">
+                <div className="section-title" style={{ marginBottom: 10 }}>
+                  Active Layout <span className="v6-badge">V6.5 HYBRID</span>
+                </div>
+
+                <div style={{ marginTop: 15 }}>
+                  <h4 className="active-layout-title">
+                    Base Division • Government View
+                  </h4>
+                  <p className="desc-text">
+                    Formal operator briefing view. Ideal for policy,
+                    documentation and accreditation pathways.
+                  </p>
+                  <p className="desc-text mono-dim">
+                    Interface: GOV • Division: BASE
+                  </p>
+                </div>
+              </div>
             </div>
 
-            <div className="mt-10 text-[12px] tracking-[0.28em] text-white/40">
-              FOR SERVING PERSONNEL & SERVICE LEAVERS • CIVILIAN ROUTE AVAILABLE VIA VANGUARD
+            <div className="division-selector">
+              <div className="section-title">Select Division</div>
+
+              <div className="division-cards">
+                {(
+                  [
+                    ["vanguard", "CURRENT"],
+                    ["phoenix", "SWITCH"],
+                    ["sentinel", "SWITCH"],
+                  ] as Array<[Division, "CURRENT" | "SWITCH"]>
+                ).map(([key]) => {
+                  const d = DIVISIONS[key];
+                  const isActive = division === key;
+
+                  return (
+                    <button
+                      key={key}
+                      className={`div-card ${isActive ? "active" : ""}`}
+                      onClick={() => setDivision(key)}
+                      type="button"
+                    >
+                      <div
+                        className="div-toplabel"
+                        data-tone={d.labelTop.toLowerCase()}
+                      >
+                        {d.labelTop}
+                      </div>
+                      <h4>{d.title}</h4>
+                      <span>{d.subtitle}</span>
+                      <p>{d.desc}</p>
+                    </button>
+                  );
+                })}
+              </div>
             </div>
           </div>
 
-          <div className="rounded-[32px] border border-white/10 bg-white/[0.03] p-7 shadow-[0_0_0_1px_rgba(255,255,255,0.03),0_30px_130px_rgba(0,0,0,0.65)]">
-            <div className="text-[11px] tracking-[0.30em] text-white/55">
-              RUNTIME SIGNAL
-            </div>
-            <pre className="mt-4 whitespace-pre-wrap rounded-2xl border border-white/10 bg-black/40 p-4 text-xs leading-relaxed text-white/70">
-{`MODEL=llama3.1:latest AWS_REGION=us-east-1
-MAX_ATTEMPTS=10
-npx ts-node cert_intel/intake/cli.ts gen phoenix-protocol-secure-cloud-operator v2 8`}
-            </pre>
+          <div className="right-col">
+            <div className="hero-card">
+              <div className="hero-content">
+                <div className="division-header">{div.heroHeader}</div>
 
-            <div className="mt-5 border-t border-white/10 pt-5 text-[11px] tracking-[0.35em] text-white/45">
-              EXECUTABLE REALITY • DETERMINISTIC DOCTRINE • IMMUTABLE CANON
+                <div className="shield-placeholder" aria-hidden="true" />
+
+                <div className="hero-title">{div.heroTitle}</div>
+                <div className="hero-sub">{div.heroInterface}</div>
+
+                <div className="hero-footer">
+                  <span>Division Status</span>
+                  <span>Build Notes: V6.5 Hybrid</span>
+                </div>
+              </div>
             </div>
           </div>
-        </section>
-      </div>
-    </main>
+        </div>
+      </main>
+    </div>
   );
 }
